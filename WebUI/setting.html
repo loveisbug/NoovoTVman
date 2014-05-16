@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	    <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
+	    <script src="./js/jquery-1.8.3.min.js"></script>
+	    <script src="./js/jquery.mobile-1.4.2.min.js"></script>
+	    <script src="./js/setting.js"></script>
+
+	    <style type="text/css">
+			.tipsBox {
+				padding: 10px 10px !important;
+			}
+
+			li a img.leftIcon {
+				width:44px !important;
+				height:44px !important;
+				max-width: 44px !important;
+				max-height:44px !important;
+				top:11px !important;
+			}
+
+			li a img.leftIcon+span  {
+				margin-left: 30px;
+			}
+
+			.ui-icon-user-info:after {
+				background:url('./img/icon-setting-into.png') no-repeat 0 0;
+				background-size: 22px 22px;  
+           		border-radius: 0;
+			}
+
+			#settingPage ul li>a {
+				height: 45px !important;
+				line-height: 45px;
+			}
+
+	    </style>
+	</head>
+
+	<body onload="init();">
+
+
+
+
+		<!--  设置首页  -->
+		<div data-role="page" id="settingPage" data-theme="b">
+		  <div data-role="header" data-position="fixed" data-tap-toggle="false">
+		    <h1 id="settingLabel_Setting">Setting</h1>
+		  </div>
+
+		  <div role="main" class="ui-content">
+			<ul data-role="listview">
+			  <li data-icon="user-info"><a href="#connectToWlanPage" data-transition="slide"><img src="./img/icon-setting-wlan.png" alt="wlan" class="ui-li-icon leftIcon" /><span id="wlanLabel_Setting">WLAN</span></a></li>
+			  <li data-icon="user-info"><a href="#hotspotPage" data-transition="slide"><img src="./img/icon-setting-hot.png" alt="hotspot" class="ui-li-icon leftIcon" /><span id="hotspotLabel_Setting">Hot Spot</span></a></li>
+			  <li data-icon="user-info"><a href="#aboutPage" data-transition="slide"><img src="./img/icon-setting-about.png" alt="about" class="ui-li-icon leftIcon" /><span id="aboutLabel_Setting">About</span></a></li>
+			</ul>
+		  </div>
+		</div>
+
+
+
+
+		<!--  设置WLAN  -->
+		<div data-role="page" id="wlanPage" data-theme="b">
+  			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+  				<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" >Back</a>
+	    		<h1 style="margin: 0 10% !important" id="SSIDHeader_Wlan">SSID</h1>
+  			</div>
+
+  			<div role="main" class="ui-content">
+				<ul data-role="listview" id="ssidList">
+				  <!-- <li data-icon="false" class="ssidItem" value="Test">Test</li> -->
+				</ul>
+  			</div>
+		</div> 
+
+		<!--  连接WLAN 页面  -->
+		<div data-role="page" id="connectToWlanPage" data-theme="b">
+		  <div data-role="header" data-position="fixed" data-tap-toggle="false">
+		  	<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" />Back</a>
+		    <h1 id="wlanLabel_connectToWlan" style="margin: 0 10% !important">WLAN</h1>
+		     <!-- <a id="search_connectToWlan" href="#wlanPage" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-search ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" >SSID</a> -->
+		  </div>
+
+		  <div role="main" class="ui-content">
+				<div style="float:right;margin-left:3px;">
+                    <a id="search_connectToWlan" href="#wlanPage" role="button" data-role="button" class="ui-shadow-inset ui-nodisc-icon ui-btn ui-icon-search ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px; border-width:1px;height:40px;background-color:#2a2a2a;">SSID</a>
+                </div>
+				<div style="width:auto;margin-right:45px;height:40px;"><input type="text" name="ssid" id="ssid_WLAN" placeholder="SSID" style="height:40px;" /></div>
+    			<input type="password" name="passwd" id="passwd_WLAN" placeholder="密码" style="height: 40px;" />
+				<input type="button" value="Join" id="connectToWLANButton" style="height:32px;"/>
+				
+				<div data-role="popup" id="ssidNoEmptyPopupDialog_WLAN" data-overlay-theme="b" data-theme="b" class="tipsBox">
+					<br />
+				    <p>SSID cannot be empty</p>
+				    <br />
+				</div>
+
+				<div data-role="popup" id="rebootPopupDialog_WLAN" data-dismissible="false" data-overlay-theme="b" data-theme="b" class="tipsBox">
+					<br />
+				    <p>User setting applied. You have to restart App!</p>
+				    <br />
+				</div>
+		  </div>
+		</div>
+
+
+
+
+		<!--  设置热点  -->
+		<div data-role="page" id="hotspotPage" data-theme="b">
+  			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+  				<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" />Back</a>
+    			<h1 id="hotspotLabel_Hotspot">Hot Spot</h1>
+  			</div>
+
+  			<div role="main" class="ui-content">
+				<ul data-role="listview" id="hotspotList">
+				  <li><a href="#wifiChannelPage" data-transition="slide"><span id="ChannelLabel_Hotspot">WiFi Channel</span> <span class="ui-li-count" id="currentWifiChannel" style="background-color:transparent;border-width:0px;padding-top:1px;">CH 1</span></a></li>
+				  <li><a href="#wifiSecretPage" data-transition="slide"><span id="SecretModeLabel_Hotspot">Security</span> <span class="ui-li-count" id="currentWifiSecret" style="background-color:transparent;border-width:0px;padding-top:1px;">NONE</span></a></li>
+				</ul>
+			<br />
+			<input type="button" id="applyButton" value="Apply"/>
+  			</div>
+
+  			<div data-role="popup" id="popupDialog_WIFI" data-overlay-theme="b" data-theme="b"  class="tipsBox">
+					<br />
+				    <p>8~63 characters, Only A~Z,a~z,0-9 allowed.</p>
+				    <br />
+			</div>
+
+			<div data-role="popup" id="rebootPopupDialog_WIFI" data-dismissible="false" data-overlay-theme="b" data-theme="b"  class="tipsBox">
+					<br />
+				    <p>User setting applied. You have to restart App!</p>
+				    <br />
+			</div>
+		</div>
+
+		<!--  频道列表页  -->
+		<div data-role="page" id="wifiChannelPage" data-theme="b">
+		  <div data-role="header"  data-position="fixed" data-tap-toggle="false">
+		  	<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" />Back</a>
+		    <h1 id="ChannelLabel_WifiChannel">WiFi Channel</h1>
+		  </div>
+
+		  <div role="main" class="ui-content">
+			<ul data-role="listview" id="wifiChannelList">
+			  <li data-icon="check" class="ui-btn-icon-right ui-icon-check">CH 1</li>
+			  <li data-icon="false">CH 2</li>
+			  <li data-icon="false">CH 3</li>
+			  <li data-icon="false">CH 4</li>
+			  <li data-icon="false">CH 5</li>
+			  <li data-icon="false">CH 6</li>
+			  <li data-icon="false">CH 7</li>
+			  <li data-icon="false">CH 8</li>
+			  <li data-icon="false">CH 9</li>
+			  <li data-icon="false">CH 10</li>
+			  <li data-icon="false">CH 11</li>
+			</ul>
+		  </div>
+		</div>
+
+		<!--  加密算法表页  -->
+		<div data-role="page" id="wifiSecretPage" data-theme="b">
+		  <div data-role="header" data-position="fixed" data-tap-toggle="false">
+		  	<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" />Back</a>
+		    <h1 id="SecretModeLabel_WifiSecret">WiFi Channel</h1>
+		  </div>
+
+		  <div role="main" class="ui-content">
+			<ul data-role="listview" id="wifiSecretList">
+			  <li data-icon="check" class="ui-btn-icon-right ui-icon-check">NONE</li>
+			  <li data-icon="false">WPA</li>
+			</ul>
+		  </div>
+		</div>
+
+
+
+
+		<!--  关于页面  -->
+		<div data-role="page" id="aboutPage" data-theme="b">
+  			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+  				<a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" />Back</a>
+    			<h1 id="about">About</h1>
+  			</div>
+
+		  	<div data-role="content">
+			  	<ul data-role="listview" data-inset="true" class="ui-corner-all" data-shadow="false" style="margin-top:0px;margin-bottom:0px;">
+	    			<li data-theme="d" class="ui-corner-all ui-btn" style="border-width:1px;margin-bottom:8px;">
+		        		<h2 id ="versionLabel" class="ui-li-heading">Version</h2>
+		        		<p  id="version" class="ui-li-desc"></p>
+	      			</li>
+	      			<li data-theme="d" class="ui-corner-all ui-btn" style="border-width:1px;margin-bottom:8px;">
+		        		<h2 id="deviceLabel" class="ui-li-heading">Firmware</h2>
+		        		<p  id="device" class="ui-li-desc"></p>
+		        		<h2 id="ssidLabel" class="ui-li-heading">SSID</h2>
+		        		<p  id="ssid" class="ui-li-desc"></p>
+				    </li>
+				    <li data-theme="d" class="ui-corner-all ui-btn">
+				        <h2 id="availableLabel" class="ui-li-heading">avaliable</h2>
+			        	<p  id="available" class="ui-li-desc">KB</p>
+			        	<h2 id="totalLabel" class="ui-li-heading">total</h2>
+			        	<p  id="total" class="ui-li-desc">KB</p>
+				    </li>
+	  			</ul>
+		    </div>
+		</div>
+
+
+
+
+	</body>
+</html>
