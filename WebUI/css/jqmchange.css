@@ -1,0 +1,4 @@
+/*jqm默认1.3，这里改为1.8*/
+.ui-header {
+	line-height:1.8;
+}
