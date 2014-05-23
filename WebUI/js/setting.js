@@ -2,15 +2,15 @@
   var browser={
     versions:function(){
             var u = navigator.userAgent, app = navigator.appVersion;
-            return {         //移动终端浏览器版本信息
+            return {         //移动终端浏览器版本信�
                  trident: u.indexOf('Trident') > -1, //IE内核
                 presto: u.indexOf('Presto') > -1, //opera内核
-                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内�
                 gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终�
                 ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
+                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览�
+                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览�
                 iPad: u.indexOf('iPad') > -1, //是否iPad
                 webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
             };
@@ -21,6 +21,7 @@
 //Hotspot
 var passwordPlaceHolder = "Password";
 var passwordInvalidMsg  = "8~63 characters, Only A~Z,a~z,0-9 allowed.";		
+var ssidListLoaded 		= false;
 
 
 /*=======================================Init function============================================*/
@@ -37,7 +38,7 @@ function onDataWithJSON(data,key) {
 	} else {
 		temp = data;
 	}
-
+	
 	if(key == "SettingInit"){
 		var aboutObj   = temp.About;
 		var wlanObj    = temp.WLAN;
@@ -73,15 +74,24 @@ function initWLAN(data) {
 	$("#rebootPopupDialog_WIFI p").text(rebootTips);
 	$("#rebootPopupDialog_WLAN p").text(rebootTips);
 	
-	var ssidList = $("#ssidList");
-	$.each(ssidTable,function(index,value){
-		ssidList.append($('<li data-icon="false" class="ssidItem" value="' + value + '">' + value + '</li>'));
-	});
+	if(!ssidListLoaded){
+		var ssidList = $("#ssidList");
 	
-	if (ssidList.children().length <= 0) {
-		$("#search_connectToWlan").hide();
-		$("#ssid_WLAN").parent().css("marginRight", "0px");
+		ssidList.children("li").remove();
+		ssidList.empty();
+
+		$.each(ssidTable,function(index,value){
+			ssidList.append($('<li data-icon="false" class="ssidItem" value="' + value + '">' + value + '</li>'));
+		});
+	
+		if (ssidList.children().length <= 0) {
+			$("#search_connectToWlan").hide();
+			$("#ssid_WLAN").parent().css("marginRight", "0px");
+		}
+		ssidListLoaded = true;
 	}
+
+//	ssidList.listview('refresh');
 }
 
 function initHotspot(data) {
@@ -94,8 +104,8 @@ function initHotspot(data) {
 		passwordPlaceHolder = data.Password;
 	    passwordInvalidMsg  = data.PasswordInvalidMsg;  //全局
 
-	$("#hotspotLabel_Setting").text(hotspotLabel);
-	$("#hotspotLabel_Hotspot").text(hotspotLabel);
+	$("#hotspotLabel_Setting").html(hotspotLabel);
+	$("#hotspotLabel_Hotspot").html(hotspotLabel);
 	$("#ChannelLabel_Hotspot").html(wifiChannelLabel);
 	$("#SecretModeLabel_Hotspot").html(secretModeLabel);
 
@@ -234,7 +244,7 @@ $(document).ready(function() {
 		}
 
 		setWlan();
-		$("#rebootPopupDialog_WLAN").popup("open", {transition:"pop"}); 
+//		$("#rebootPopupDialog_WLAN").popup("open", {transition:"pop"}); 
 	});
 
 	$("#applyButton").click( function() {
@@ -250,7 +260,7 @@ $(document).ready(function() {
 		}
 
 		setHotspot();
-		$("#rebootPopupDialog_WIFI").popup("open", {transition:"pop"});
+//		$("#rebootPopupDialog_WIFI").popup("open", {transition:"pop"});
 	});
 
 	$("#wifiChannelList li").click(function() {

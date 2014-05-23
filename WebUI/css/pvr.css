@@ -15,42 +15,88 @@
 .cur {
 	background-color:white;
 }
-
+#pvrScheduleList{
+	margin:0;
+	padding:0;
+}
+.pvrScheduleListli{
+	margin:0;
+	padding:0;
+	list-style:none;
+	position:relative;
+	width:17em;
+	float:left;
+}
 #pvrScheduleList li>a  {
 	background-color:transparent; 
 	border-width:0px;
+	text-decoration:none;
+	padding:0.3em 0.2em;
 }
-
+.pvrScheduleItem{
+	padding:0.3em 0.2em;
+	display:block;
+}
+#recFilesList{
+	margin:0;
+	padding:0;
+}
+.recFilesListli{
+	margin:0;
+	padding:0;
+	list-style:none;
+	position:relative;
+	width:17em;
+	float:left;
+}
 #recFilesList li>a  {
 	background-color:transparent; 
 	border-width:0px;
+	text-decoration:none;
+	padding:0.3em 0.2em;
+}
+.recordFileItem{
+	padding:0.2em 0.5em;
+	display:block;
 }
 
 .pvrItemImgDiv {
-	width:48px;
-	 height:48px;
-	 float:right;
-	 padding-right:5px;
+	max-width:20%;
+	width:20%;
+	height:48px;
+	float:left;
+	padding-right:5%;
 }
-
+.pvrItemRecDiv{
+	width:0.75em;
+	height:0.75em;
+	border-radius:0.375em;
+	bottom:0.2em;
+	left:0.2em;
+	position:absolute;
+}
+.pvrItemRecNow{
+	box-shadow:#999999 1px 2px;
+	background-color:#FF0000;
+}
 .pvrItemContent {
 	overflow:hidden;
-	border-radius:3px;
+	position:relative;
 }
 
 .pvrItemInfoDiv {
 	background-color:lightgray;
-	width:100%;
-	float:right;
-	margin-right:-57px;
-	border-radius:3px;
+	width:73%;
+	height:4em;
+	float:left;
 	padding:2px 2px;
+	overflow:hidden;
 }
 
 .recFileItemInfoDiv {
 	background-color:lightgray;
-	border-radius:3px;
 	padding:2px 2px;
+	overflow:hidden;
 }
 
 .recFileItemInfoDiv ul li {
@@ -84,7 +130,6 @@
 	background-color:#333333;
 	border-width:1px;
 	border-color:black;
-	border-radius:4px;
 	width:18px; 
 	height:18px; 
 	padding:7px 7px;
