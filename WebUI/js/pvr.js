@@ -60,7 +60,7 @@ var recordFileItem        = '<li class="recFilesListli"> \
                 </li>'*/
 /*魏雯涛：对应前台html的变化修改此字符串*/
 var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
-                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#recordItemPage" data-transition="slide">           \
+                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           \
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >\
                             <span style="font-size:17px;font-style:italic;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />\
                             <div class="pvrItemContent">\
@@ -86,7 +86,7 @@ var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
                     </div>\
                 </li>'
 var pvrScheduleItemBtn = '<li class="pvrScheduleListli" style="height:8em;"> \
-                    <a id="recordAddItemPage" href="#recordItemPage" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         \
+                    <a id="recordAddItemPage" href="#" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         \
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;">\
                             <div style="position:absolute;bottom:0px;font-size:12px;"><span style="color:gray;">New PVR Schedule</span></div>\
                             <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; text-align:center; border-radius:5px;"><span style="font-size:3em; line-height:0.7em; color:#999999;">+</span></div>\
@@ -154,8 +154,10 @@ function onDataWithJSON(data,key) {
     } else {
         temp = data;
     }
-    if(key == "PVRInit"){
-		$.mobile.changePage("#pvrPage",  { transition: "none"});
+    if(key == "PVRInit" || key == "PVRInitWithoutTransition"){
+		if(key == "PVRInit"){
+			$.mobile.changePage("#pvrPage",  { transition: "none"});
+		}
         var recordFilesArray = temp.PVR;
         var recordFilesLabel = temp.PVRLabel;
             pvrScheduleArray = temp.PVRSchedule;
@@ -268,9 +270,9 @@ function initPVRShedule(data) {
     $.each(data, function(index,value) {
         var channelName    = value.ChannelName;
         var displayName    = value.DisplayName;
-        var startTime      = new Date(value.StartYear + "-" + value.StartMonth + "-" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0").format("yyyy-MM-dd hh:mm");
-        var endTime        = new Date(value.EndYear + "-" + value.EndMonth + "-" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("hh:mm");
-		var endTimeFull        = new Date(value.EndYear + "-" + value.EndMonth + "-" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
+        var startTime      = new Date(value.StartYear + "/" + value.StartMonth + "/" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0").format("yyyy-MM-dd hh:mm");
+        var endTime        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("hh:mm");
+		var endTimeFull        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
         var startTimeLabel = startTime.toLocaleString();
         var endTimeLabel   = endTime.toLocaleString();
         var sheduleItem    = $(pvrScheduleItem);
@@ -311,9 +313,9 @@ function initChannelList(data) {
 
 /*=======================================private function============================================*/
 function loadPVR(url) {
-    // $.get("https://s3-eu-west-1.amazonaws.com/tvman/PVR+Schedule/1398311131021",function(data,status){
-    //     alert("Data: " + data + "\nStatus: " + status);
-    // });
+    $.get(url,function(data,status){
+         alert("Data: " + data + "\nStatus: " + status);
+     });
 
 // $.ajax({ url: "http://cdn.iknow.bdimg.com/static/common/lib/mod_4a8b07f.js", context: document.body, success: function(){
 //         alert("sefsef"); 
@@ -332,53 +334,156 @@ function loadPVR(url) {
 //         }
 //     });
 }
+/*=======================================twitter============================================*/
+function twitter(d,s,id) {
+	var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+	if(!d.getElementById(id)){ 
+		js=d.createElement(s);
+		js.id=id;
+		js.src=p+"://platform.twitter.com/widgets.js";
+		fjs.parentNode.insertBefore(js,fjs);
+	}
+}
+function loadTwitter () {
+	timerId = setTimeout("checkIframe()", 500);
+	twitter(document,"script","twitter-wjs");
+}
+function checkIframe() {
+	var iframe = $("iframe[id='twitter-widget-0']");
 
+	if(iframe.length <= 0) {
+		setTimeout("checkIframe()", 500);
+		return;
+	}
+
+	if(iframe.width() <= "1") {
+		setTimeout("checkIframe()", 500);
+		return;
+	}
+
+	//iframe.contents().find("body").css("margin", "0px 0px");
+	//iframe.contents().find("body").css("padding", "0px 0px");
+	//iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
+	var tempHeight = $(window).height() - headerHeight - 10;
+	iframe.height("100%");
+	iframe.width("100%");
+	iframe.contents().find(".e-entry-content a").click(function() {
+		//alert($(this).attr("title"));
+		loadPVR($(this).attr("title"));
+		return false;
+	});
+	/*var headlinkstr="<script src='./js/jquery.mobile-1.4.2.min.js'></script>"
+	var head=iframe.contents().find("head")
+	head.append(headlinkstr);
+	iframe.contents().find("body").bind("swipeleft",function(){
+        $.mobile.changePage("#pvrPage",  { transition: "slide"});
+		resizepvrScheduleList();
+		resizeRecordFileList();
+    });*/
+	//给iframe绑定滑屏返回事件，但是无效
+}
 /*=======================================JQuery Binding============================================*/
+/*=======================================删除预约和文件============================================*/
  $(document).ready(function () {
 
     $("#delButton_PVR").click(function() {
-		var pvrScheduleListdiv = $("#pvrScheduleList li>div")
-		if(pvrScheduleListdiv.length>0){
-			if (pvrFileEditStatus == false) {
-				pvrFileEditStatus = true;
-				pvrScheduleListdiv.fadeIn(200);
-	
-			} else {
-				pvrFileEditStatus = false;
-				pvrScheduleListdiv.fadeOut(200);
-	
-				pvrScheduleListdiv = pvrScheduleListdiv.find("img[data-isCheck=true]");
-				var tempArray = new Array();
-				$.each(pvrScheduleListdiv,function(index,temp){
-					tempArray.push($(temp).parents("li").children("a").attr("data-recordId"));
-				});
-				deletePvr(tempArray);
+		if($('.pvrScheduleListli').length > 0){
+			var pvrScheduleListdiv = $("#pvrScheduleList li>div")
+			if(pvrScheduleListdiv.length>0){
+				if (pvrFileEditStatus == false) {
+					pvrFileEditStatus = true;
+					pvrScheduleListdiv.fadeIn(200);
+					$("#cancelpvrselect").fadeIn(200);
+					$("#pvrPage").unbind();
+				} else {
+					pvrFileEditStatus = false;
+					pvrScheduleListdiv.fadeOut(200);
+					$("#cancelpvrselect").fadeOut(200);
+					pvrScheduleListdiv = pvrScheduleListdiv.find("img[data-isCheck=true]");
+					var tempArray = new Array();
+					$.each(pvrScheduleListdiv,function(index,temp){
+						tempArray.push($(temp).parents("li").children("a").attr("data-recordId"));
+					});
+					deletePvr(tempArray);
+					$("#pvrPage").on("swiperight",function(){
+						$.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
+						loadTwitter();
+					});
+					$("#pvrPage").on("swipeleft",function(){
+						$.mobile.changePage("#recFilesPage",  { transition: "slide" });
+						resizepvrScheduleList();
+						resizeRecordFileList();
+					});
+				}
 			}
 		}
     });
+	$("#cancelpvrselect").click(function() {
+		pvrFileEditStatus = false;
+        var imgCheck = $(".checkButton").find("img");
+        imgCheck.hide();
+		$(".checkButton").parent().css("background-color", "transparent");
+        imgCheck.attr("data-isCheck", "false");
+		var pvrScheduleListdiv = $("#pvrScheduleList li>div");
+		pvrScheduleListdiv.fadeOut(200);
+		$("#cancelpvrselect").fadeOut(200);
+		$("#pvrPage").on("swiperight",function(){
+			$.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
+			loadTwitter();
+		});
+		$("#pvrPage").on("swipeleft",function(){
+			$.mobile.changePage("#recFilesPage",  { transition: "slide" });
+			resizepvrScheduleList();
+			resizeRecordFileList();
+		});
+	});
 
     $("#delButton_Record").click(function() {
-        var recordFileItemList = $("#recFilesList li>div");
-
-        if (recordFileEditStatus == false) {
-            recordFileEditStatus = true;
-            recordFileItemList.fadeIn(200);
-
-        } else {
-            recordFileEditStatus = false;
-            recordFileItemList.fadeOut(200);
-
-            recordFileItemList = recordFileItemList.find("img[data-isCheck=true]");
-            var tempArray = new Array();
-            $.each(recordFileItemList,function(index,temp){
-                tempArray.push($(temp).parents("li").children("a").attr("data-path"));
-            });
-            deleteFile(tempArray);
-        }
+		if($(".recFilesListli").length > 0){
+			var recordFileItemList = $("#recFilesList li>div");
+			if (recordFileEditStatus == false) {
+				recordFileEditStatus = true;
+				recordFileItemList.fadeIn(200);
+				$("#cancelrecselect").fadeIn(200);
+				$("#recFilesPage").unbind();
+			} else {
+				recordFileEditStatus = false;
+				recordFileItemList.fadeOut(200);
+				$("#cancelrecselect").fadeOut(200);
+				recordFileItemList = recordFileItemList.find("img[data-isCheck=true]");
+				var tempArray = new Array();
+				$.each(recordFileItemList,function(index,temp){
+					tempArray.push($(temp).parents("li").children("a").attr("data-path"));
+				});
+				deleteFile(tempArray);
+				$("#recFilesPage").on("swiperight",function(){
+					$.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
+					resizepvrScheduleList();
+					resizeRecordFileList();
+				});
+			}
+		}
     }); 
+	$("#cancelrecselect").click(function() {
+		recordFileEditStatus = false;
+        var imgCheck = $(".checkButton").find("img");
+        imgCheck.hide();
+		$(".checkButton").parent().css("background-color", "transparent");
+        imgCheck.attr("data-isCheck", "false");
+		var recordFileItemList = $("#recFilesList li>div");
+		recordFileItemList.fadeOut(200);
+		$("#cancelrecselect").fadeOut(200);
+		$("#recFilesPage").on("swiperight",function(){
+			$.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
+			resizepvrScheduleList();
+			resizeRecordFileList();
+		});
+	});
 
+/*=======================================滑屏响应============================================*/
     $("#pvrPage").on("swiperight",function(){
         $.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
+		loadTwitter();
     });
     $("#pvrPage").on("swipeleft",function(){
         $.mobile.changePage("#recFilesPage",  { transition: "slide" });
@@ -408,7 +513,8 @@ function loadPVR(url) {
         startYear:2010,
         endYear:2050,
         animate:"slideup",
-		timeFormat: 'HH:ii',
+		timeFormat: 'HH:ii',//获得的时间为24小时制
+		height:30,//调整行高度不让整个控件超出屏幕
 		showOnFocus: false//解决页面切换回来后会弹出时间选择
     };
 
@@ -422,7 +528,8 @@ function loadPVR(url) {
         startYear:2010,
         endYear:2050,
         animate:"slideup",
-		timeFormat: 'HH:ii',
+		timeFormat: 'HH:ii',//获得的时间为24小时制
+		height:30,//调整行高度不让整个控件超出屏幕
 		showOnFocus: false//解决页面切换回来后会弹出时间选择
     };
     $("#formTimeSelect").textinput();
@@ -460,6 +567,9 @@ $(function() {
     });
 
     $("body").on("click", "#recordEditItemPage", function() {
+		if(currentTime==0){
+			return;
+		}
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
         var pvrScheduleItemObj = pvrScheduleObj[$(this).attr("data-PVRIndex")];
@@ -476,9 +586,13 @@ $(function() {
 		}else{
 			$("#formTimeSelect").textinput("enable");
 		}
+		$.mobile.changePage("#recordItemPage",  { transition: "slide" });
     });
 	
 	$("body").on("click", "#recordAddItemPage", function() {
+		if(currentTime==0){
+			return;
+		}
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
 		 $("#recItemIndex").val('-1');
@@ -497,45 +611,21 @@ $(function() {
          $("#formTimeSelect").val(starttime);
          $("#toTimeSelect").val(endtime);
 		 $("#formTimeSelect").textinput("enable");
+		 $.mobile.changePage("#recordItemPage",  { transition: "slide" });
     });
 	
     $("body").on("click", ".checkButton", function() {
         var imgCheck = $(this).find("img");
         imgCheck.toggle();
         if(imgCheck.css("display") == "none") {
+			$(this).parent().css("background-color", "transparent");
             imgCheck.attr("data-isCheck", "false");
         } else {
+			$(this).parent().css("background-color", "red");
             imgCheck.attr("data-isCheck", "true");
         }
 
     });
-
-
-    function checkIframe() {
-    var iframe = $("iframe");
-
-    if(iframe.length <= 0) {
-        setTimeout("checkIframe()", 500);
-        return;
-    }
-
-    if(iframe.width() <= "1") {
-        setTimeout("checkIframe()", 500);
-        return;
-    }
-    
-    iframe.contents().find("body").css("margin", "0px 0px");
-    iframe.contents().find("body").css("padding", "0px 0px");
-    iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
-    var tempHeight = $(window).height() - headerHeight - 10;
-    iframe.height(tempHeight);
-
-    iframe.contents().find(".e-entry-content a").click(function() {
-        //alert($(this).attr("title"));
-        loadPVR($(this).attr("title"));
-        return false;
-    });
-}
 });
 
 /*魏雯涛增加部分*/
@@ -555,8 +645,8 @@ $(function(){
 	});
 	$("#toTimeSelect").change(function(){
 		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
-			var starttime=new Date($("#formTimeSelect").val());
-			var endtime=new Date($("#toTimeSelect").val());
+			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
+			var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
 			if(endtime<=currentTime){
 				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
@@ -578,8 +668,8 @@ $(function(){
 	});
 	$("#formTimeSelect").change(function(){
 		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
-			var starttime=new Date($("#formTimeSelect").val());
-			var endtime=new Date($("#toTimeSelect").val());
+			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
+			var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
 			if(endtime<=currentTime){
 				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
@@ -619,8 +709,8 @@ $(function(){
 			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 			return;
 		}
-		var starttime=new Date($("#formTimeSelect").val());
-		var endtime=new Date($("#toTimeSelect").val());
+		var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
+		var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
 		if(endtime<=currentTime){
 			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
@@ -719,8 +809,8 @@ $(function(){
 		flag=0;
 		$.each(data, function(index,value) {
 			if(index!=recItemIndex){
-				localstarttime=new Date(value.startTime);
-				localendtime=new Date(value.endTime);
+				localstarttime=new Date(value.startTime.replace(/-/g, '/'));
+				localendtime=new Date(value.endTime.replace(/-/g, '/'));
 				if(starttime>=localstarttime&&starttime<=localendtime){
 					flag=1;
 					return;
@@ -747,13 +837,14 @@ $(function(){
 });
 /*列表自适应*/
 var divwidth=272;
-$(function(){
-	if($('.recFilesListli').length > 0){
-		divwidth=$('.recFilesListli').width();
-	}else if($('.pvrScheduleListli').length > 0){
+/*$(function(){
+	if($('.pvrScheduleListli').length > 0){
 		divwidth=$('.pvrScheduleListli').width();
+	}else if($('.recFilesListli').length > 0){
+		divwidth=$('.recFilesListli').width();
 	}
-});
+	alert(divwidth);
+});*/
 var resizeRecordFileList=function(){
 	if($('.recFilesListli').length > 0){
 		var windowwidth=$("#recFilesList").width();

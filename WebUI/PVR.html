@@ -18,33 +18,16 @@
         <script src="./js/mobiscroll.android-ics-2.6.2.js" type="text/javascript"></script>
         <link rel="stylesheet" href="./css/mobiscroll.android-ics-2.6.2.css"  />
 		<link rel="stylesheet" href="./css/pvr.css" />
-        <script>
-            function twitter(d,s,id) {
-                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-                if(!d.getElementById(id)){ 
-                    js=d.createElement(s);
-                    js.id=id;
-                    js.src=p+"://platform.twitter.com/widgets.js";
-                    fjs.parentNode.insertBefore(js,fjs);
-                }
-            }; 
-        </script>
-
-        <script>
-        function loadTwitter () {
-            timerId = setTimeout("checkIframe()", 500);
-            twitter(document,"script","twitter-wjs");
-        }
-        </script>
 
 	</head>
 
-	<body onload="init();">
+	<body onLoad="init();">
 	<!--<body>-->
 		<!--  PVR首页  -->
 		<div data-role="page" id="pvrPage" data-theme="a" style="background-color:#FFE">
 		  <div data-role="header"  data-position="fixed" data-tap-toggle="false" id="pvrHeader" data-theme="b">
-            <a id="delButton_PVR" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
+          	<a id="cancelpvrselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="border-radius: 5px !important; display:none;" >cancel</a>
+            <a id="delButton_PVR" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
 		    <h1 id="pvrScheduleLabel_PVR">PVR</h1>
 
 		    <div class="statusBar" id="statusBar">
@@ -57,7 +40,7 @@
 		  <div role="main" class="ui-content" id="mainContent">
             <ul id="pvrScheduleList">
                 <li class="pvrScheduleListli" style="height:8em;"> 
-                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#recordItemPage" data-transition="slide">           
+                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >
                             <span style="font-size:17px;font-style:italic;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />
                             <div class="pvrItemContent">
@@ -84,13 +67,12 @@
                 </li>
 
                 <li class="pvrScheduleListli" style="height:8em;"> 
-                    <a id="recordAddItemPage" href="#recordItemPage" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         
+                    <a id="recordAddItemPage" href="#" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;">
                             <div style="position:absolute;bottom:0px;font-size:12px;"><span style="color:gray;">New PVR Schedule</span></div>
                             <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; text-align:center; border-radius:5px;"><span style="font-size:3em; line-height:0.7em; color:#999999;">+</span></div>
                         </div>
                     </a>
-                    <div class="pvrItemMaskDiv"><div>
                 </li>
             </ul>
 
@@ -174,7 +156,8 @@
         <!--  Rec File  -->
         <div data-role="page" id="recFilesPage" data-theme="a" style="background-color:#EFF">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-            <a id="delButton_Record" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
+          	<a id="cancelrecselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="border-radius: 5px !important; display:none;" >cancel</a>
+            <a id="delButton_Record" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
             <h1 id="recordFilesLabel_RecordFile">Record Files</h1>
              <div class="statusBar" id="statusBar">
 				<div style="left:0px;" class="circle" ></div>
@@ -275,18 +258,19 @@
 			</div>
           </div>
 
-          <div role="main" class="ui-content" style="padding:0px 0px; margin:0px 0px;" id="twitterContent">
-            <a href="#twitterPanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini" onclick='loadTwitter();'>Share</a>
+          <div role="main" class="ui-content" id="twitterContent">
+            <!--<a href="#twitterPanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini" onclick='loadTwitter();'>Share</a>-->
+            <a class="twitter-timeline ui-btn" href="https://twitter.com/Tvman" data-widget-id="450868560969990144" data-aria-polite="assertive">@Tvman 推文加载中...</a>
           </div>
 
-            <div data-role="panel" id="twitterPanel">
+            <!--<div data-role="panel" id="twitterPanel">
             <div class="ui-panel-inner">
                 <ul data-role="listview" data-icon="false" class="ui-listview">
                     <li id="twitterPannelHeader" data-icon="delete" class="ui-first-child"><a href="#" data-rel="close" class="ui-btn ui-btn-icon-right ui-icon-delete">Twitter</a></li>
                     <li><a class="twitter-timeline" href="https://twitter.com/Tvman" data-widget-id="450868560969990144" data-aria-polite="assertive">@Tvman 的推文</a></li>
                 </ul>
             </div>  
-            </div>
+            </div>-->
         </div>
         <!--  dialog  -->
         <!--<div id="dialog" data-role="dialog">

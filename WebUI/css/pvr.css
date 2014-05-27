@@ -125,22 +125,23 @@
 
 .pvrItemCheckBox {
 	position:absolute;
-	top:15px;
-	right:25px;
-	background-color:#333333;
+	top: 0.5em;
+	right: 0.5em;
+	background-color: transparent;
 	border-width:1px;
 	border-color:black;
-	width:18px; 
-	height:18px; 
-	padding:7px 7px;
+	width:1em; 
+	height:1em; 
+	border-radius: 0.5em;
+	border:#999999 1px solid;
+	z-index:0;
 }
 
 .checkImgDiv {
-	background-color:#2e2e2e;
-	border-radius:4px;
-	width:14px;
-	height:14px;
-	padding:3px 3px;
+	width:1em;
+	height:1em;
+	z-index:1;
+	background:url(../img/icon-check-bg.png) center no-repeat;
 }
 
 .checkImgDiv img{
