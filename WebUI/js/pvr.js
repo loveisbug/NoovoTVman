@@ -1,9 +1,8 @@
 //全局
 var headerHeight          = 0;
 var recordFileEditStatus  = false;
-var pvrFileEditStatus  = false;
+var pvrFileEditStatus     = false;
 var pvrScheduleObj        = new Array();
-var pvrScheduleArray      = new Array();
 var channelList           = 0;
 var currentTime			  = 0;
 var utcdiff				  = 0;
@@ -11,11 +10,12 @@ var offset				  = 0;
 var confirmLabel		  = "";
 var cancelLabel			  = "";
 var nowRecordId			  = -1;
-/*魏雯涛：对应前台html的变化修改此字符串*/
-var recordFileItem        = '<li class="recFilesListli"> \
+
+
+var recordFileItem = '<li class="recFilesListli">\
                     <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">\
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;" >  \
-                            <span style="font-size:17px;"><i><b id="channelName_recFile">CH: Fox News</b></i></span><br />     \
+                            <span style="font-size:17px;"><b id="channelName_recFile">CH: Fox News</b></span><br />     \
                             <div class="recFileItemInfoDiv"> \
                                 <ul>\
                                     <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li> \
@@ -35,47 +35,24 @@ var recordFileItem        = '<li class="recFilesListli"> \
                         </div>\
                     </div>   \
                 </li>'
-/*var recordFileItem        = '<li data-icon="false">                                                                        \
-                    <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">                      \
-                        <div class="ui-body ui-body-a ui-corner-all" style="padding:8px 8px;" data-role="button" >         \
-                            <span style="font-size:17px;"><i><b id="channelName_recFile">CH: Fox News</b></i></span><br /> \
-                            <div class="recFileItemInfoDiv">                                                               \
-                                <ul>                                                                                       \
-                                    <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li>\
-                                    <li><span id="recTime_recFile">2014.7.5, 18:00 ~ 20:00</span></li>                     \
-                                    <li><span id="fileInfo_recFile">3rd Game of Group A</span></li>                        \
-                                </ul>                                                                                      \
-                            </div>                                                                                         \
-                        </div>                                                                                             \
-                    </a>                                                                                                   \
-                    <div class="pvrItemMaskDiv">                                                                           \
-                        <div class="pvrItemCheckBox">                                                                      \
-                        <a href="#" class="checkButton">                                                                   \
-                            <div class="checkImgDiv">                                                                      \
-                                <img src="./img/icon-check.png" data-isCheck="false"/>                                     \
-                            </div>                                                                                         \
-                        </a>                                                                                               \
-                        </div>                                                                                             \
-                    </div>                                                                                                 \
-                </li>'*/
-/*魏雯涛：对应前台html的变化修改此字符串*/
-var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
-                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           \
+
+var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;">\
+                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">\
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >\
-                            <span style="font-size:17px;font-style:italic;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />\
+                            <span style="font-size:17px;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />\
                             <div class="pvrItemContent">\
                             	<div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>\
-								<div class="pvrItemRecDiv"></div>\
+                                <div class="pvrItemRecDiv"></div>\
                                 <div class="pvrItemInfoDiv"> \
                                     <ul>\
-                                        <li style="height:36px;overflow:hidden;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. FranceEngland</span></li>\
+                                        <li style="height:36px;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. England</span></li>\
                                         <li style="margin-top:0.5em;"><span id="startTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 18:00</span>~<span id="endTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 20:00</span></li>\
                                     </ul>\
                                 </div>\
                             </div>\
                         </div>\
                     </a>\
-                    <div class="pvrItemMaskDiv">    \
+                    <div class="pvrItemMaskDiv">\
                         <div class="pvrItemCheckBox">\
                         <a href="#" class="checkButton">\
                             <div class="checkImgDiv">\
@@ -85,60 +62,16 @@ var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
                         </div>\
                     </div>\
                 </li>'
-var pvrScheduleItemBtn = '<li class="pvrScheduleListli" style="height:8em;"> \
-                    <a id="recordAddItemPage" href="#" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         \
-                        <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;">\
-                            <div style="position:absolute;bottom:0px;font-size:12px;"><span style="color:gray;">New PVR Schedule</span></div>\
-                            <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; text-align:center; border-radius:5px;"><span style="font-size:3em; line-height:0.7em; color:#999999;">+</span></div>\
+
+var pvrScheduleItemBtn = '<li class="pvrScheduleListli" style="height:8em;">\
+                    <a href="#" data-transition="slide" class="pvrScheduleItem pvrScheduleAddItem">\
+                        <div class="ui-body ui-body-a ui-shadow" style="padding:8px 8px;height:6em; border-color:#e4e7e8;background-color:#e4e7e8" >\
+                            <div style="position:absolute;top: 50%; left: 50%; margin-top:0.5em; margin-left: -5em;font-size:12px;"><span style="color:#95a5a6;">New PVR Schedule</span></div>\
+                            <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; margin-top: -1.8em;text-align:center; border-radius:5px;"><span style="font-weight:bold;font-size:3em; line-height:0.7em; color:#95a5a6;">+</span></div>\
                         </div>\
                     </a>\
-                    <div class="pvrItemMaskDiv"><div>\
-                </li>'
-/*var pvrScheduleItem = '<li data-icon="false">                                                                              \
-                    <a href="#recordItemPage" data-transition="slide" data-PVRIndex="">                                    \
-                        <div class="ui-body ui-body-a ui-corner-all" style="padding:8px 8px;" data-role="button" >         \
-                        <span style="font-size:17px;" id="channelName_pvrShedule"><i><b>CH: Fox News</b></i></span><br />  \
-                            <div class="pvrItemContent">                                                                   \
-                                <div class="pvrItemInfoDiv"><ul>                                                           \
-                                    <li><span style="font-size:16px;" id="programme_pvrShedule">England</span></li>        \
-                                    <li><span id="startTime_pvrShedule">2014.7.5, 18:00 ~ 20:00</span></li>                \
-                                    <li><span id="endTime_pvrShedule">3rd Game of Group A</span></li></ul>                 \
-                                </div>                                                                                     \
-                                <div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>                         \
-                            </div>                                                                                         \
-                        </div>                                                                                             \
-                    </a>                                                                                                   \
-                    <div class="pvrItemMaskDiv">                                                                           \
-                        <div class="pvrItemCheckBox">                                                                      \
-                        <a href="#" class="checkButton">                                                                   \
-                            <div class="checkImgDiv">                                                                      \
-                                <img src="./img/icon-check.png" data-isCheck="false"/>                                     \
-                            </div>                                                                                         \
-                        </a>                                                                                               \
-                        </div>                                                                                             \
-                    </div>                                                                                                 \
-                </li>'*/
-
-
-var browser = {
-    versions:function(){
-            var u = navigator.userAgent, app = navigator.appVersion;
-            return {         //移动终端浏览器版本信息
-                 trident: u.indexOf('Trident') > -1, //IE内核
-                presto: u.indexOf('Presto') > -1, //opera内核
-                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览器
-                iPad: u.indexOf('iPad') > -1, //是否iPad
-                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-            };
-         }(),
-         language:(navigator.browserLanguage || navigator.language).toLowerCase()
-};
-
+                </li>'         
+                
 
 /*=======================================Init function============================================*/ 
 function init() {
@@ -154,32 +87,34 @@ function onDataWithJSON(data,key) {
     } else {
         temp = data;
     }
+
     if(key == "PVRInit" || key == "PVRInitWithoutTransition"){
 		if(key == "PVRInit"){
 			$.mobile.changePage("#pvrPage",  { transition: "none"});
 		}
         var recordFilesArray = temp.PVR;
         var recordFilesLabel = temp.PVRLabel;
-            pvrScheduleArray = temp.PVRSchedule;
+        var pvrScheduleArray = temp.PVRSchedule;
         var pvrScheduleLabel = temp.PVRScheduleLabel;
             channelList      = temp.ChannelList;
 			confirmLabel	 = temp.ConfirmLabel;
 			cancelLabel		 = temp.CancelLabel;
-			//计算当前时间
 		
-		var	now				 = new Date().getTime();
+        //计算当前时间
+		var	now = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
 		nowoffset = nowoffset * 60 * 1000;
-			if(typeof(temp.CurrentTime.UTCDiff) != "undefined" && typeof(temp.CurrentTime.Offset) != "undefined"){
-				currentTime = new Date(parseInt(now)+parseInt(nowoffset)+parseInt(temp.CurrentTime.UTCDiff)+parseInt(temp.CurrentTime.Offset));
-				utcdiff	= parseInt(temp.CurrentTime.UTCDiff);
-				offset = parseInt(temp.CurrentTime.Offset);
-			}
+
+		if(typeof(temp.CurrentTime.UTCDiff) != "undefined" && typeof(temp.CurrentTime.Offset) != "undefined"){
+			currentTime = new Date(parseInt(now)+parseInt(nowoffset)+parseInt(temp.CurrentTime.UTCDiff)+parseInt(temp.CurrentTime.Offset));
+			utcdiff	= parseInt(temp.CurrentTime.UTCDiff);
+			offset = parseInt(temp.CurrentTime.Offset);
+		}
         $("#pvrScheduleLabel_PVR").text(pvrScheduleLabel);
         $("#recordFilesLabel_RecordFile").text(recordFilesLabel);
 		
         initPVRShedule(pvrScheduleArray);
-		nowRecordId=temp.RecordingItemId;
+		nowRecordId = temp.RecordingItemId;
 		findNowRecord(nowRecordId);
         initRecordFiles(recordFilesArray);
         initChannelList(channelList);
@@ -187,28 +122,34 @@ function onDataWithJSON(data,key) {
     } else if(key == "UpdateRemoteFileList") {
         var recordFilesArray = temp.PVR;
         initRecordFiles(recordFilesArray);
+
     } else if(key == "UpdateRecItemList"){
 		$.mobile.changePage("#pvrPage",  { transition: "none"});
-		pvrScheduleArray = temp.PVRSchedule;
+		var pvrScheduleArray = temp.PVRSchedule;
 		initPVRShedule(pvrScheduleArray);
 		findNowRecord(nowRecordId);
+
 	} else if(key == "UpdateTime"){
 		var	now = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
 		nowoffset = nowoffset * 60 * 1000;
+
 		if(typeof(temp.CurrentTime.UTCDiff) != "undefined" && typeof(temp.CurrentTime.Offset) != "undefined"){
 			currentTime = new Date(parseInt(now)+parseInt(nowoffset)+parseInt(temp.CurrentTime.UTCDiff)+parseInt(temp.CurrentTime.Offset));
 			utcdiff	= parseInt(temp.CurrentTime.UTCDiff);
 			offset = parseInt(temp.CurrentTime.Offset);
 		}
+
 	} else if(key == "RecordStartNotification"){
 		nowRecordId=temp;
 		findNowRecord(nowRecordId);
+
 	} else if(key == "RecordFinishNotification"){
 		nowRecordId = -1;
-		pvrScheduleArray = temp.PVRSchedule;
+		var pvrScheduleArray = temp.PVRSchedule;
 		initPVRShedule(pvrScheduleArray);
 	}
+
 	resizepvrScheduleList();
 	resizeRecordFileList();
 }
@@ -232,7 +173,6 @@ function addRecItem(jsonarraystr) {
 }
 
 function deletePvr(recordIdArray){
-	//$.mobile.loading("show",{text:recordIdArray,textVisible:true,textonly:true,html:recordIdArray});
 	window.location = "native://DeleteRecItem?" + recordIdArray;	
 }
 
@@ -242,6 +182,7 @@ function initRecordFiles(data) {
     var recFilesList = $("#recFilesList");
     recFilesList.children().remove();
     recFilesList.empty();
+
     $.each(data, function(index,value) {
         var filePath    = value.FilePath;
         var channelName = value.ChannelName;
@@ -257,9 +198,9 @@ function initRecordFiles(data) {
 
         recFilesList.append(recItem);
     });
+
 	resizepvrScheduleList();
 	resizeRecordFileList();
-    //recFilesList.listview('refresh');
 }
 
 function initPVRShedule(data) {
@@ -267,12 +208,13 @@ function initPVRShedule(data) {
     pvrScheduleList.children().remove();
     pvrScheduleList.empty();
 	pvrScheduleObj = new Array();
+
     $.each(data, function(index,value) {
         var channelName    = value.ChannelName;
         var displayName    = value.DisplayName;
         var startTime      = new Date(value.StartYear + "/" + value.StartMonth + "/" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0").format("yyyy-MM-dd hh:mm");
         var endTime        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("hh:mm");
-		var endTimeFull        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
+		var endTimeFull    = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
         var startTimeLabel = startTime.toLocaleString();
         var endTimeLabel   = endTime.toLocaleString();
         var sheduleItem    = $(pvrScheduleItem);
@@ -292,18 +234,18 @@ function initPVRShedule(data) {
 
         pvrScheduleList.append(sheduleItem);
     });
+
 	pvrScheduleList.append(pvrScheduleItemBtn);
 	resizepvrScheduleList();
 	resizeRecordFileList();
-    //pvrScheduleList.listview('refresh');
 }
 
 function initChannelList(data) {
     var channelList = $("#channelList");
     channelList.children().remove();
     channelList.empty();
-    $("#applyButton").text(confirmLabel);//提交按钮国际化语言
-	$("#cancelButton").text(cancelLabel);//提交按钮国际化语言
+    $("#applyButton").text(confirmLabel);
+	$("#cancelButton").text(cancelLabel);
     $.each(data, function(index, value){
         channelList.append('<li data-icon="false" class="channelItem" data-index="'+index+'" value="' + value.ChannelName + '">' + value.ChannelName + '</li>');
     });
@@ -313,26 +255,22 @@ function initChannelList(data) {
 
 /*=======================================private function============================================*/
 function loadPVR(url) {
+	alert(url);
     $.get(url,function(data,status){
          alert("Data: " + data + "\nStatus: " + status);
      });
+}
 
-// $.ajax({ url: "http://cdn.iknow.bdimg.com/static/common/lib/mod_4a8b07f.js", context: document.body, success: function(){
-//         alert("sefsef"); 
-//       }});
-
-// $.ajax({
-//     type: "GET",
-//     cache: false,
-//     url: 'http://cdn.iknow.bdimg.com/static/common/lib/mod_4a8b07f.js',
-//     dataType: "text",
-//     error: function(xhr, settings, exception){
-//         alert('The update server could not be contacted.');
-//     },
-//     success: function(xml){
-//         alert(xml);    
-//         }
-//     });
+function findNowRecord(nowRecordId){
+	if(nowRecordId!=-1){
+		var pvrItemRecDivs=$(".pvrItemRecDiv");
+		$.each(pvrItemRecDivs, function(index,element) {
+			pvrItemRecDiv=$(element);
+			if(pvrItemRecDiv.attr("data-recordId")==nowRecordId){
+				pvrItemRecDiv.addClass('pvrItemRecNow');
+			}
+		});
+	}
 }
 /*=======================================twitter============================================*/
 function twitter(d,s,id) {
@@ -361,26 +299,15 @@ function checkIframe() {
 		return;
 	}
 
-	//iframe.contents().find("body").css("margin", "0px 0px");
-	//iframe.contents().find("body").css("padding", "0px 0px");
-	//iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
+	iframe.contents().find("body").css("margin", "0px 0px");
+	iframe.contents().find("body").css("padding", "0px 0px");
+	iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
 	var tempHeight = $(window).height() - headerHeight - 10;
-	iframe.height("100%");
-	iframe.width("100%");
+	iframe.height(tempHeight);
 	iframe.contents().find(".e-entry-content a").click(function() {
-		//alert($(this).attr("title"));
 		loadPVR($(this).attr("title"));
 		return false;
 	});
-	/*var headlinkstr="<script src='./js/jquery.mobile-1.4.2.min.js'></script>"
-	var head=iframe.contents().find("head")
-	head.append(headlinkstr);
-	iframe.contents().find("body").bind("swipeleft",function(){
-        $.mobile.changePage("#pvrPage",  { transition: "slide"});
-		resizepvrScheduleList();
-		resizeRecordFileList();
-    });*/
-	//给iframe绑定滑屏返回事件，但是无效
 }
 /*=======================================JQuery Binding============================================*/
 /*=======================================删除预约和文件============================================*/
@@ -395,6 +322,7 @@ function checkIframe() {
 					pvrScheduleListdiv.fadeIn(200);
 					$("#cancelpvrselect").fadeIn(200);
 					$("#pvrPage").unbind();
+
 				} else {
 					pvrFileEditStatus = false;
 					pvrScheduleListdiv.fadeOut(200);
@@ -552,13 +480,6 @@ $(function() {
         $(this).addClass("ui-btn-icon-right ui-icon-check");
 		$("#channelName_recItemEdit").attr("data-index",$(this).attr("data-index"));
         $("#channelName_recItemEdit").text(channelName);
-		/*$.mobile.changePage(
-			'#recordItemPage',{
-			transition : 'slide',
-			reverse : true,
-			changeHash : true	
-			}
-		);*/
 		$('#ChannelListback').click();
     });
 
@@ -589,7 +510,7 @@ $(function() {
 		$.mobile.changePage("#recordItemPage",  { transition: "slide" });
     });
 	
-	$("body").on("click", "#recordAddItemPage", function() {
+	$("body").on("click", ".pvrScheduleAddItem", function() {
 		if(currentTime==0){
 			return;
 		}
@@ -619,9 +540,11 @@ $(function() {
         imgCheck.toggle();
         if(imgCheck.css("display") == "none") {
 			$(this).parent().css("background-color", "transparent");
+			$(this).parents("li").find("a>div").removeClass("check");
             imgCheck.attr("data-isCheck", "false");
         } else {
 			$(this).parent().css("background-color", "red");
+			$(this).parents("li").find("a>div").addClass("check");
             imgCheck.attr("data-isCheck", "true");
         }
 
@@ -639,11 +562,13 @@ $(function(){
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
 	});
+
 	$("#toTimeSelect").click(function(){
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
 	});
-	$("#toTimeSelect").change(function(){
+	
+    $("#toTimeSelect").change(function(){
 		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
 			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
 			var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
@@ -666,6 +591,7 @@ $(function(){
 			$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
 		}
 	});
+
 	$("#formTimeSelect").change(function(){
 		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
 			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
@@ -689,11 +615,13 @@ $(function(){
 			$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
 		}
 	});
+
 	$("#applyButton").click(function(){
 		
 		if(currentTime==0){
 			return;
 		}
+
 		if($("#channelName_recItemEdit").text()==""||$("#channelName_recItemEdit").text()=="　"){
 			return;
 		}
@@ -705,10 +633,12 @@ $(function(){
 			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 			return;
 		}
+
 		if($("#toTimeSelect").val()==""){
 			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 			return;
 		}
+
 		var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
 		var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
 		if(endtime<=currentTime){
@@ -758,6 +688,7 @@ $(function(){
 			json.Frequency=channel.Frequency;
 			json.Version=4;
 		}
+
 		if($("#recItemIndex").val()!="-1"){
 			var pvrScheduleItemObj = pvrScheduleObj[$("#recItemIndex").val()];
 			json.RecordItemId=pvrScheduleItemObj.RecordItemId;
@@ -794,6 +725,7 @@ $(function(){
 					EndYear:json.EndYear,
 					Frequency:json.Frequency,
 					Version:json.Version};
+
 		if($("#recItemIndex").val()!="-1"){
 			modifyRecItem(JSON.stringify(jsonstr));
 		}else{
@@ -845,7 +777,7 @@ var divwidth=272;
 	}
 	alert(divwidth);
 });*/
-var resizeRecordFileList=function(){
+var resizeRecordFileList = function(){
 	if($('.recFilesListli').length > 0){
 		var windowwidth=$("#recFilesList").width();
 		//var marginleft=$('.recFilesListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
@@ -858,7 +790,7 @@ var resizeRecordFileList=function(){
 		$('.recFilesListli').width(needwidth);
 	}
 }
-var resizepvrScheduleList=function(){
+var resizepvrScheduleList = function(){
 	if($('.pvrScheduleListli').length > 0){	
 		var windowwidth=$('#pvrScheduleList').width();
 		//var marginleft=$('.pvrScheduleListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
@@ -875,6 +807,7 @@ $(window).resize(function(){
 	resizepvrScheduleList();
 	resizeRecordFileList();
 });
+
 /** 
  * 时间对象的格式化; 
  */  
@@ -906,19 +839,5 @@ Date.prototype.format = function(format) {
 		}  
 	}  
 	return format;  
-}  
-/*查找当前录制的节目*/
-function findNowRecord(nowRecordId){
-	if(nowRecordId!=-1){
-		var pvrItemRecDivs=$(".pvrItemRecDiv");
-		$.each(pvrItemRecDivs, function(index,element) {
-			pvrItemRecDiv=$(element);
-			if(pvrItemRecDiv.attr("data-recordId")==nowRecordId){
-				
-				pvrItemRecDiv.addClass('pvrItemRecNow');
-			}
-		});
-	}
 }
-/*魏雯涛修改部分--over*/
 

@@ -37,6 +37,17 @@
 	padding:0.3em 0.2em;
 	display:block;
 }
+
+.pvrScheduleItem>div {
+	border-width: 2px;
+	border-color: white;
+}
+
+.pvrScheduleItem .check {
+	border-color: red;
+	border-width: 2px;
+}
+
 #recFilesList{
 	margin:0;
 	padding:0;
@@ -55,9 +66,20 @@
 	text-decoration:none;
 	padding:0.3em 0.2em;
 }
+
 .recordFileItem{
 	padding:0.2em 0.5em;
 	display:block;
+}
+
+.recordFileItem>div{
+	border-width: 2px;
+	border-color:white;
+}
+
+.recordFileItem .check {
+	border-color: red;
+	border-width: 2px;
 }
 
 .pvrItemImgDiv {
@@ -65,7 +87,7 @@
 	width:20%;
 	height:48px;
 	float:left;
-	padding-right:5%;
+	padding-right:2px;
 }
 .pvrItemRecDiv{
 	width:0.75em;
@@ -85,22 +107,29 @@
 }
 
 .pvrItemInfoDiv {
-	background-color:lightgray;
-	width:73%;
+	background-color:#f9f9fa;
+	width:78%;
 	height:4em;
 	float:left;
-	padding:2px 2px;
+	padding:1px 1px;
+	overflow:hidden;
+}
+
+.pvrItemInfoDiv ul li {
+	text-overflow:ellipsis;
+	white-space:nowrap;
 	overflow:hidden;
 }
 
 .recFileItemInfoDiv {
-	background-color:lightgray;
+	background-color:#f9f9fa;
 	padding:2px 2px;
 	overflow:hidden;
 }
 
 .recFileItemInfoDiv ul li {
 	text-overflow:ellipsis;
+	white-space:nowrap;
 	overflow:hidden;
 }
 

@@ -7,11 +7,12 @@
 	    <script src="./js/jquery-1.8.3.min.js"></script>
         <script src="./js/jquery.mobile-1.4.2.min.js"></script>
         <script src="./js/pvr.js"></script>
+        <script src="./js/global.js"></script>
 	    <script src="./js/mobiscroll.core-2.6.2.js"></script>
         <script src="./js/mobiscroll.core-2.6.2-zh.js"></script>
         <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
-        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140516.min.css" />
-        <link rel="stylesheet" href="./css/jqmchange.css" />
+        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140529.min.css" />
+        <link rel="stylesheet" href="./css/jqmChange.css" />
         <link rel="stylesheet" href="./css/mobiscroll.core-2.6.2.css" />
         <link rel="stylesheet" href="./css/mobiscroll.animation-2.6.2.css" />
         <script src="./js/mobiscroll.datetime-2.6.2.js"></script>
@@ -22,12 +23,12 @@
 	</head>
 
 	<body onLoad="init();">
-	<!--<body>-->
-		<!--  PVR首页  -->
-		<div data-role="page" id="pvrPage" data-theme="a" style="background-color:#FFE">
-		  <div data-role="header"  data-position="fixed" data-tap-toggle="false" id="pvrHeader" data-theme="b">
-          	<a id="cancelpvrselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="border-radius: 5px !important; display:none;" >cancel</a>
-            <a id="delButton_PVR" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
+
+		<!--  PVR  -->
+		<div data-role="page" id="pvrPage" data-theme="c">
+		  <div data-role="header"  data-position="fixed" data-tap-toggle="false" id="pvrHeader" data-theme="c">
+          	<a id="cancelpvrselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="display:none;" >cancel</a>
+            <a id="delButton_PVR" data-role="button" class="ui-icon-custom-edit ui-btn-right ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">Edit</a>
 		    <h1 id="pvrScheduleLabel_PVR">PVR</h1>
 
 		    <div class="statusBar" id="statusBar">
@@ -37,18 +38,18 @@
 		</div>
 		  </div>
 
-		  <div role="main" class="ui-content" id="mainContent">
+		  <div data-role="content" id="mainContent">
             <ul id="pvrScheduleList">
                 <li class="pvrScheduleListli" style="height:8em;"> 
                     <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >
-                            <span style="font-size:17px;font-style:italic;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />
+                            <span style="font-size:17px;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />
                             <div class="pvrItemContent">
                             	<div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>
                                 <div class="pvrItemRecDiv pvrItemRecNow"></div>
                                 <div class="pvrItemInfoDiv"> 
                                     <ul>
-                                        <li style="height:36px;overflow:hidden;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. FranceEngland</span></li>
+                                        <li style="height:36px;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. England</span></li>
                                         <li style="margin-top:0.5em;"><span id="startTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 18:00</span>~<span id="endTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 20:00</span></li>
                                     </ul>
                                 </div>
@@ -67,10 +68,10 @@
                 </li>
 
                 <li class="pvrScheduleListli" style="height:8em;"> 
-                    <a id="recordAddItemPage" href="#" data-transition="slide" style="background-color:transparent; border-width:0px;" data-icon="plus" class="pvrScheduleItem">         
-                        <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;">
-                            <div style="position:absolute;bottom:0px;font-size:12px;"><span style="color:gray;">New PVR Schedule</span></div>
-                            <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; text-align:center; border-radius:5px;"><span style="font-size:3em; line-height:0.7em; color:#999999;">+</span></div>
+                    <a href="#" data-transition="slide" class="pvrScheduleItem pvrScheduleAddItem">
+                        <div class="ui-body ui-body-a ui-shadow" style="padding:8px 8px;height:6em; border-color:#e4e7e8;background-color:#e4e7e8" >
+                            <div style="position:absolute;top: 50%; left: 50%; margin-top:0.8em; margin-left: -5em;font-size:12px;"><span style="color:#95a5a6;">New PVR Schedule</span></div>
+                            <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; margin-top: -1.8em;text-align:center; border-radius:5px;"><span style="font-weight:bold;font-size:3em; line-height:0.7em; color:#95a5a6;">+</span></div>
                         </div>
                     </a>
                 </li>
@@ -85,12 +86,12 @@
         <!--  Record Item  -->
         <div data-role="page" id="recordItemPage" data-theme="a">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-            <a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" >Back</a>
+            <a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Back</a>
             <h1 id="recordItemLabel_RecordItem">RecordItem</h1>
           </div>
 
 
-          <div role="main" class="ui-content">
+          <div data-role="content">
             <ul style="list-style-type: none; padding-left: 0px;margin-top: 0px;margin-bottom: 0px;">
                 <li>
                     <div style="float:left;margin-right:13px; padding-top:6.4px;"><span>Channel:</span></div>
@@ -118,10 +119,10 @@
                     </div>
                 </li>
                 <li style="margin-top:18px;">
-                    <a data-role="button" id="applyButton">确  定</a>
+                    <a data-role="button" id="applyButton">OK</a>
                 </li>
                 <li>
-                    <a data-rel="back" data-role="button" id="cancelButton" data-transition="slide" data-direction="reverse">取  消</a>
+                    <a data-rel="back" data-role="button" id="cancelButton" data-transition="slide" data-direction="reverse">Cancel</a>
                 </li>
             </ul>
             <div id="recordItemPopup" data-role="popup" style="width:15em;">
@@ -136,17 +137,16 @@
 
         </div>
 
-        <!--  频道列表  -->
+        <!--  Channel List  -->
         <div data-role="page" id="channelListPage" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-                <a id="ChannelListback" data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="border-radius: 5px !important" >Back</a>
+                <a id="ChannelListback" data-rel="back" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Back</a>
                 <h1 style="margin: 0 10% !important" id="channelListLabel_ChannelList">ChannelList</h1>
             </div>
 
-            <div role="main" class="ui-content">
+            <div data-role="content">
                 <ul data-role="listview" id="channelList">
-                  <li data-icon="false" class="channelItem" value="6 M6">6 M6</li>
-                  <li data-icon="false" class="channelItem" value="6 M6">9 W9</li>
+                  <!-- <li data-icon="false" class="channelItem" value="6 M6">6 M6</li> -->
                 </ul>
             </div>
         </div>
@@ -156,8 +156,8 @@
         <!--  Rec File  -->
         <div data-role="page" id="recFilesPage" data-theme="a" style="background-color:#EFF">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-          	<a id="cancelrecselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="border-radius: 5px !important; display:none;" >cancel</a>
-            <a id="delButton_Record" role="button" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide" style="border-radius: 5px !important" />Del</a>
+          	<a id="cancelrecselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="display:none;" >cancel</a>
+            <a id="delButton_Record" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide">Del</a>
             <h1 id="recordFilesLabel_RecordFile">Record Files</h1>
              <div class="statusBar" id="statusBar">
 				<div style="left:0px;" class="circle" ></div>
@@ -167,60 +167,12 @@
           </div>
 
 
-          <div role="main" class="ui-content">
-          	<!--<ul id="recFilesList" data-role="listview">
-                <li data-icon="false"> 
-                    <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">  
-                        <div class="ui-body ui-body-a ui-corner-all" style="padding:8px 8px;" >  
-                            <span style="font-size:17px;"><i><b id="channelName_recFile">CH: Fox News</b></i></span><br />     
-                            <div class="recFileItemInfoDiv"> 
-                                <ul>
-                                    <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li> 
-                                    <li><span id="recTime_recFile">2014.7.5, 18:00 ~ 20:00</span></li>  
-                                    <li><span id="fileInfo_recFile">3rd Game of Group A</span></li> 
-                                </ul>   
-                            </div> 
-                        </div>  
-                    </a>
-                    <div class="pvrItemMaskDiv">    
-                        <div class="pvrItemCheckBox">
-                        <a href="#" class="checkButton">
-	                        <div class="checkImgDiv">
-	                        	<img src="./img/icon-check.png" data-isCheck="false"/>
-	                        </div>
-                        </a>
-                        </div>
-                    </div>   
-                </li>
-            </ul>-->
+          <div data-role="content">
             <ul id="recFilesList">
                 <li class="recFilesListli"> 
                     <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;" >  
-                            <span style="font-size:17px;"><i><b id="channelName_recFile">CH: Fox News</b></i></span><br />     
-                            <div class="recFileItemInfoDiv"> 
-                                <ul>
-                                    <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li> 
-                                    <li><span id="recTime_recFile">2014.7.5, 18:00 ~ 20:00</span></li>  
-                                    <li><span id="fileInfo_recFile">3rd Game of Group A</span></li> 
-                                </ul>   
-                            </div> 
-                        </div>  
-                    </a>
-                    <div class="pvrItemMaskDiv">    
-                        <div class="pvrItemCheckBox">
-                        <a href="#" class="checkButton">
-	                        <div class="checkImgDiv">
-	                        	<img src="./img/icon-check.png" data-isCheck="false"/>
-	                        </div>
-                        </a>
-                        </div>
-                    </div>   
-                </li>
-                <li class="recFilesListli"> 
-                    <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">
-                        <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;" >  
-                            <span style="font-size:17px;"><i><b id="channelName_recFile">CH: Fox News</b></i></span><br />     
+                            <span style="font-size:17px;"><b id="channelName_recFile">CH: Fox News</b></span><br />     
                             <div class="recFileItemInfoDiv"> 
                                 <ul>
                                     <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li> 
@@ -258,30 +210,11 @@
 			</div>
           </div>
 
-          <div role="main" class="ui-content" id="twitterContent">
+          <div data-role="content" id="twitterContent">
             <!--<a href="#twitterPanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini" onclick='loadTwitter();'>Share</a>-->
             <a class="twitter-timeline ui-btn" href="https://twitter.com/Tvman" data-widget-id="450868560969990144" data-aria-polite="assertive">@Tvman 推文加载中...</a>
           </div>
-
-            <!--<div data-role="panel" id="twitterPanel">
-            <div class="ui-panel-inner">
-                <ul data-role="listview" data-icon="false" class="ui-listview">
-                    <li id="twitterPannelHeader" data-icon="delete" class="ui-first-child"><a href="#" data-rel="close" class="ui-btn ui-btn-icon-right ui-icon-delete">Twitter</a></li>
-                    <li><a class="twitter-timeline" href="https://twitter.com/Tvman" data-widget-id="450868560969990144" data-aria-polite="assertive">@Tvman 的推文</a></li>
-                </ul>
-            </div>  
-            </div>-->
         </div>
-        <!--  dialog  -->
-        <!--<div id="dialog" data-role="dialog">
-            <div data-role="header" data-theme="d">
-                <h1>1</h1>
-            </div>
-            <div data-role="content" data-theme="c">
-                <p>1</p>
-                <a data-role="button" data-rel="back" data-theme="a">关　闭</a>           
-            </div>
-        </div>-->
         
 	</body>
 </html>

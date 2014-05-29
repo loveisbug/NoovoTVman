@@ -1,23 +1,3 @@
-//全局变量
-  var browser={
-    versions:function(){
-            var u = navigator.userAgent, app = navigator.appVersion;
-            return {         //移动终端浏览器版本信�
-                 trident: u.indexOf('Trident') > -1, //IE内核
-                presto: u.indexOf('Presto') > -1, //opera内核
-                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内�
-                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终�
-                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-                android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览�
-                iPhone: u.indexOf('iPhone') > -1 , //是否为iPhone或者QQHD浏览�
-                iPad: u.indexOf('iPad') > -1, //是否iPad
-                webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-            };
-         }(),
-         language:(navigator.browserLanguage || navigator.language).toLowerCase()
-}
-
 //Hotspot
 var passwordPlaceHolder = "Password";
 var passwordInvalidMsg  = "8~63 characters, Only A~Z,a~z,0-9 allowed.";		
@@ -40,6 +20,7 @@ function onDataWithJSON(data,key) {
 	}
 	
 	if(key == "SettingInit"){
+	
 		var aboutObj   = temp.About;
 		var wlanObj    = temp.WLAN;
 		var hotspotObj = temp.HotSpot; 
@@ -91,7 +72,7 @@ function initWLAN(data) {
 		ssidListLoaded = true;
 	}
 
-//	ssidList.listview('refresh');
+	//ssidList.listview('refresh');
 }
 
 function initHotspot(data) {
@@ -102,7 +83,7 @@ function initHotspot(data) {
 	var secureMode          = data.SecureMode;
 	var wiFiChannelValue    = data.WiFiChannelValue;
 		passwordPlaceHolder = data.Password;
-	    passwordInvalidMsg  = data.PasswordInvalidMsg;  //全局
+	    passwordInvalidMsg  = data.PasswordInvalidMsg;  //global
 
 	$("#hotspotLabel_Setting").html(hotspotLabel);
 	$("#hotspotLabel_Hotspot").html(hotspotLabel);
@@ -244,7 +225,6 @@ $(document).ready(function() {
 		}
 
 		setWlan();
-//		$("#rebootPopupDialog_WLAN").popup("open", {transition:"pop"}); 
 	});
 
 	$("#applyButton").click( function() {
@@ -260,7 +240,6 @@ $(document).ready(function() {
 		}
 
 		setHotspot();
-//		$("#rebootPopupDialog_WIFI").popup("open", {transition:"pop"});
 	});
 
 	$("#wifiChannelList li").click(function() {
