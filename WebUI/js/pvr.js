@@ -8,9 +8,8 @@ var currentTime			  = 0;
 var utcdiff				  = 0;
 var offset				  = 0;
 var confirmLabel		  = "";
-var cancelLabel			  = "";
 var nowRecordId			  = -1;
-
+var catchUpScheduleObj    = "";
 
 var recordFileItem = '<li class="recFilesListli">\
                     <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">\
@@ -25,24 +24,18 @@ var recordFileItem = '<li class="recFilesListli">\
                             </div> \
                         </div>  \
                     </a>\
-                    <div class="pvrItemMaskDiv">    \
-                        <div class="pvrItemCheckBox">\
-                        <a href="#" class="checkButton">\
-	                        <div class="checkImgDiv">\
-	                        	<img src="./img/icon-check.png" data-isCheck="false"/>\
-	                        </div>\
-                        </a>\
-                        </div>\
-                    </div>   \
+                    <div class="pvrItemMaskDiv">\
+                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>\
+                    </div>\
                 </li>'
 
-var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;">\
-                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">\
+var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
+                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide"> \
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >\
-                            <span style="font-size:17px;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />\
+                            <div class="pvrItemRecDiv pvrItemRecNow"></div>\
+                            <span style="font-size:17px;" id="channelName_pvrShedule" class="titleForAnimate"><b>CH: Fox News</b></span><br />\
                             <div class="pvrItemContent">\
                             	<div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>\
-                                <div class="pvrItemRecDiv"></div>\
                                 <div class="pvrItemInfoDiv"> \
                                     <ul>\
                                         <li style="height:36px;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. England</span></li>\
@@ -53,15 +46,19 @@ var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;">\
                         </div>\
                     </a>\
                     <div class="pvrItemMaskDiv">\
-                        <div class="pvrItemCheckBox">\
-                        <a href="#" class="checkButton">\
-                            <div class="checkImgDiv">\
-                                <img src="./img/icon-check.png" data-isCheck="false"/>\
-                            </div>\
-                        </a>\
-                        </div>\
+                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>\
                     </div>\
                 </li>'
+
+var catchUpPVRScheduleItem = '<li class="catchUpPVRScheduleLi">\
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0"  style="padding:8px 8px;height:6em;" data-role="button" >\
+                            <p id="channelName">CH02:BBC Sports 1</p>\
+                            <p><span id="displayName">England vs Japan </span><span id="timeLabel">2014/06/19 18:00-20:00</span></p>\
+                            <div class="catchUpItemMaskDiv">\
+                                <div class="catchUpItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>\
+                            </div>\
+                        </div>\
+                    </li>'
 
 var pvrScheduleItemBtn = '<li class="pvrScheduleListli" style="height:8em;">\
                     <a href="#" data-transition="slide" class="pvrScheduleItem pvrScheduleAddItem">\
@@ -98,9 +95,8 @@ function onDataWithJSON(data,key) {
         var pvrScheduleLabel = temp.PVRScheduleLabel;
             channelList      = temp.ChannelList;
 			confirmLabel	 = temp.ConfirmLabel;
-			cancelLabel		 = temp.CancelLabel;
 		
-        //计算当前时间
+        //calculateCurrentTime
 		var	now = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
 		nowoffset = nowoffset * 60 * 1000;
@@ -148,10 +144,15 @@ function onDataWithJSON(data,key) {
 		nowRecordId = -1;
 		var pvrScheduleArray = temp.PVRSchedule;
 		initPVRShedule(pvrScheduleArray);
+	
+	} else if(key == "PVRFromS3") {
+		initPVRFromS3(temp);
+		$.mobile.changePage("#catchUpPVRSchedualPage", { transition: "slide", reverse:true});
 	}
 
 	resizepvrScheduleList();
 	resizeRecordFileList();
+	resizecatchUpTopicList();
 }
 
 
@@ -169,14 +170,77 @@ function modifyRecItem(jsonstr) {
 }
 
 function addRecItem(jsonarraystr) {
-    window.location = "native://AddRecItem?" + jsonarraystr;
+    window.location = "native://AddRecItem?" + jsonarraystr + "&" + 0;
+}
+
+function syncPVRSchedule(jsonarraystr) {
+	window.location = "native://AddRecItem?" + jsonarraystr + "&" + 1;
 }
 
 function deletePvr(recordIdArray){
 	window.location = "native://DeleteRecItem?" + recordIdArray;	
 }
 
+function getPVRFromS3(url) {
+    window.location = "native://GetPVRFromS3?" + url;
+}
+
 /*=======================================Init function============================================*/
+//yang begin
+function initPVRFromS3(data){
+
+	 var catchUpPVRScheduleList = $("#catchUpPVRScheduleList");
+	 catchUpPVRScheduleList.children().remove();
+	 catchUpPVRScheduleList.empty();
+
+	  var topic                = data.Topic;
+	  var description          = data.Description;
+	  var countryCode          = data.CountryCode; 
+	  var catchUpPVRSchedule   = data.PVRSchedule;
+
+	 $("#topic_catchUpPVRSchedualPage").html(topic);
+	 $("#description_catchUpPVRSchedualPage").html(description);
+
+	 catchUpScheduleObj    = new Array();
+	 $.each(catchUpPVRSchedule, function(index, value) {
+	 	var channelName = value.ChannelName;
+		var displayName = value.DisplayName;
+		var startYear   = value.StartYear;
+		var startMonth	= value.StartMonth;
+		var startDay 	= value.StartDay;
+		var startHour   = value.StartHour
+		var startMinute	= value.StartMinute;
+		var endYear   	= value.EndYear;
+		var endMonth	= value.EndMonth;
+		var endDay 		= value.EndDay;
+		var endHour 	= value.EndHour;
+		var endMinute	= value.EndMinute;
+		var endSecond	= value.EndSecond;
+
+	 	var catchUpItem = $(catchUpPVRScheduleItem);
+	
+		catchUpItem.find(".catchUpPVRScheduleItem").attr("data-index", index);
+		catchUpItem.find("#channelName").html(channelName).removeAttr("id");
+		catchUpItem.find("#displayName").html(displayName).removeAttr("id");
+		
+        var startTime = new Date(startYear + "/" + startMonth + "/" + startDay + " " + startHour + ":" + startMinute + ":0");
+        	startTime = new Date(startTime.getTime() + offset);
+        var endTime   = new Date(endYear + "/" + endMonth + "/" + endDay + " " + endHour + ":" + endMinute + ":0");
+            endTime   = new Date(endTime.getTime() + offset);
+        var timeLabel = startTime.format("yyyy-MM-dd hh:mm") + " - " + endTime.format("hh:mm");
+
+		catchUpItem.find("#timeLabel").html(timeLabel).removeAttr("id");
+		
+	  	catchUpScheduleObj[index] = value;
+	  	catchUpScheduleObj[index].startTime = startTime;
+	  	catchUpScheduleObj[index].endTime = endTime;
+		
+	 	catchUpPVRScheduleList.append(catchUpItem);
+	 });		
+}
+
+//yang end
+
 function initRecordFiles(data) {
 	
     var recFilesList = $("#recFilesList");
@@ -215,8 +279,6 @@ function initPVRShedule(data) {
         var startTime      = new Date(value.StartYear + "/" + value.StartMonth + "/" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0").format("yyyy-MM-dd hh:mm");
         var endTime        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("hh:mm");
 		var endTimeFull    = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
-        var startTimeLabel = startTime.toLocaleString();
-        var endTimeLabel   = endTime.toLocaleString();
         var sheduleItem    = $(pvrScheduleItem);
 		var recordItemId   = value.RecordItemId;
 		
@@ -244,8 +306,8 @@ function initChannelList(data) {
     var channelList = $("#channelList");
     channelList.children().remove();
     channelList.empty();
+    
     $("#applyButton").text(confirmLabel);
-	$("#cancelButton").text(cancelLabel);
     $.each(data, function(index, value){
         channelList.append('<li data-icon="false" class="channelItem" data-index="'+index+'" value="' + value.ChannelName + '">' + value.ChannelName + '</li>');
     });
@@ -254,20 +316,15 @@ function initChannelList(data) {
 }
 
 /*=======================================private function============================================*/
-function loadPVR(url) {
-	alert(url);
-    $.get(url,function(data,status){
-         alert("Data: " + data + "\nStatus: " + status);
-     });
-}
-
 function findNowRecord(nowRecordId){
-	if(nowRecordId!=-1){
-		var pvrItemRecDivs=$(".pvrItemRecDiv");
+	if(nowRecordId != -1){
+		var pvrItemRecDivs = $(".pvrItemRecDiv");
 		$.each(pvrItemRecDivs, function(index,element) {
-			pvrItemRecDiv=$(element);
-			if(pvrItemRecDiv.attr("data-recordId")==nowRecordId){
+			pvrItemRecDiv = $(element);
+			if(pvrItemRecDiv.attr("data-recordId") == nowRecordId){
 				pvrItemRecDiv.addClass('pvrItemRecNow');
+				pvrItemRecDiv.parent().find(".titleForAnimate").animate({marginLeft:'1.3em'});
+				pvrItemRecDiv.animate({opacity:'1.0'});
 			}
 		});
 	}
@@ -287,7 +344,7 @@ function loadTwitter () {
 	twitter(document,"script","twitter-wjs");
 }
 function checkIframe() {
-	var iframe = $("iframe[id='twitter-widget-0']");
+	var iframe = $("iframe");
 
 	if(iframe.length <= 0) {
 		setTimeout("checkIframe()", 500);
@@ -304,39 +361,63 @@ function checkIframe() {
 	iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
 	var tempHeight = $(window).height() - headerHeight - 10;
 	iframe.height(tempHeight);
+
+	iframe.contents().find("a:not(.e-entry-content)").click(function() {
+		return false;
+	});
+
 	iframe.contents().find(".e-entry-content a").click(function() {
-		loadPVR($(this).attr("title"));
+		getPVRFromS3($(this).attr("href"));
 		return false;
 	});
 }
 /*=======================================JQuery Binding============================================*/
-/*=======================================删除预约和文件============================================*/
+/*===================================delect record and documents===================================*/
  $(document).ready(function () {
 
     $("#delButton_PVR").click(function() {
+
 		if($('.pvrScheduleListli').length > 0){
 			var pvrScheduleListdiv = $("#pvrScheduleList li>div")
-			if(pvrScheduleListdiv.length>0){
+			if(pvrScheduleListdiv.length > 0) {
 				if (pvrFileEditStatus == false) {
 					pvrFileEditStatus = true;
+					
+					$("#delButton_PVR").removeClass("ui-icon-custom-edit");
+					$("#delButton_PVR").addClass("ui-icon-custom-delete");
+
 					pvrScheduleListdiv.fadeIn(200);
 					$("#cancelpvrselect").fadeIn(200);
+					$(".pvrScheduleAddItem").fadeOut(200);
 					$("#pvrPage").unbind();
 
 				} else {
 					pvrFileEditStatus = false;
+
+					$("#delButton_PVR").removeClass("ui-icon-custom-delete");
+					$("#delButton_PVR").addClass("ui-icon-custom-edit");
+					
 					pvrScheduleListdiv.fadeOut(200);
 					$("#cancelpvrselect").fadeOut(200);
-					pvrScheduleListdiv = pvrScheduleListdiv.find("img[data-isCheck=true]");
+
+					pvrScheduleListdiv = pvrScheduleListdiv.find(".pvrItemCheckBox[data-isCheck=true]");
 					var tempArray = new Array();
 					$.each(pvrScheduleListdiv,function(index,temp){
 						tempArray.push($(temp).parents("li").children("a").attr("data-recordId"));
 					});
+
 					deletePvr(tempArray);
+
+					var checkBox = $(".pvrItemCheckBox");
+					checkBox.removeClass("ui-icon-custom-selected");
+					checkBox.addClass("ui-icon-custom-unselect");
+					checkBox.attr("data-isCheck", "false");
+					$(".pvrScheduleItem>div").removeClass("check");
+
 					$("#pvrPage").on("swiperight",function(){
-						$.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
-						loadTwitter();
+						$.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
 					});
+
 					$("#pvrPage").on("swipeleft",function(){
 						$.mobile.changePage("#recFilesPage",  { transition: "slide" });
 						resizepvrScheduleList();
@@ -346,18 +427,26 @@ function checkIframe() {
 			}
 		}
     });
+
 	$("#cancelpvrselect").click(function() {
 		pvrFileEditStatus = false;
-        var imgCheck = $(".checkButton").find("img");
-        imgCheck.hide();
-		$(".checkButton").parent().css("background-color", "transparent");
-        imgCheck.attr("data-isCheck", "false");
+
+		$("#delButton_PVR").removeClass("ui-icon-custom-delete");
+		$("#delButton_PVR").addClass("ui-icon-custom-edit");
+
+        var checkBox = $(".pvrItemCheckBox");
+		checkBox.removeClass("ui-icon-custom-selected");
+		checkBox.addClass("ui-icon-custom-unselect");
+		checkBox.attr("data-isCheck", "false");
+		$("#pvrScheduleList li>a>div").removeClass("check");
+
 		var pvrScheduleListdiv = $("#pvrScheduleList li>div");
 		pvrScheduleListdiv.fadeOut(200);
 		$("#cancelpvrselect").fadeOut(200);
+		$(".pvrScheduleAddItem").fadeIn(200);
+
 		$("#pvrPage").on("swiperight",function(){
-			$.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
-			loadTwitter();
+			$.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
 		});
 		$("#pvrPage").on("swipeleft",function(){
 			$.mobile.changePage("#recFilesPage",  { transition: "slide" });
@@ -371,19 +460,36 @@ function checkIframe() {
 			var recordFileItemList = $("#recFilesList li>div");
 			if (recordFileEditStatus == false) {
 				recordFileEditStatus = true;
+
+				$("#delButton_Record").removeClass("ui-icon-custom-edit");
+				$("#delButton_Record").addClass("ui-icon-custom-delete");
+
 				recordFileItemList.fadeIn(200);
 				$("#cancelrecselect").fadeIn(200);
 				$("#recFilesPage").unbind();
+
 			} else {
 				recordFileEditStatus = false;
+			
+				$("#delButton_Record").removeClass("ui-icon-custom-delete");
+				$("#delButton_Record").addClass("ui-icon-custom-edit");
+
 				recordFileItemList.fadeOut(200);
 				$("#cancelrecselect").fadeOut(200);
-				recordFileItemList = recordFileItemList.find("img[data-isCheck=true]");
+
+				recordFileItemList = recordFileItemList.find(".pvrItemCheckBox[data-isCheck=true]");
 				var tempArray = new Array();
 				$.each(recordFileItemList,function(index,temp){
 					tempArray.push($(temp).parents("li").children("a").attr("data-path"));
 				});
 				deleteFile(tempArray);
+
+				var checkBox = $(".pvrItemCheckBox");
+				checkBox.removeClass("ui-icon-custom-selected");
+				checkBox.addClass("ui-icon-custom-unselect");
+				checkBox.attr("data-isCheck", "false");
+				$(".pvrScheduleItem>div").removeClass("check");
+
 				$("#recFilesPage").on("swiperight",function(){
 					$.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
 					resizepvrScheduleList();
@@ -392,12 +498,19 @@ function checkIframe() {
 			}
 		}
     }); 
+
 	$("#cancelrecselect").click(function() {
 		recordFileEditStatus = false;
-        var imgCheck = $(".checkButton").find("img");
-        imgCheck.hide();
-		$(".checkButton").parent().css("background-color", "transparent");
-        imgCheck.attr("data-isCheck", "false");
+		
+		$("#delButton_Record").removeClass("ui-icon-custom-delete");
+		$("#delButton_Record").addClass("ui-icon-custom-edit");
+
+        var checkBox = $(".pvrItemCheckBox");
+		checkBox.removeClass("ui-icon-custom-selected");
+		checkBox.addClass("ui-icon-custom-unselect");
+		checkBox.attr("data-isCheck", "false");
+        $("#recFilesList li>a>div").removeClass("check");
+
 		var recordFileItemList = $("#recFilesList li>div");
 		recordFileItemList.fadeOut(200);
 		$("#cancelrecselect").fadeOut(200);
@@ -408,17 +521,16 @@ function checkIframe() {
 		});
 	});
 
-/*=======================================滑屏响应============================================*/
+/*=======================================Sliding============================================*/
     $("#pvrPage").on("swiperight",function(){
-        $.mobile.changePage("#twitterPage",  { transition: "slide", reverse:true});
-		loadTwitter();
+        $.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
     });
     $("#pvrPage").on("swipeleft",function(){
         $.mobile.changePage("#recFilesPage",  { transition: "slide" });
 		resizepvrScheduleList();
 		resizeRecordFileList();
     });
-    $("#twitterPage").on("swipeleft",function(){
+    $("#catchUpTopicPage").on("swipeleft",function(){
         $.mobile.changePage("#pvrPage",  { transition: "slide"});
 		resizepvrScheduleList();
 		resizeRecordFileList();
@@ -480,7 +592,6 @@ $(function() {
         $(this).addClass("ui-btn-icon-right ui-icon-check");
 		$("#channelName_recItemEdit").attr("data-index",$(this).attr("data-index"));
         $("#channelName_recItemEdit").text(channelName);
-		$('#ChannelListback').click();
     });
 
     $("body").on("click", ".recordFileItem", function() {
@@ -491,6 +602,7 @@ $(function() {
 		if(currentTime==0){
 			return;
 		}
+
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
         var pvrScheduleItemObj = pvrScheduleObj[$(this).attr("data-PVRIndex")];
@@ -514,50 +626,161 @@ $(function() {
 		if(currentTime==0){
 			return;
 		}
+
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
-		 $("#recItemIndex").val('-1');
-		 $("#channelName_recItemEdit").attr("data-index","0");
-		 $("#channelName_recItemEdit").text(channelList[0].ChannelName);
-		 $("#channelName_recItemEdit").attr("href","#channelListPage");
-         $("#displayName_recItemEdit").val("");
+		$("#recItemIndex").val('-1');
+		$("#channelName_recItemEdit").attr("data-index","0");
+		$("#channelName_recItemEdit").text(channelList[0].ChannelName);
+		$("#channelName_recItemEdit").attr("href","#channelListPage");
+	    $("#displayName_recItemEdit").val("");
 		 
-		 var starttime = new Date().getTime();
-		 var nowoffset = new Date().getTimezoneOffset();
-		 nowoffset = nowoffset * 60 * 1000;
-		 starttime = starttime+nowoffset+utcdiff+offset;
-		 var endtime = starttime+3600000;
-		 starttime = new Date(starttime).format("yyyy-MM-dd hh:mm");
-		 endtime = new Date(endtime).format("yyyy-MM-dd hh:mm");
-         $("#formTimeSelect").val(starttime);
-         $("#toTimeSelect").val(endtime);
-		 $("#formTimeSelect").textinput("enable");
-		 $.mobile.changePage("#recordItemPage",  { transition: "slide" });
+		var starttime = new Date().getTime();
+		var nowoffset = new Date().getTimezoneOffset();
+		    nowoffset = nowoffset * 60 * 1000;
+		    starttime = starttime + nowoffset + utcdiff + offset;
+		var endtime   = starttime + 3600000;
+		    starttime = new Date(starttime).format("yyyy-MM-dd hh:mm");
+		    endtime   = new Date(endtime).format("yyyy-MM-dd hh:mm");
+	    
+	    $("#formTimeSelect").val(starttime);
+	    $("#toTimeSelect").val(endtime);
+		$("#formTimeSelect").textinput("enable");
+		$.mobile.changePage("#recordItemPage",  { transition: "slide" });
     });
 	
-    $("body").on("click", ".checkButton", function() {
-        var imgCheck = $(this).find("img");
-        imgCheck.toggle();
-        if(imgCheck.css("display") == "none") {
-			$(this).parent().css("background-color", "transparent");
-			$(this).parents("li").find("a>div").removeClass("check");
-            imgCheck.attr("data-isCheck", "false");
-        } else {
-			$(this).parent().css("background-color", "red");
+    $("body").on("click", ".pvrItemMaskDiv", function() {
+        var checkBox = $(this).find(".pvrItemCheckBox");
+        if(checkBox.attr("data-isCheck") == "false") {
 			$(this).parents("li").find("a>div").addClass("check");
-            imgCheck.attr("data-isCheck", "true");
+			checkBox.removeClass("ui-icon-custom-unselect");
+			checkBox.addClass("ui-icon-custom-selected");
+            checkBox.attr("data-isCheck", "true");
+        } else {
+			$(this).parents("li").find("a>div").removeClass("check");
+			checkBox.removeClass("ui-icon-custom-selected");
+			checkBox.addClass("ui-icon-custom-unselect");
+            checkBox.attr("data-isCheck", "false");
         }
-
     });
+
+    // Yang begin
+    $("body").on("click", ".twitterTopicListLi", function() {
+		var twitterAccount = $(this).children("div").attr("data-account");
+		var twitterId = $(this).children("div").attr("data-id");
+		$("#twitterContent").empty();
+		$("#twitter-wjs").remove();
+		$("iframe").empty();
+		
+        $.mobile.changePage("#twitterPage", {transition: "slide", reverse: true});
+		$("#twitterContent").append('<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="'+twitterId + '">loading Twitter...</a>');
+		loadTwitter();
+    });
+
+	$("body").on("click",".catchUpTopicCheckBox",function(){
+		if($(this).attr("data-isCheck") == "false"){
+			$(this).removeClass("ui-icon-custom-unselect").addClass("ui-icon-custom-selected");
+			$(this).attr("data-isCheck","true");
+		}else{
+			$(this).removeClass("ui-icon-custom-selected").addClass("ui-icon-custom-unselect");
+			$(this).attr("data-isCheck","false");
+		}
+		return false;
+	});
+	
+	
+	$("body").on("click", ".catchUpItemMaskDiv", function() {
+
+        var checkBox = $(this).find(".catchUpItemCheckBox");
+	    var index = parseInt($(this).parent().attr("data-index"));
+
+		//ScheduleTime
+		var endTime 	= catchUpScheduleObj[index].endTime;
+		
+		//cuurentTime
+		var	nowTime   = new Date().getTime();
+		var nowOffset = new Date().getTimezoneOffset();
+		    nowOffset = nowOffset * 60 * 1000;
+		    currentTime = new Date(parseInt(nowTime) + parseInt(nowOffset) + utcdiff + offset);
+
+		if(currentTime < endTime){
+			if(checkBox.attr("data-isCheck") == "false") {
+				checkBox.removeClass("ui-icon-custom-unselect");
+				checkBox.addClass("ui-icon-custom-selected");
+				checkBox.attr("data-isCheck", "true");
+				
+        	}else{
+				checkBox.removeClass("ui-icon-custom-selected");
+				checkBox.addClass("ui-icon-custom-unselect");
+				checkBox.attr("data-isCheck", "false");
+        	}	
+		}
+    });
+	
+	$("body").on("click", ".syncBtn", function() {
+		var jsonStrArray = [];
+		var checkBox = $(".catchUpItemCheckBox[data-isCheck=true]");
+		var recordItemId = new Date().getTime();
+
+		$.each(checkBox, function(catchUpScheduleIndex, item) {
+			var catchUpScheduleItemIndex = parseInt($(item).parents(".catchUpPVRScheduleItem").attr("data-index"));
+			var catchUpScheduleItem      = catchUpScheduleObj[catchUpScheduleItemIndex];
+			
+			var startTime = catchUpScheduleItem.startTime;
+			var endTime   = catchUpScheduleItem.endTime;
+			var	pidArray  = 0;
+			var	bandwidth = 0;
+			var	frequency = 0;
+
+			//get the Channel Info
+			$.each(channelList, function(channelIndex, channel) {
+				if(catchUpScheduleItem.ProgId == channel.ServiceId &&
+					catchUpScheduleItem.NetworkId == channel.NetworkId &&
+					catchUpScheduleItem.TsId == channel.TsId ) {
+					
+					pidArray  = channel.PidArray;
+					bandwidth = channel.Bandwidth;
+					frequency = channel.Frequency;
+				}
+			});
+
+			var jsonstr = {
+					StartYear:startTime.getFullYear(),
+					StartMonth:startTime.getMonth() + 1,
+					StartDay:startTime.getDate(),
+					StartHour:startTime.getHours(),
+					StartMinute:startTime.getMinutes(),
+					StartSecond:startTime.getSeconds(),
+					EndYear:endTime.getFullYear(),
+					EndMonth:endTime.getMonth() + 1,
+					EndDay:endTime.getDate(),
+					EndHour:endTime.getHours(),
+					EndMinute:endTime.getMinutes(),
+					EndSecond:endTime.getSeconds(),
+					ProgId:catchUpScheduleItem.ProgId,
+					NetworkId:catchUpScheduleItem.NetworkId,
+					TsId:catchUpScheduleItem.TsId,
+					Version:catchUpScheduleItem.Version,
+					ChannelName:catchUpScheduleItem.ChannelName,
+					DisplayName:catchUpScheduleItem.DisplayName,
+					EventId:0,
+					RecordItemId:parseInt(recordItemId / 1000) + catchUpScheduleIndex,
+					PidArray:pidArray,
+					Bandwidth:bandwidth,
+					Frequency:frequency
+				};
+
+				jsonStrArray.push(jsonstr);
+		});
+		
+		syncPVRSchedule(JSON.stringify(jsonStrArray));
+	});
+	// Yang end
 });
 
 /*魏雯涛增加部分*/
 $(function(){
 	
-	/*录制时间冲突判断*/
-	/*$("#displayName_recItemEdit").focus(function(){
-		$("#displayName_recItemEdit").css("background-color","#ddd");
-	});*/
 	$("#formTimeSelect").click(function(){
 		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
 		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
@@ -654,9 +877,6 @@ $(function(){
 		if(iftimeconflict(starttime,endtime,$("#recItemIndex").val())){
 			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
 			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-			/*$('#recordItemPopup h1').text("提示：");
-			$('#recordItemPopup p').text("预约时间输入错误，或者预约时间有冲突!");
-			$('#recordItemPopup').popup( "open", {transition:"pop"} );*/
 			return;
 		}
 		var json = [];		
@@ -702,7 +922,8 @@ $(function(){
 			json.Frequency=pvrScheduleItemObj.Frequency;
 			json.Version=pvrScheduleItemObj.Version;
 		}
-		var jsonstr={StartDay:json.StartDay,
+
+		var jsonstr = {StartDay:json.StartDay,
 					EndMonth:json.EndMonth,
 					StartMonth:json.StartMonth,
 					EventId:json.EventId,
@@ -726,9 +947,10 @@ $(function(){
 					Frequency:json.Frequency,
 					Version:json.Version};
 
-		if($("#recItemIndex").val()!="-1"){
+		if($("#recItemIndex").val()!="-1") {
 			modifyRecItem(JSON.stringify(jsonstr));
-		}else{
+
+		} else {
 			var jsonstrarray=[];
 			jsonstrarray.push(jsonstr);
 			addRecItem(JSON.stringify(jsonstrarray));
@@ -767,16 +989,10 @@ $(function(){
 		return false;
 	}
 });
+
 /*列表自适应*/
 var divwidth=272;
-/*$(function(){
-	if($('.pvrScheduleListli').length > 0){
-		divwidth=$('.pvrScheduleListli').width();
-	}else if($('.recFilesListli').length > 0){
-		divwidth=$('.recFilesListli').width();
-	}
-	alert(divwidth);
-});*/
+
 var resizeRecordFileList = function(){
 	if($('.recFilesListli').length > 0){
 		var windowwidth=$("#recFilesList").width();
@@ -803,9 +1019,25 @@ var resizepvrScheduleList = function(){
 		$('.pvrScheduleListli').width(needwidth);
 	}
 }
+
+var resizecatchUpTopicList = function(){
+	if($('.twitterTopicListLi').length > 0){	
+		var windowwidth=$('#twitterTopicList').width();
+		//var marginleft=$('.pvrScheduleListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
+		var marginleft=0;
+		//var marginright=$('.pvrScheduleListli').css("margin-right").substring(0,$('.recFilesListli').css("margin-right").indexOf('px'));
+		var marginright=0;
+		var divallwidth=parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
+		var multiple=parseInt(windowwidth/divallwidth);
+		var needwidth=parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
+		$('.twitterTopicListLi').width(needwidth);
+	}
+}
+
 $(window).resize(function(){
 	resizepvrScheduleList();
 	resizeRecordFileList();
+	resizecatchUpTopicList();
 });
 
 /** 

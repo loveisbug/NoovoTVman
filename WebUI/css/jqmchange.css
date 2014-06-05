@@ -3,5 +3,32 @@
 	line-height:1.8;
 }
 
+.ui-icon-custom-into:after {
+	background:url('../img/icon-setting-into.png') no-repeat center;
+	background-size: 25px 25px;
+}
 
-.ui-icon-custom-edit {background:url('../img/icon_about.png') no-repeat center;}
+.ui-icon-custom-edit {
+	background:url('../img/icon-list-edit.png') no-repeat center;
+	background-size: 30px 30px;
+}
+
+.ui-icon-custom-delete {
+	background:url('../img/icon-list-trash.png') no-repeat center;
+	background-size: 30px 30px;
+}
+
+.ui-icon-custom-selected {
+	background:url('../img/icon-selected.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
+.ui-icon-custom-unselect {
+	background:url('../img/icon-unselect.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
+.ui-icon-custom-back {
+	background:url('../img/icon-go-back.png') no-repeat center;
+	background-size: 43% 72%;
+}

@@ -44,7 +44,7 @@
 }
 
 .pvrScheduleItem .check {
-	border-color: red;
+	border-color: #D0021B;
 	border-width: 2px;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .recordFileItem .check {
-	border-color: red;
+	border-color: #D0021B;
 	border-width: 2px;
 }
 
@@ -89,18 +89,20 @@
 	float:left;
 	padding-right:2px;
 }
+
 .pvrItemRecDiv{
-	width:0.75em;
-	height:0.75em;
-	border-radius:0.375em;
-	bottom:0.2em;
-	left:0.2em;
+	width: 1em;
+	height: 1em;
+	top:0.7em;
+	left:0.5em;
 	position:absolute;
 }
 .pvrItemRecNow{
-	box-shadow:#999999 1px 2px;
-	background-color:#FF0000;
+	opacity: 0;
+	background-image: url('../img/icon-rec.gif');
+	background-size: 15px 15px;
 }
+
 .pvrItemContent {
 	overflow:hidden;
 	position:relative;
@@ -156,24 +158,61 @@
 	position:absolute;
 	top: 0.5em;
 	right: 0.5em;
-	background-color: transparent;
-	border-width:1px;
-	border-color:black;
-	width:1em; 
-	height:1em; 
-	border-radius: 0.5em;
-	border:#999999 1px solid;
+	width: 25px;
+	height:25px;
 	z-index:0;
 }
 
-.checkImgDiv {
-	width:1em;
-	height:1em;
-	z-index:1;
-	background:url(../img/icon-check-bg.png) center no-repeat;
+#twitterTopicList{
+	padding:0;
+	margin-top:0.3em;
+	list-style:none;	
 }
 
-.checkImgDiv img{
-	margin-bottom:8px;
-	display:none;
+.twitterTopicListLi{
+	cursor:pointer;
+	margin-left:6px;
+	padding:0;
+	list-style:none;
+	position:relative;
+	height:8em;
+	width:17em;
+	float:left;
+}
+
+.catchUpTopicMaskDiv{
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	position:absolute;
+}
+
+.catchUpTopicCheckBox {
+	position:absolute;
+	top: 0.5em;
+	height:0.5em;
+	right: 0.5em;
+	width: 25px;
+	height:25px;
+}
+.catchUpPVRScheduleItem {
+	background-color:white;
+}
+
+.catchUpItemMaskDiv {
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	position:absolute;
+}
+
+.catchUpItemCheckBox {
+	position:absolute;
+	top: 0.5em;
+	right: 0.5em;
+	width: 25px;
+	height:25px;
+	z-index:0;
 }

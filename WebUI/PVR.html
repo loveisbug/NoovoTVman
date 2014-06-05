@@ -27,15 +27,15 @@
 		<!--  PVR  -->
 		<div data-role="page" id="pvrPage" data-theme="c">
 		  <div data-role="header"  data-position="fixed" data-tap-toggle="false" id="pvrHeader" data-theme="c">
-          	<a id="cancelpvrselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="display:none;" >cancel</a>
+          	<a id="cancelpvrselect" data-role="button" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;display:none;" >cancel</a>
             <a id="delButton_PVR" data-role="button" class="ui-icon-custom-edit ui-btn-right ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">Edit</a>
 		    <h1 id="pvrScheduleLabel_PVR">PVR</h1>
 
 		    <div class="statusBar" id="statusBar">
 				<div style="left:0px;" class="circle" ></div>
 				<div style="left:12px;" class="circle cur" ></div>
-			<div style="left:24px;" class="circle" ></div>
-		</div>
+			    <div style="left:24px;" class="circle" ></div>
+		    </div>
 		  </div>
 
 		  <div data-role="content" id="mainContent">
@@ -43,10 +43,10 @@
                 <li class="pvrScheduleListli" style="height:8em;"> 
                     <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           
                         <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >
-                            <span style="font-size:17px;" id="channelName_pvrShedule"><b>CH: Fox News</b></span><br />
+                            <div class="pvrItemRecDiv pvrItemRecNow"></div>
+                            <span style="font-size:17px;" id="channelName_pvrShedule" class="titleForAnimate"><b>CH: Fox News</b></span><br />
                             <div class="pvrItemContent">
                             	<div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>
-                                <div class="pvrItemRecDiv pvrItemRecNow"></div>
                                 <div class="pvrItemInfoDiv"> 
                                     <ul>
                                         <li style="height:36px;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. England</span></li>
@@ -56,14 +56,8 @@
                             </div>
                         </div>
                     </a>
-                    <div class="pvrItemMaskDiv">    
-                        <div class="pvrItemCheckBox">
-                        <a href="#" class="checkButton">
-                            <div class="checkImgDiv">
-                                <img src="./img/icon-check.png" data-isCheck="false"/>
-                            </div>
-                        </a>
-                        </div>
+                    <div class="pvrItemMaskDiv">
+                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
                     </div>
                 </li>
 
@@ -86,10 +80,9 @@
         <!--  Record Item  -->
         <div data-role="page" id="recordItemPage" data-theme="a">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-            <a data-rel="back" role="button" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Back</a>
+            <a href="#pvrPage" data-role="button" class="ui-icon-custom-back ui-btn ui-nodisc-icon ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
             <h1 id="recordItemLabel_RecordItem">RecordItem</h1>
           </div>
-
 
           <div data-role="content">
             <ul style="list-style-type: none; padding-left: 0px;margin-top: 0px;margin-bottom: 0px;">
@@ -121,18 +114,7 @@
                 <li style="margin-top:18px;">
                     <a data-role="button" id="applyButton">OK</a>
                 </li>
-                <li>
-                    <a data-rel="back" data-role="button" id="cancelButton" data-transition="slide" data-direction="reverse">Cancel</a>
-                </li>
             </ul>
-            <div id="recordItemPopup" data-role="popup" style="width:15em;">
-            	<div data-role="header" data-theme="a">
-                <h1></h1>
-                </div>
-                <div role="main" class="ui-content">   
-                <p></p>
-                </div>
-            </div>
           </div>
 
         </div>
@@ -140,7 +122,7 @@
         <!--  Channel List  -->
         <div data-role="page" id="channelListPage" data-theme="a">
             <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-                <a id="ChannelListback" data-rel="back" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-carat-l ui-btn-icon-notext" data-transition="slide" data-direction="reverse" >Back</a>
+                <a href="#recordItemPage" data-role="button" class="ui-icon-custom-back ui-nodisc-icon ui-btn ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
                 <h1 style="margin: 0 10% !important" id="channelListLabel_ChannelList">ChannelList</h1>
             </div>
 
@@ -156,8 +138,8 @@
         <!--  Rec File  -->
         <div data-role="page" id="recFilesPage" data-theme="a" style="background-color:#EFF">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-          	<a id="cancelrecselect" data-role="button" class="ui-btn-left ui-alt-icon ui-nodisc-icon ui-btn ui-icon-delete ui-btn-icon-notext" style="display:none;" >cancel</a>
-            <a id="delButton_Record" data-role="button" class="ui-btn-right ui-alt-icon ui-nodisc-icon ui-btn ui-icon-bin ui-btn-icon-notext" data-transition="slide">Del</a>
+            <a id="cancelrecselect" data-role="button" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;display:none;" >cancel</a>
+            <a id="delButton_Record" data-role="button" class="ui-icon-custom-edit ui-btn-right ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">Edit</a>
             <h1 id="recordFilesLabel_RecordFile">Record Files</h1>
              <div class="statusBar" id="statusBar">
 				<div style="left:0px;" class="circle" ></div>
@@ -182,14 +164,8 @@
                             </div> 
                         </div>  
                     </a>
-                    <div class="pvrItemMaskDiv">    
-                        <div class="pvrItemCheckBox">
-                        <a href="#" class="checkButton">
-	                        <div class="checkImgDiv">
-	                        	<img src="./img/icon-check.png" data-isCheck="false"/>
-	                        </div>
-                        </a>
-                        </div>
+                    <div class="pvrItemMaskDiv">
+                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
                     </div>   
                 </li>
             </ul>
@@ -198,23 +174,116 @@
         </div>
 
 
-
-        <!--  Twitter  -->
-        <div data-role="page" id="twitterPage" data-theme="a">
-          <div data-role="header" data-tap-toggle="false" id="twitterHeader" data-theme="b">
-            <h1 id="twitterLabel_Record">Twitter</h1>
+        <!--Yang begin-->
+        <!--  CathUp  -->
+        <div data-role="page" id="catchUpTopicPage" data-theme="a">
+          <div data-role="header" data-tap-toggle="false" id="recommdentHeader" data-theme="b">
+            <h1 id="header_catchUpTopicPage">CatchUp</h1>
             <div class="statusBar" id="statusBar">
-				<div style="left:0px;" class="circle cur" ></div>
-				<div style="left:12px;" class="circle" ></div>
-			<div style="left:24px;" class="circle" ></div>
-			</div>
+                <div style="left:0px;" class="circle cur" ></div>
+                <div style="left:12px;" class="circle" ></div>
+            <div style="left:24px;" class="circle" ></div>
+            </div>
           </div>
 
-          <div data-role="content" id="twitterContent">
-            <!--<a href="#twitterPanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini" onclick='loadTwitter();'>Share</a>-->
-            <a class="twitter-timeline ui-btn" href="https://twitter.com/Tvman" data-widget-id="450868560969990144" data-aria-polite="assertive">@Tvman 推文加载中...</a>
+          <div data-role="content" id="catchUpContent">
+             <ul id="twitterTopicList">
+                <li class="twitterTopicListLi">
+                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="471979025749901312" data-account="TVman" class="ui-body ui-body-a">
+                        <div style="margin-top:10px;float:left">
+                            <img src="img/a_cherie25.png">
+                        </div>
+                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:13px;">
+                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
+                            <div><span style="font-size:10px;">Description</span></div>
+                        </div>
+                        <div class="catchUpTopicMaskDiv">
+                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                        </div>
+                    </div>
+              </li>
+
+                <li class="twitterTopicListLi">
+                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="471980729778180096" data-account="YangSquarepants"  class="ui-body ui-body-a">
+                        <div style="margin-top:10px;float:left">
+                            <img src="img/a_cherie25.png">
+                        </div>
+                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:10px;">
+                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
+                            <div><span style="font-size:10px;">Description</span></div>
+                        </div>
+                        <div class="catchUpTopicMaskDiv">
+                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                        </div>
+                    </div>
+              </li>
+
+                <li class="twitterTopicListLi">
+                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="450868560969990144" data-account="ALitu2014"  class="ui-body ui-body-a">
+                        <div style="margin-top:10px;float:left">
+                            <img src="img/a_cherie25.png">
+                        </div>
+                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:10px;">
+                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
+                            <div><span style="font-size:10px;">Description</span></div>
+                        </div>
+                        <div class="catchUpTopicMaskDiv">
+                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                        </div>
+                    </div>
+                </li>
+             </ul>
           </div>
         </div>
         
-	</body>
+        
+        <!--  Twitter  -->
+        <div data-role="page" id="twitterPage" data-theme="a">
+          <div data-role="header" data-tap-toggle="false" id="twitterHeader" data-theme="b">
+            <h1 id="header_Twitter">Twitter</h1>
+            <a data-role="button" href="#catchUpTopicPage" data-transition="slide" data-reverse="true" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;" >back</a>
+            </a> 
+          </div>
+
+          <div data-role="content" id="twitterContent" style="padding:0 0;">
+          </div>
+        </div>
+    <!--Yang end-->
+
+
+
+        <!--  CatchUpPVRSchedual -->
+        <div data-role="page" id="catchUpPVRSchedualPage" data-theme="a">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" id="twitterHeader" data-theme="b">
+            <h1 id="header_RecommandPVRPage">CatchUpContent</h1>
+            <a data-role="button" href="#twitterPage" data-transition="slide" class="ui-icon-custom-back ui-btn-left ui-btn ui-nodisc-icon ui-btn-icon-notext" style="background-color:transparent; border:0;">back</a>
+          </div>
+
+          <div data-role="content" id="twitterContent">
+            <div id="RecommandPVRSchedual">
+                <div style="background-color:white; border-radius:5px;height:3em;">
+                    <img src="./img/country.png" style="float:left;">
+                    <span id="topic_catchUpPVRSchedualPage">England Team</span>
+                </div>
+                <div id="descriptionDiv" style="background-color:white; ">
+                    <p id="description_catchUpPVRSchedualPage" style="text-indent:2em;padding:0.3em 0.3em;">Hi, ALitu</p>
+                </div>
+                <div><p style="color:white;margin-bottom:0.5em;">PVR Schedual:</p></div>
+                <ul id="catchUpPVRScheduleList" style="list-style:none;padding:0 0;margin:0 0;">
+                    <li class="catchUpPVRScheduleLi">
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="3"  style="padding:8px 8px;height:6em;" data-role="button" >
+                            <p id="channelName">CH02:BBC Sports 1</p>
+                            <p><span id="displayName">England vs Japan </span><span id="timeLabel">2014/06/19 18:00-20:00</span></p>
+                            <div class="catchUpItemMaskDiv">
+                                <div class="catchUpItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <a data-role="button" class="syncBtn">Sync with this Schedual <img src="./img/icon-check.png"></a>
+            </div>
+            </div>
+          </div>
+        
+    </body>
 </html>
