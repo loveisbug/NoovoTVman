@@ -11,7 +11,7 @@
 	    <script src="./js/mobiscroll.core-2.6.2.js"></script>
         <script src="./js/mobiscroll.core-2.6.2-zh.js"></script>
         <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
-        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140529.min.css" />
+        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140605.min.css" />
         <link rel="stylesheet" href="./css/jqmChange.css" />
         <link rel="stylesheet" href="./css/mobiscroll.core-2.6.2.css" />
         <link rel="stylesheet" href="./css/mobiscroll.animation-2.6.2.css" />
@@ -41,27 +41,6 @@
 		  <div data-role="content" id="mainContent">
             <ul id="pvrScheduleList">
                 <li class="pvrScheduleListli" style="height:8em;"> 
-                    <a id="recordEditItemPage" class="pvrScheduleItem" href="#" data-transition="slide">           
-                        <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;height:6em;" data-role="button" >
-                            <div class="pvrItemRecDiv pvrItemRecNow"></div>
-                            <span style="font-size:17px;" id="channelName_pvrShedule" class="titleForAnimate"><b>CH: Fox News</b></span><br />
-                            <div class="pvrItemContent">
-                            	<div class="pvrItemImgDiv"><img src="./img/a_cherie25.png"/></div>
-                                <div class="pvrItemInfoDiv"> 
-                                    <ul>
-                                        <li style="height:36px;"><span style="font-size:16px;line-height:18px;" id="programme_pvrShedule">England vs. England</span></li>
-                                        <li style="margin-top:0.5em;"><span id="startTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 18:00</span>~<span id="endTime_pvrShedule" style="font-size:14px;line-height:16px;">2014.7.5, 20:00</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="pvrItemMaskDiv">
-                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
-                    </div>
-                </li>
-
-                <li class="pvrScheduleListli" style="height:8em;"> 
                     <a href="#" data-transition="slide" class="pvrScheduleItem pvrScheduleAddItem">
                         <div class="ui-body ui-body-a ui-shadow" style="padding:8px 8px;height:6em; border-color:#e4e7e8;background-color:#e4e7e8" >
                             <div style="position:absolute;top: 50%; left: 50%; margin-top:0.8em; margin-left: -5em;font-size:12px;"><span style="color:#95a5a6;">New PVR Schedule</span></div>
@@ -79,13 +58,13 @@
 
         <!--  Record Item  -->
         <div data-role="page" id="recordItemPage" data-theme="a">
-          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
             <a href="#pvrPage" data-role="button" class="ui-icon-custom-back ui-btn ui-nodisc-icon ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
             <h1 id="recordItemLabel_RecordItem">RecordItem</h1>
           </div>
 
           <div data-role="content">
-            <ul style="list-style-type: none; padding-left: 0px;margin-top: 0px;margin-bottom: 0px;">
+            <ul class="recordItemEditTable_recordItemPage" style="list-style-type: none; padding-left: 0px;margin-top: 0px;margin-bottom: 0px;">
                 <li>
                     <div style="float:left;margin-right:13px; padding-top:6.4px;"><span>Channel:</span></div>
                     <div style="width:100%;padding-right:76px; text-align:left;">
@@ -108,7 +87,7 @@
                 <li>
                     <div style="float:left;margin-right:10px;padding-top:5px;"><span>To:</span></div>
                     <div style="width:auto;margin-left:76px;">
-                        <input type="text" name="toTimeSelect" id="toTimeSelect" />
+                        <input type="text" name="toTimeSelect" id="toTimeSelect"/>
                     </div>
                 </li>
                 <li style="margin-top:18px;">
@@ -121,8 +100,8 @@
 
         <!--  Channel List  -->
         <div data-role="page" id="channelListPage" data-theme="a">
-            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
-                <a href="#recordItemPage" data-role="button" class="ui-icon-custom-back ui-nodisc-icon ui-btn ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
+                <a href="#recordItemPage" id="ChannelListback" data-role="button" class="ui-icon-custom-back ui-nodisc-icon ui-btn ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
                 <h1 style="margin: 0 10% !important" id="channelListLabel_ChannelList">ChannelList</h1>
             </div>
 
@@ -136,8 +115,8 @@
 
 
         <!--  Rec File  -->
-        <div data-role="page" id="recFilesPage" data-theme="a" style="background-color:#EFF">
-          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="b">
+        <div data-role="page" id="recFilesPage" data-theme="d">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="d">
             <a id="cancelrecselect" data-role="button" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;display:none;" >cancel</a>
             <a id="delButton_Record" data-role="button" class="ui-icon-custom-edit ui-btn-right ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">Edit</a>
             <h1 id="recordFilesLabel_RecordFile">Record Files</h1>
@@ -151,23 +130,7 @@
 
           <div data-role="content">
             <ul id="recFilesList">
-                <li class="recFilesListli"> 
-                    <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">
-                        <div class="ui-body ui-body-a ui-corner-all ui-shadow" style="padding:8px 8px;" >  
-                            <span style="font-size:17px;"><b id="channelName_recFile">CH: Fox News</b></span><br />     
-                            <div class="recFileItemInfoDiv"> 
-                                <ul>
-                                    <li><span style="font-size:16px;" id="programme_recFile">England vs. France</span></li> 
-                                    <li><span id="recTime_recFile">2014.7.5, 18:00 ~ 20:00</span></li>  
-                                    <li><span id="fileInfo_recFile">3rd Game of Group A</span></li> 
-                                </ul>   
-                            </div> 
-                        </div>  
-                    </a>
-                    <div class="pvrItemMaskDiv">
-                        <div class="pvrItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
-                    </div>   
-                </li>
+                
             </ul>
           </div>
 
@@ -176,8 +139,8 @@
 
         <!--Yang begin-->
         <!--  CathUp  -->
-        <div data-role="page" id="catchUpTopicPage" data-theme="a">
-          <div data-role="header" data-tap-toggle="false" id="recommdentHeader" data-theme="b">
+        <div data-role="page" id="catchUpTopicPage" data-theme="e">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="e">
             <h1 id="header_catchUpTopicPage">CatchUp</h1>
             <div class="statusBar" id="statusBar">
                 <div style="left:0px;" class="circle cur" ></div>
@@ -187,48 +150,84 @@
           </div>
 
           <div data-role="content" id="catchUpContent">
-             <ul id="twitterTopicList">
-                <li class="twitterTopicListLi">
-                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="471979025749901312" data-account="TVman" class="ui-body ui-body-a">
-                        <div style="margin-top:10px;float:left">
-                            <img src="img/a_cherie25.png">
-                        </div>
-                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:13px;">
-                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
-                            <div><span style="font-size:10px;">Description</span></div>
-                        </div>
-                        <div class="catchUpTopicMaskDiv">
-                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
-                        </div>
-                    </div>
-              </li>
-
-                <li class="twitterTopicListLi">
-                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="471980729778180096" data-account="YangSquarepants"  class="ui-body ui-body-a">
-                        <div style="margin-top:10px;float:left">
-                            <img src="img/a_cherie25.png">
-                        </div>
-                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:10px;">
-                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
-                            <div><span style="font-size:10px;">Description</span></div>
-                        </div>
-                        <div class="catchUpTopicMaskDiv">
-                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+             <ul id="catchUpTopicList">
+                <li class="catchUpTopicListLi" data-topicName="World_Cup">
+                    <div style="padding:0.3em 0.2em"> 
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476278045532098560" data-account="WorldCup_TVman" data-img="topic_World_Cup.jpg">
+                            <div class="catchUpTopicImgDiv"><img src="./img/topic_World_Cup.jpg"/></div>
+                                
+                            <div class="catchUpTopicInfoDiv">
+                                <div><span style="font-size:17px;"><b>World Cup</b></span></div>
+                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">Catch up the newest movement of world cup on DTV. New draw, news release, tidbits, comments. Never miss a thing!</span>
+                                </div>
+                            </div>
+                            <div class="catchUpTopicMaskDiv">
+                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
+                            </div>
                         </div>
                     </div>
               </li>
-
-                <li class="twitterTopicListLi">
-                    <div style="padding:8px 8px; height:6em; border-width:2px; border-color:#FFFFFF;" data-id="450868560969990144" data-account="ALitu2014"  class="ui-body ui-body-a">
-                        <div style="margin-top:10px;float:left">
-                            <img src="img/a_cherie25.png">
+                <li class="catchUpTopicListLi" data-topicName="Sports">
+                    <div style="padding:0.3em 0.2em">      
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476276881440796672" data-account="Sports_TVman" data-img="topic_Sports.jpg">
+                            <div class="catchUpTopicImgDiv"><img src="./img/topic_Sports.jpg"/></div>
+                                
+                            <div class="catchUpTopicInfoDiv">
+                                <div><span style="font-size:17px;"><b>Sports</b></span></div>
+                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">We follow and share the latest sports relevant program and events on DTV.</span>
+                                </div>
+                            </div>
+                            <div class="catchUpTopicMaskDiv">
+                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
+                            </div>
                         </div>
-                        <div id="twitterTopicDsc" style="float:left; margin-left:10px; margin-top:10px;">
-                            <div><span style="font-size:17px;"><b>TopicName</b></span></div>
-                            <div><span style="font-size:10px;">Description</span></div>
+                    </div>
+                </li>
+                <li class="catchUpTopicListLi" data-topicName="Documentary">
+                    <div style="padding:0.3em 0.2em"> 
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="471980729778180096" data-account="Documentary" data-img="topic_Documentary.jpg">
+                            <div class="catchUpTopicImgDiv"><img style="height:35px; width:40px;margin-top: 8px;" src="./img/topic_Documentary.jpg"/></div>
+                                
+                            <div class="catchUpTopicInfoDiv">
+                                <div><span style="font-size:17px;"><b>Documentary</b></span></div>
+                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">This is documentary topic, we search and share the documentary program on DTV.</span>
+                                </div>
+                            </div>
+                            <div class="catchUpTopicMaskDiv">
+                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
+                            </div>
                         </div>
-                        <div class="catchUpTopicMaskDiv">
-                            <div class="catchUpTopicCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                    </div>
+              </li>
+                <li class="catchUpTopicListLi" data-topicName="Variety_shows">
+                    <div style="padding:0.3em 0.2em"> 
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476281877280460800" data-account="Varietyshows_TV" data-img="Variety_shows.jpg">
+                            <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
+                                
+                            <div class="catchUpTopicInfoDiv">
+                                <div><span style="font-size:17px;"><b>Variety Shows</b></span></div>
+                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">The Hottest variety shows are all here, catch up the most popular shows from now!</span>
+                                </div>
+                            </div>
+                            <div class="catchUpTopicMaskDiv">
+                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
+                            </div>
+                        </div>
+                    </div>
+              </li>
+                <li class="catchUpTopicListLi" data-topicName="Politics">
+                    <div style="padding:0.3em 0.2em"> 
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="471979025749901312" data-account="TVman" data-img="Politics.jpg">
+                            <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
+                                
+                            <div class="catchUpTopicInfoDiv">
+                                <div><span style="font-size:17px;"><b> Politics</b></span></div>
+                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">The deeper analysis, further understanding of political event on DTV.</span>
+                                </div>
+                            </div>
+                            <div class="catchUpTopicMaskDiv">
+                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -239,7 +238,7 @@
         
         <!--  Twitter  -->
         <div data-role="page" id="twitterPage" data-theme="a">
-          <div data-role="header" data-tap-toggle="false" id="twitterHeader" data-theme="b">
+          <div data-role="header" data-tap-toggle="false" id="twitterHeader" data-theme="a">
             <h1 id="header_Twitter">Twitter</h1>
             <a data-role="button" href="#catchUpTopicPage" data-transition="slide" data-reverse="true" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;" >back</a>
             </a> 
@@ -252,35 +251,58 @@
 
 
 
-        <!--  CatchUpPVRSchedual -->
-        <div data-role="page" id="catchUpPVRSchedualPage" data-theme="a">
-          <div data-role="header" data-position="fixed" data-tap-toggle="false" id="twitterHeader" data-theme="b">
+        <!--  CatchUpPVRSchedule -->
+        <div data-role="page" id="catchUpPVRSchedulePage" data-theme="a">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" id="twitterHeader" data-theme="a">
             <h1 id="header_RecommandPVRPage">CatchUpContent</h1>
             <a data-role="button" href="#twitterPage" data-transition="slide" class="ui-icon-custom-back ui-btn-left ui-btn ui-nodisc-icon ui-btn-icon-notext" style="background-color:transparent; border:0;">back</a>
           </div>
 
           <div data-role="content" id="twitterContent">
-            <div id="RecommandPVRSchedual">
-                <div style="background-color:white; border-radius:5px;height:3em;">
-                    <img src="./img/country.png" style="float:left;">
-                    <span id="topic_catchUpPVRSchedualPage">England Team</span>
+            <div id="CatchUpPVRSchedule">
+                <!--<div style="background-color:rgb(226, 226, 226); width:100%; border-radius:15px;height:3em; display:table; vertical-align:middle;">
+                    <div style="display:table-cell; vertical-align:middle">
+                        <img style="vertical-align:middle; margin-left:0.3em;" src="./img/World_Cup.png"/>
+                        <span style="vertical-align:middle; font-weight:bold; font-size:18px;" id="topic_catchUpPVRSchedulePage">England Team</span>
+                    </div>
+                </div>-->
+                <div style="background-color:rgb(226, 226, 226); width:100%;height:3em; display:table; vertical-align:middle;">
+                    <div style="height: 44px;">
+                    	<!--<div style="height: 51.2px;width: 45.2px;background-color: #FFFFFF;border-radius: 5px;margin-top: 12.5px;margin-left: 3.5px;position: absolute;padding: 1.2px 1.2px;">-->
+                        <div style="height: 52px;width: 44px;background-color:#fff; border-radius:10px;margin-top: 10.5px;margin-left: 5.5px;position: absolute;padding:2px 2px;">
+                        	<img class="twitterImg" src="./img/World_Cup.jpg"/>
+                        </div>
+                        <span style="font-weight: bold;font-size: 18px;position: absolute;margin-top: 25px;
+margin-left: 56px;" id="topic_catchUpPVRSchedulePage">England Team</span>
+                    </div>
                 </div>
-                <div id="descriptionDiv" style="background-color:white; ">
-                    <p id="description_catchUpPVRSchedualPage" style="text-indent:2em;padding:0.3em 0.3em;">Hi, ALitu</p>
+                
+                <div id="descriptionDiv" style="background-color: rgb(236, 236, 236);width: 100%;
+height: auto;margin-top: 30px;">
+                    <p id="description_catchUpPVRSchedulePage" style="text-indent: 8px; padding: 8px;">Hi, ALitu</p>
                 </div>
-                <div><p style="color:white;margin-bottom:0.5em;">PVR Schedual:</p></div>
+                <div><p style="color:white;margin-top:1em;margin-bottom:0.3em;padding-left:5%;">PVR Schedule:</p></div>
                 <ul id="catchUpPVRScheduleList" style="list-style:none;padding:0 0;margin:0 0;">
                     <li class="catchUpPVRScheduleLi">
-                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="3"  style="padding:8px 8px;height:6em;" data-role="button" >
-                            <p id="channelName">CH02:BBC Sports 1</p>
-                            <p><span id="displayName">England vs Japan </span><span id="timeLabel">2014/06/19 18:00-20:00</span></p>
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0">
+                            <p class="channelName">CH02:BBC Sports 1</p>
+                            <p><span class="displayName">England vs Japan </span><span class="timeLabel">2014/06/19 18:00-20:00</span></p>
                             <div class="catchUpItemMaskDiv">
-                                <div class="catchUpItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>
+                                <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="false"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="catchUpPVRScheduleLi">
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0">
+                            <p class="channelName">CH02:BBC Sports 1</p>
+                            <p><span class="displayName">England vs Japan </span><span class="timeLabel">2014/06/19 18:00-20:00</span></p>
+                            <div class="catchUpItemMaskDiv">
+                                <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="false"></div>
                             </div>
                         </div>
                     </li>
                 </ul>
-                <a data-role="button" class="syncBtn">Sync with this Schedual <img src="./img/icon-check.png"></a>
+                <a data-role="button" class="syncBtn" style="font-weight: normal; background-color:rgb(226,226,226); color:black;">Sync with this Schedule <img src="./img/icon-check.png"></a>
             </div>
             </div>
           </div>

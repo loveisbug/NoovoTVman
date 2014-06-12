@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	    <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
-	    <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140529.min.css" />
+	    <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140605.min.css" />
 	    <link rel="stylesheet" href="./css/jqmChange.css" />
 	    
 	    <script src="./js/jquery-1.8.3.min.js"></script>
@@ -29,7 +29,6 @@
 			}
 
 	    </style>
-	    <link rel="stylesheet" href="./css/jqmChange.css" />
 	</head>
 
 	<body onload="init();">
@@ -59,7 +58,7 @@
 
 		  <div data-role="content">
 				<div style="float:right;margin-left:3px;">
-                    <a id="search_connectToWlan" href="#wlanPage" data-role="button" class="ui-shadow-inset ui-nodisc-icon ui-btn ui-icon-search ui-btn-icon-notext" data-transition="slide" style="border-width:1px;height:40px;background-color:#2a2a2a;">SSID</a>
+                    <a id="search_connectToWlan" href="#wlanPage" data-role="button" class="ui-shadow-inset ui-nodisc-icon ui-btn ui-icon-custom-search ui-btn-icon-notext" data-transition="slide" style="border-width:1px;height:40px;background-color:#2a2a2a;">SSID</a>
                 </div>
 				<div style="width:auto;margin-right:45px;height:40px;"><input type="text" name="ssid" id="ssid_WLAN" placeholder="SSID" style="height:40px;" /></div>
     			<input type="password" name="passwd" id="passwd_WLAN" placeholder="Password" style="height: 40px;" />
@@ -121,7 +120,7 @@
 
 		  <div data-role="content">
 			<ul data-role="listview" id="wifiChannelList">
-			  <li data-icon="check" class="ui-btn-icon-right ui-icon-check">CH 1</li>
+			  <li data-icon="check" class="ui-btn-icon-right ui-icon-custom-check">CH 1</li>
 			  <li data-icon="false">CH 2</li>
 			  <li data-icon="false">CH 3</li>
 			  <li data-icon="false">CH 4</li>
@@ -145,7 +144,7 @@
 
 		  <div data-role="content">
 			<ul data-role="listview" id="wifiSecretList">
-			  <li data-icon="check" class="ui-btn-icon-right ui-icon-check">NONE</li>
+			  <li data-icon="check" class="ui-btn-icon-right ui-icon-custom-check">NONE</li>
 			  <li data-icon="false">WPA</li>
 			</ul>
 		  </div>

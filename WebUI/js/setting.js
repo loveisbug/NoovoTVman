@@ -20,7 +20,10 @@ function onDataWithJSON(data,key) {
 	}
 	
 	if(key == "SettingInit"){
-	
+		if(key == "SettingInit"){
+			$.mobile.changePage("#settingPage",  { transition: "none"});
+		}
+		
 		var aboutObj   = temp.About;
 		var wlanObj    = temp.WLAN;
 		var hotspotObj = temp.HotSpot; 
@@ -150,26 +153,26 @@ function setHotspot() {
 function setWiFiChannel(channelValue) {
 	var preCheck = $("#wifiChannelList").find("[data-icon=check]");
 	preCheck.attr("data-icon", "false");
-	preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+	preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
 	var tempStr     = "CH " + channelValue;
 	var channelItem = $("#wifiChannelList li:contains(" + tempStr + ")").first();
 
 	channelItem.attr("data-icon", "check");
-	channelItem.addClass("ui-btn-icon-right ui-icon-check");
+	channelItem.addClass("ui-btn-icon-right ui-icon-custom-check");
 	$("#currentWifiChannel").text(channelItem.html());
 }
 
 function setWifiSecretMode(secretMode) {
 	var preCheck = $("#wifiSecretList").find("[data-icon=check]");
 	preCheck.attr("data-icon", "false");
-	preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+	preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
 	var tempStr    = secretMode == 0 ? "NONE" : "WPA";
 	var secretItem = $("#wifiSecretList li:contains(" + tempStr + ")");
 
 	secretItem.attr("data-icon", "check");
-	secretItem.addClass("ui-btn-icon-right ui-icon-check");
+	secretItem.addClass("ui-btn-icon-right ui-icon-custom-check");
 	$("#currentWifiSecret").html(secretItem.html());
 }
 
@@ -181,7 +184,7 @@ function setWLanSSID(ssid) {
 	var currentSSIDItem = $("#ssidList").find("[value='" + ssid + "']");
 	if (currentSSIDItem.length > 0) {
 		currentSSIDItem.attr("data-icon", "check");
-		currentSSIDItem.addClass("ui-btn-icon-right ui-icon-check");
+		currentSSIDItem.addClass("ui-btn-icon-right ui-icon-custom-check");
 	}
 }
 
@@ -200,10 +203,10 @@ $(function() {
 
 		var preCheck = $("#ssidList").find("[data-icon=check]");
 		preCheck.attr("data-icon", "false");
-		preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+		preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
 		$(this).attr("data-icon", "check");
-		$(this).addClass("ui-btn-icon-right ui-icon-check");
+		$(this).addClass("ui-btn-icon-right ui-icon-custom-check");
 		$("#ssid_WLAN").val(ssidValue);
 
 	});
@@ -245,20 +248,20 @@ $(document).ready(function() {
 	$("#wifiChannelList li").click(function() {
 		var preCheck = $("#wifiChannelList").find("[data-icon=check]");
 		preCheck.attr("data-icon", "false");
-		preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+		preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
 		$(this).attr("data-icon", "check");
-		$(this).addClass("ui-btn-icon-right ui-icon-check");
+		$(this).addClass("ui-btn-icon-right ui-icon-custom-check");
 		$("#currentWifiChannel").html($(this).html());
 	});
 
 	$("#wifiSecretList li").click(function() {
 		var preCheck = $("#wifiSecretList").find("[data-icon=check]");
 		preCheck.attr("data-icon", "false");
-		preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+		preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
 		$(this).attr("data-icon", "check");
-		$(this).addClass("ui-btn-icon-right ui-icon-check");
+		$(this).addClass("ui-btn-icon-right ui-icon-custom-check");
 		$("#currentWifiSecret").html($(this).html());
 
 		if($(this).html() == "WPA") {

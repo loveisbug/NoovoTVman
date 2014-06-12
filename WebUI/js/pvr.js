@@ -10,6 +10,8 @@ var offset				  = 0;
 var confirmLabel		  = "";
 var nowRecordId			  = -1;
 var catchUpScheduleObj    = "";
+var catchUpTopicArray     = new Array("true", "true", "true", "true", "true"); //default book all the topic
+var twitterIconName 	  = "";
 
 var recordFileItem = '<li class="recFilesListli">\
                     <a href="#" class="recordFileItem" data-transition="slide" data-path="hellow.ts">\
@@ -51,11 +53,12 @@ var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
                 </li>'
 
 var catchUpPVRScheduleItem = '<li class="catchUpPVRScheduleLi">\
-                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0"  style="padding:8px 8px;height:6em;" data-role="button" >\
-                            <p id="channelName">CH02:BBC Sports 1</p>\
-                            <p><span id="displayName">England vs Japan </span><span id="timeLabel">2014/06/19 18:00-20:00</span></p>\
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0" ata-role="button" >\
+                            <p class="channelName">CH02:BBC Sports 1</p>\
+                            <p style="margin:0px;"><span class="displayName">England vs Japan </span></p>\
+							<p style="margin:0px;"><span class="timeLabel">2014/06/19 18:00-20:00</span></p>\
                             <div class="catchUpItemMaskDiv">\
-                                <div class="catchUpItemCheckBox ui-icon-custom-unselect" data-isCheck="false"></div>\
+                                <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>\
                             </div>\
                         </div>\
                     </li>'
@@ -95,16 +98,17 @@ function onDataWithJSON(data,key) {
         var pvrScheduleLabel = temp.PVRScheduleLabel;
             channelList      = temp.ChannelList;
 			confirmLabel	 = temp.ConfirmLabel;
+		var catchUpTopicDate = temp.Topic;
 		
         //calculateCurrentTime
-		var	now = new Date().getTime();
+		var	now 	  = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
-		nowoffset = nowoffset * 60 * 1000;
+		nowoffset 	  = nowoffset * 60 * 1000;
 
 		if(typeof(temp.CurrentTime.UTCDiff) != "undefined" && typeof(temp.CurrentTime.Offset) != "undefined"){
-			currentTime = new Date(parseInt(now)+parseInt(nowoffset)+parseInt(temp.CurrentTime.UTCDiff)+parseInt(temp.CurrentTime.Offset));
+			currentTime = new Date(parseInt(now) + parseInt(nowoffset) + parseInt(temp.CurrentTime.UTCDiff) +  parseInt(temp.CurrentTime.Offset));
 			utcdiff	= parseInt(temp.CurrentTime.UTCDiff);
-			offset = parseInt(temp.CurrentTime.Offset);
+			offset  = parseInt(temp.CurrentTime.Offset);
 		}
         $("#pvrScheduleLabel_PVR").text(pvrScheduleLabel);
         $("#recordFilesLabel_RecordFile").text(recordFilesLabel);
@@ -114,6 +118,7 @@ function onDataWithJSON(data,key) {
 		findNowRecord(nowRecordId);
         initRecordFiles(recordFilesArray);
         initChannelList(channelList);
+        initCatchUpTopic(catchUpTopicDate);
 		
     } else if(key == "UpdateRemoteFileList") {
         var recordFilesArray = temp.PVR;
@@ -126,18 +131,18 @@ function onDataWithJSON(data,key) {
 		findNowRecord(nowRecordId);
 
 	} else if(key == "UpdateTime"){
-		var	now = new Date().getTime();
+		var	now 	  = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
-		nowoffset = nowoffset * 60 * 1000;
+		nowoffset 	  = nowoffset * 60 * 1000;
 
 		if(typeof(temp.CurrentTime.UTCDiff) != "undefined" && typeof(temp.CurrentTime.Offset) != "undefined"){
 			currentTime = new Date(parseInt(now)+parseInt(nowoffset)+parseInt(temp.CurrentTime.UTCDiff)+parseInt(temp.CurrentTime.Offset));
 			utcdiff	= parseInt(temp.CurrentTime.UTCDiff);
-			offset = parseInt(temp.CurrentTime.Offset);
+			offset  = parseInt(temp.CurrentTime.Offset);
 		}
 
 	} else if(key == "RecordStartNotification"){
-		nowRecordId=temp;
+		nowRecordId = temp;
 		findNowRecord(nowRecordId);
 
 	} else if(key == "RecordFinishNotification"){
@@ -147,12 +152,12 @@ function onDataWithJSON(data,key) {
 	
 	} else if(key == "PVRFromS3") {
 		initPVRFromS3(temp);
-		$.mobile.changePage("#catchUpPVRSchedualPage", { transition: "slide", reverse:true});
-	}
+		$.mobile.changePage("#catchUpPVRSchedulePage", { transition: "slide", reverse:true});
 
-	resizepvrScheduleList();
-	resizeRecordFileList();
-	resizecatchUpTopicList();
+	} else if(key == "SyncTopicFinishNotification") {
+		initCatchUpTopic(temp);
+
+	}
 }
 
 
@@ -185,8 +190,26 @@ function getPVRFromS3(url) {
     window.location = "native://GetPVRFromS3?" + url;
 }
 
+//yang
+function syncCatchUpTopic(jsonarray){
+	window.location = "native://SyncTopicSubscription?" + jsonarray;
+}
+
 /*=======================================Init function============================================*/
 //yang begin
+function initCatchUpTopic(data) {
+	$.each(data, function(index, value) {
+		catchUpTopicArray[index] = value.Subscribed == 1 ? "true" : "false";
+		
+		if (catchUpTopicArray[index] == "true") {
+			$(".catchUpTopicCheckBox:eq(" + index + ")").removeClass("ui-icon-custom-unselect").addClass("ui-icon-custom-selected-blue");
+		} else {
+			$(".catchUpTopicCheckBox:eq(" + index + ")").removeClass("ui-icon-custom-selected-blue").addClass("ui-icon-custom-unselect");
+		}
+	});
+};
+
+
 function initPVRFromS3(data){
 
 	 var catchUpPVRScheduleList = $("#catchUpPVRScheduleList");
@@ -198,9 +221,15 @@ function initPVRFromS3(data){
 	  var countryCode          = data.CountryCode; 
 	  var catchUpPVRSchedule   = data.PVRSchedule;
 
-	 $("#topic_catchUpPVRSchedualPage").html(topic);
-	 $("#description_catchUpPVRSchedualPage").html(description);
+	  var index   = description.indexOf("http");
+	  description = description.substr(0, index);
+	  
+	  twitterIconURL = "./img/" +twitterIconName;
+	  $(".twitterImg").attr("src",twitterIconURL);
 
+	 $("#topic_catchUpPVRSchedulePage").html(topic);
+	 $("#description_catchUpPVRSchedulePage").html(description);
+		
 	 catchUpScheduleObj    = new Array();
 	 $.each(catchUpPVRSchedule, function(index, value) {
 	 	var channelName = value.ChannelName;
@@ -220,8 +249,8 @@ function initPVRFromS3(data){
 	 	var catchUpItem = $(catchUpPVRScheduleItem);
 	
 		catchUpItem.find(".catchUpPVRScheduleItem").attr("data-index", index);
-		catchUpItem.find("#channelName").html(channelName).removeAttr("id");
-		catchUpItem.find("#displayName").html(displayName).removeAttr("id");
+		catchUpItem.find(".channelName").html(channelName);
+		catchUpItem.find(".displayName").html(displayName);
 		
         var startTime = new Date(startYear + "/" + startMonth + "/" + startDay + " " + startHour + ":" + startMinute + ":0");
         	startTime = new Date(startTime.getTime() + offset);
@@ -229,7 +258,19 @@ function initPVRFromS3(data){
             endTime   = new Date(endTime.getTime() + offset);
         var timeLabel = startTime.format("yyyy-MM-dd hh:mm") + " - " + endTime.format("hh:mm");
 
-		catchUpItem.find("#timeLabel").html(timeLabel).removeAttr("id");
+		catchUpItem.find(".timeLabel").html(timeLabel);
+		//xinjia
+		//cuurentTime
+	 	var nowTime     = new Date().getTime();
+	 	var nowOffset	= new Date().getTimezoneOffset();
+			nowOffset 	= nowOffset * 60 * 1000;
+		 	currentTime = new Date(parseInt(nowTime) + parseInt(nowOffset) + utcdiff + offset);
+			
+		if(currentTime > endTime){
+			$(this).remove(".catchUpItemMaskDiv");	
+			$(this).find(".catchUpPVRScheduleItem ").css("color","grey");
+		}
+		//xinjia end
 		
 	  	catchUpScheduleObj[index] = value;
 	  	catchUpScheduleObj[index].startTime = startTime;
@@ -240,14 +281,13 @@ function initPVRFromS3(data){
 }
 
 //yang end
-
 function initRecordFiles(data) {
 	
     var recFilesList = $("#recFilesList");
     recFilesList.children().remove();
     recFilesList.empty();
 
-    $.each(data, function(index,value) {
+    $.each(data, function(index, value) {
         var filePath    = value.FilePath;
         var channelName = value.ChannelName;
         var displayName = value.DisplayName;
@@ -263,7 +303,6 @@ function initRecordFiles(data) {
         recFilesList.append(recItem);
     });
 
-	resizepvrScheduleList();
 	resizeRecordFileList();
 }
 
@@ -281,6 +320,13 @@ function initPVRShedule(data) {
 		var endTimeFull    = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
         var sheduleItem    = $(pvrScheduleItem);
 		var recordItemId   = value.RecordItemId;
+		var progId 	  	   = value.ProgId;
+		var array 	       = getChannelIdArray(progId);
+		var networkId      = array[0];
+		var tsId 	       = array[1];
+		var serviceId 	   = array[2];
+		var iconKey   	   = getChannelIconKey(networkId, tsId, serviceId);
+		var iconName  	   = getIconNameFromKey(iconKey);
 		
         sheduleItem.children("a").attr("data-PVRIndex", index);
 		sheduleItem.children("a").attr("data-recordId", recordItemId);
@@ -289,6 +335,7 @@ function initPVRShedule(data) {
         sheduleItem.find("#programme_pvrShedule").html(displayName == "" ? "&nbsp" : displayName).attr("id", "programme" + index + "_pvrShedule");
         sheduleItem.find("#startTime_pvrShedule").text(startTime).attr("id", "startTime" + index + "_pvrShedule");
         sheduleItem.find("#endTime_pvrShedule").text(endTime).attr("id", "endTime" + index + "_pvrShedule");
+        sheduleItem.find(".pvrItemImgDiv img").attr("src", "./img/"+ iconName +".png");
 
         pvrScheduleObj[index] = value;
         pvrScheduleObj[index].startTime = startTime;
@@ -299,7 +346,6 @@ function initPVRShedule(data) {
 
 	pvrScheduleList.append(pvrScheduleItemBtn);
 	resizepvrScheduleList();
-	resizeRecordFileList();
 }
 
 function initChannelList(data) {
@@ -328,6 +374,26 @@ function findNowRecord(nowRecordId){
 			}
 		});
 	}
+}
+
+function getChannelIdArray(progId) {
+	var idArray   = [0, 0, 0];
+	var networkId = 0;
+	var tsId 	  = 0;
+	var serviceId = 0;
+
+	$.each(channelList, function(channelIndex, channel) {
+		if(progId == channel.ServiceId ) {
+
+			networkId  = channel.NetworkId;
+			tsId 	   = channel.TsId;
+			serviceId  = channel.ServiceId;
+			idArray[0] = networkId;
+			idArray[1] = tsId;
+			idArray[2] = serviceId;
+		}
+	});
+	return idArray;
 }
 /*=======================================twitter============================================*/
 function twitter(d,s,id) {
@@ -360,7 +426,9 @@ function checkIframe() {
 	iframe.contents().find("body").css("padding", "0px 0px");
 	iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
 	var tempHeight = $(window).height() - headerHeight - 10;
+	var tempWidth  = $(window).width();
 	iframe.height(tempHeight);
+	iframe.width(tempWidth);
 
 	iframe.contents().find("a:not(.e-entry-content)").click(function() {
 		return false;
@@ -416,11 +484,11 @@ function checkIframe() {
 
 					$("#pvrPage").on("swiperight",function(){
 						$.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
+						resizecatchUpTopicList();
 					});
 
 					$("#pvrPage").on("swipeleft",function(){
 						$.mobile.changePage("#recFilesPage",  { transition: "slide" });
-						resizepvrScheduleList();
 						resizeRecordFileList();
 					});
 				}
@@ -447,10 +515,10 @@ function checkIframe() {
 
 		$("#pvrPage").on("swiperight",function(){
 			$.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
+			resizecatchUpTopicList();
 		});
 		$("#pvrPage").on("swipeleft",function(){
 			$.mobile.changePage("#recFilesPage",  { transition: "slide" });
-			resizepvrScheduleList();
 			resizeRecordFileList();
 		});
 	});
@@ -493,7 +561,6 @@ function checkIframe() {
 				$("#recFilesPage").on("swiperight",function(){
 					$.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
 					resizepvrScheduleList();
-					resizeRecordFileList();
 				});
 			}
 		}
@@ -517,60 +584,55 @@ function checkIframe() {
 		$("#recFilesPage").on("swiperight",function(){
 			$.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
 			resizepvrScheduleList();
-			resizeRecordFileList();
 		});
 	});
 
 /*=======================================Sliding============================================*/
     $("#pvrPage").on("swiperight",function(){
         $.mobile.changePage("#catchUpTopicPage",  { transition: "slide", reverse:true});
+		resizecatchUpTopicList();
     });
     $("#pvrPage").on("swipeleft",function(){
         $.mobile.changePage("#recFilesPage",  { transition: "slide" });
-		resizepvrScheduleList();
 		resizeRecordFileList();
     });
     $("#catchUpTopicPage").on("swipeleft",function(){
         $.mobile.changePage("#pvrPage",  { transition: "slide"});
 		resizepvrScheduleList();
-		resizeRecordFileList();
     });
     $("#recFilesPage").on("swiperight",function(){
         $.mobile.changePage("#pvrPage",  { transition: "slide", reverse:true});
 		resizepvrScheduleList();
-		resizeRecordFileList();
     });
 
-
-    //初始化日期控件
     var formTime = {
-        preset: 'datetime', //日期
-        theme: 'android-ics', //皮肤样式
-        display: 'modal', //显示方式 
-        mode: 'Scroller', //日期选择模式
-        dateFormat: 'yy-mm-dd', // 日期格式
-        dateOrder: 'yymmdd', //面板中日期排列格式
-        startYear:2010,
-        endYear:2050,
-        animate:"slideup",
-		timeFormat: 'HH:ii',//获得的时间为24小时制
-		height:30,//调整行高度不让整个控件超出屏幕
-		showOnFocus: false//解决页面切换回来后会弹出时间选择
+        preset	   : 'datetime',
+        theme	   : 'android-ics', 
+        display	   : 'modal', 
+        mode	   : 'Scroller', 
+        dateFormat : 'yy-mm-dd', 
+        dateOrder  : 'yymmdd', 
+        startYear  : 2010,
+        endYear    : 2050,
+        animate	   : "slideup",
+		timeFormat : 'HH:ii',
+		height     : 30,
+		showOnFocus: false
     };
 
     var toTime = {
-        preset: 'datetime', //日期
-        theme: 'android-ics', //皮肤样式
-        display: 'modal', //显示方式 
-        mode: 'Scroller', //日期选择模式
-        dateFormat: 'yy-mm-dd', // 日期格式
-        dateOrder: 'yymmdd', //面板中日期排列格式
-        startYear:2010,
-        endYear:2050,
-        animate:"slideup",
-		timeFormat: 'HH:ii',//获得的时间为24小时制
-		height:30,//调整行高度不让整个控件超出屏幕
-		showOnFocus: false//解决页面切换回来后会弹出时间选择
+        preset     : 'datetime',
+        theme	   : 'android-ics', 
+        display	   : 'modal', 
+        mode	   : 'Scroller', 
+        dateFormat : 'yy-mm-dd', 
+        dateOrder  : 'yymmdd', 
+        startYear  : 2010,
+        endYear	   : 2050,
+        animate	   : "slideup",
+		timeFormat : 'HH:ii',
+		height	   : 30,
+		showOnFocus: false
     };
     $("#formTimeSelect").textinput();
 	$("#toTimeSelect").textinput();
@@ -583,15 +645,16 @@ $(function() {
 
     $("body").on("click", ".channelItem", function() {
         var channelName = $(this).text();
-
-        var preCheck = $("#channelList").find("[data-icon=check]");
+        var preCheck    = $("#channelList").find("[data-icon=check]");
+		
         preCheck.attr("data-icon", "false");
-        preCheck.removeClass("ui-btn-icon-right ui-icon-check");
+        preCheck.removeClass("ui-btn-icon-right ui-icon-custom-check");
 
         $(this).attr("data-icon", "check");
-        $(this).addClass("ui-btn-icon-right ui-icon-check");
+        $(this).addClass("ui-btn-icon-right ui-icon-custom-check");
 		$("#channelName_recItemEdit").attr("data-index",$(this).attr("data-index"));
         $("#channelName_recItemEdit").text(channelName);
+        $('#ChannelListback').click();
     });
 
     $("body").on("click", ".recordFileItem", function() {
@@ -599,12 +662,12 @@ $(function() {
     });
 
     $("body").on("click", "#recordEditItemPage", function() {
-		if(currentTime==0){
+		if(currentTime == 0){
 			return;
 		}
 
-		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+		$("#formTimeSelect").css({"background-color":"transparent"});
+		$("#toTimeSelect").css({"background-color":"transparent"});
         var pvrScheduleItemObj = pvrScheduleObj[$(this).attr("data-PVRIndex")];
 		 $("#recItemIndex").val($(this).attr("data-PVRIndex"));
 		 $("#channelName_recItemEdit").attr("data-index","-1");
@@ -614,7 +677,7 @@ $(function() {
          $("#formTimeSelect").val(pvrScheduleItemObj.startTime);
          $("#toTimeSelect").val(pvrScheduleItemObj.endTime);
 		 var pvrItemRecDiv=$(this).find(".pvrItemRecDiv");
-		if(pvrItemRecDiv.attr("data-recordId")==nowRecordId){
+		if(pvrItemRecDiv.attr("data-recordId") == nowRecordId){
 			$("#formTimeSelect").textinput("disable");
 		}else{
 			$("#formTimeSelect").textinput("enable");
@@ -623,12 +686,12 @@ $(function() {
     });
 	
 	$("body").on("click", ".pvrScheduleAddItem", function() {
-		if(currentTime==0){
+		if(currentTime == 0){
 			return;
 		}
 
-		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+		$("#formTimeSelect").css({"background-color":"transparent"});
+		$("#toTimeSelect").css({"background-color":"transparent"});
 		$("#recItemIndex").val('-1');
 		$("#channelName_recItemEdit").attr("data-index","0");
 		$("#channelName_recItemEdit").text(channelList[0].ChannelName);
@@ -665,34 +728,65 @@ $(function() {
     });
 
     // Yang begin
-    $("body").on("click", ".twitterTopicListLi", function() {
-		var twitterAccount = $(this).children("div").attr("data-account");
-		var twitterId = $(this).children("div").attr("data-id");
+    $("body").on("click", ".catchUpTopicListLi", function() {
+		var twitterAccount = $(this).find(".catchUpTopicItemDiv").attr("data-account");
+		var twitterId 	   = $(this).find(".catchUpTopicItemDiv").attr("data-id");
+		twitterIconName    = $(this).find(".catchUpTopicItemDiv").attr("data-img"); 
+		
 		$("#twitterContent").empty();
 		$("#twitter-wjs").remove();
 		$("iframe").empty();
 		
         $.mobile.changePage("#twitterPage", {transition: "slide", reverse: true});
-		$("#twitterContent").append('<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="'+twitterId + '">loading Twitter...</a>');
+		$("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '">loading Twitter...</a>');
 		loadTwitter();
     });
 
 	$("body").on("click",".catchUpTopicCheckBox",function(){
 		if($(this).attr("data-isCheck") == "false"){
-			$(this).removeClass("ui-icon-custom-unselect").addClass("ui-icon-custom-selected");
+			$(this).removeClass("ui-icon-custom-unselect").addClass("ui-icon-custom-selected-blue");
 			$(this).attr("data-isCheck","true");
 		}else{
-			$(this).removeClass("ui-icon-custom-selected").addClass("ui-icon-custom-unselect");
+			$(this).removeClass("ui-icon-custom-selected-blue").addClass("ui-icon-custom-unselect");
 			$(this).attr("data-isCheck","false");
 		}
 		return false;
 	});
+
+
+	$(document).on("pagehide","#catchUpTopicPage",function(){
+		var jsonArray = [];
+
+		$.each($(".catchUpTopicListLi"), function(index, value) {
+			var isCheckNow = $(this).find(".catchUpTopicCheckBox").attr("data-isCheck");
+			var isCheckOld = catchUpTopicArray[index];
+			var jsonStr    = {};
+			var topicName  = "";
+			var subscribed = "";
+
+			if(isCheckNow != isCheckOld) {
+
+				topicName = $(this).attr("data-topicName");
+
+				if($(this).find(".catchUpTopicCheckBox").attr("data-isCheck") == "true") {
+					subscribed = 1;
+				} else {
+					subscribed = 0;
+				}
+
+				jsonStr.TopicName  = topicName;
+				jsonStr.Subscribed = subscribed;
+				jsonArray.push(jsonStr);
+			}
+		});
+		syncCatchUpTopic(JSON.stringify(jsonArray));
+	});
 	
 	
 	$("body").on("click", ".catchUpItemMaskDiv", function() {
-
+		
         var checkBox = $(this).find(".catchUpItemCheckBox");
-	    var index = parseInt($(this).parent().attr("data-index"));
+	   /* var index = parseInt($(this).parent().attr("data-index"));
 
 		//ScheduleTime
 		var endTime 	= catchUpScheduleObj[index].endTime;
@@ -701,25 +795,26 @@ $(function() {
 		var	nowTime   = new Date().getTime();
 		var nowOffset = new Date().getTimezoneOffset();
 		    nowOffset = nowOffset * 60 * 1000;
-		    currentTime = new Date(parseInt(nowTime) + parseInt(nowOffset) + utcdiff + offset);
+		    currentTime = new Date(parseInt(nowTime) + parseInt(nowOffset) + utcdiff + offset);*/
 
-		if(currentTime < endTime){
+
+		//if(currentTime < endTime){
 			if(checkBox.attr("data-isCheck") == "false") {
 				checkBox.removeClass("ui-icon-custom-unselect");
-				checkBox.addClass("ui-icon-custom-selected");
+				checkBox.addClass("ui-icon-custom-selected-blue");
 				checkBox.attr("data-isCheck", "true");
 				
         	}else{
-				checkBox.removeClass("ui-icon-custom-selected");
+				checkBox.removeClass("ui-icon-custom-selected-blue");
 				checkBox.addClass("ui-icon-custom-unselect");
 				checkBox.attr("data-isCheck", "false");
         	}	
-		}
+		//}
     });
 	
 	$("body").on("click", ".syncBtn", function() {
 		var jsonStrArray = [];
-		var checkBox = $(".catchUpItemCheckBox[data-isCheck=true]");
+		var checkBox 	 = $(".catchUpItemCheckBox[data-isCheck=true]");
 		var recordItemId = new Date().getTime();
 
 		$.each(checkBox, function(catchUpScheduleIndex, item) {
@@ -745,29 +840,29 @@ $(function() {
 			});
 
 			var jsonstr = {
-					StartYear:startTime.getFullYear(),
-					StartMonth:startTime.getMonth() + 1,
-					StartDay:startTime.getDate(),
-					StartHour:startTime.getHours(),
-					StartMinute:startTime.getMinutes(),
-					StartSecond:startTime.getSeconds(),
-					EndYear:endTime.getFullYear(),
-					EndMonth:endTime.getMonth() + 1,
-					EndDay:endTime.getDate(),
-					EndHour:endTime.getHours(),
-					EndMinute:endTime.getMinutes(),
-					EndSecond:endTime.getSeconds(),
-					ProgId:catchUpScheduleItem.ProgId,
-					NetworkId:catchUpScheduleItem.NetworkId,
-					TsId:catchUpScheduleItem.TsId,
-					Version:catchUpScheduleItem.Version,
-					ChannelName:catchUpScheduleItem.ChannelName,
-					DisplayName:catchUpScheduleItem.DisplayName,
-					EventId:0,
-					RecordItemId:parseInt(recordItemId / 1000) + catchUpScheduleIndex,
-					PidArray:pidArray,
-					Bandwidth:bandwidth,
-					Frequency:frequency
+					StartYear	: startTime.getFullYear(),
+					StartMonth	: startTime.getMonth() + 1,
+					StartDay	: startTime.getDate(),
+					StartHour	: startTime.getHours(),
+					StartMinute	: startTime.getMinutes(),
+					StartSecond : startTime.getSeconds(),
+					EndYear		: endTime.getFullYear(),
+					EndMonth	: endTime.getMonth() + 1,
+					EndDay		: endTime.getDate(),
+					EndHour		: endTime.getHours(),
+					EndMinute	: endTime.getMinutes(),
+					EndSecond	: endTime.getSeconds(),
+					ProgId		: catchUpScheduleItem.ProgId,
+					NetworkId	: catchUpScheduleItem.NetworkId,
+					TsId		: catchUpScheduleItem.TsId,
+					Version		: catchUpScheduleItem.Version,
+					ChannelName	: catchUpScheduleItem.ChannelName,
+					DisplayName	: catchUpScheduleItem.DisplayName,
+					EventId		: 0,
+					RecordItemId: parseInt(recordItemId / 1000) + catchUpScheduleIndex,
+					PidArray	: pidArray,
+					Bandwidth	: bandwidth,
+					Frequency	: frequency
 				};
 
 				jsonStrArray.push(jsonstr);
@@ -778,219 +873,220 @@ $(function() {
 	// Yang end
 });
 
-/*魏雯涛增加部分*/
+
 $(function(){
 	
 	$("#formTimeSelect").click(function(){
-		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+		$("#formTimeSelect").css({"background-color":"transparent"});
+		$("#toTimeSelect").css({"background-color":"transparent"});
 	});
 
 	$("#toTimeSelect").click(function(){
-		$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-		$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+		$("#formTimeSelect").css({"background-color":"transparent"});
+		$("#toTimeSelect").css({"background-color":"transparent"});
 	});
 	
     $("#toTimeSelect").change(function(){
-		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
-			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
-			var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
-			if(endtime<=currentTime){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+		if($("#toTimeSelect").val() !="" && $("#formTimeSelect").val() != ""){
+			var starttime = new Date($("#formTimeSelect").val().replace(/-/g, '/'));
+			var endtime   = new Date($("#toTimeSelect").val().replace(/-/g, '/'));
+			if(endtime <= currentTime){
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
-			if(starttime>=endtime){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+			if(starttime >= endtime){
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
 			if(iftimeconflict(starttime,endtime,$("#recItemIndex").val())){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
-			$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-			$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+			$("#formTimeSelect").css({"background-color":"transparent"});
+			$("#toTimeSelect").css({"background-color":"transparent"});
 		}
 	});
 
 	$("#formTimeSelect").change(function(){
-		if($("#toTimeSelect").val()!=""&&$("#formTimeSelect").val()!=""){
-			var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
-			var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
+		if($("#toTimeSelect").val() != "" && $("#formTimeSelect").val() != ""){
+			var starttime = new Date($("#formTimeSelect").val().replace(/-/g, '/'));
+			var endtime   = new Date($("#toTimeSelect").val().replace(/-/g, '/'));
 			if(endtime<=currentTime){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
 			if(starttime>=endtime){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
 			if(iftimeconflict(starttime,endtime,$("#recItemIndex").val())){
-				$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-				$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+				$("#formTimeSelect").css({"background-color":"#ff6464"});
+				$("#toTimeSelect").css({"background-color":"#ff6464"});
 				return;
 			}
-			$("#formTimeSelect").css({"background-color":"transparent","color":"#333"});
-			$("#toTimeSelect").css({"background-color":"transparent","color":"#333"});
+			$("#formTimeSelect").css({"background-color":"transparent"});
+			$("#toTimeSelect").css({"background-color":"transparent"});
 		}
 	});
 
 	$("#applyButton").click(function(){
 		
-		if(currentTime==0){
+		if(currentTime == 0){
 			return;
 		}
 
-		if($("#channelName_recItemEdit").text()==""||$("#channelName_recItemEdit").text()=="　"){
+		if($("#channelName_recItemEdit").text() == "" || $("#channelName_recItemEdit").text() == "　"){
 			return;
 		}
 		/*if($("#displayName_recItemEdit").val()==""){
 			$("#displayName_recItemEdit").css({"background-color":"#ff6464","color":"#fff"});
 			return;
 		}*/
-		if($("#formTimeSelect").val()==""){
-			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+		if($("#formTimeSelect").val() == ""){
+			$("#formTimeSelect").css({"background-color":"#ff6464"});
 			return;
 		}
 
-		if($("#toTimeSelect").val()==""){
-			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+		if($("#toTimeSelect").val() == ""){
+			$("#toTimeSelect").css({"background-color":"#ff6464"});
 			return;
 		}
 
 		var starttime=new Date($("#formTimeSelect").val().replace(/-/g, '/'));
 		var endtime=new Date($("#toTimeSelect").val().replace(/-/g, '/'));
-		if(endtime<=currentTime){
-			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+		if(endtime <= currentTime){
+			$("#formTimeSelect").css({"background-color":"#ff6464"});
+			$("#toTimeSelect").css({"background-color":"#ff6464"});
 			return;
 		}
-		if(starttime>=endtime){
-			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+		if(starttime >= endtime){
+			$("#formTimeSelect").css({"background-color":"#ff6464"});
+			$("#toTimeSelect").css({"background-color":"#ff6464"});
 			return;
 		}
 		if(iftimeconflict(starttime,endtime,$("#recItemIndex").val())){
-			$("#formTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
-			$("#toTimeSelect").css({"background-color":"#ff6464","color":"#fff"});
+			$("#formTimeSelect").css({"background-color":"#ff6464"});
+			$("#toTimeSelect").css({"background-color":"#ff6464"});
 			return;
 		}
 		var json = [];		
-		json.StartYear=starttime.getFullYear();
-		json.StartMonth=starttime.getMonth()+1;
-		json.StartDay=starttime.getDate();
-		json.StartHour=starttime.getHours();
-		json.StartMinute=starttime.getMinutes();
-		json.StartSecond=starttime.getSeconds();
-		json.EndYear=endtime.getFullYear();
-		json.EndMonth=endtime.getMonth()+1;
-		json.EndDay=endtime.getDate();
-		json.EndHour=endtime.getHours();
-		json.EndMinute=endtime.getMinutes();
-		json.EndSecond=endtime.getSeconds();
+		json.StartYear   = starttime.getFullYear();
+		json.StartMonth  = starttime.getMonth()+1;
+		json.StartDay	 = starttime.getDate();
+		json.StartHour	 = starttime.getHours();
+		json.StartMinute = starttime.getMinutes();
+		json.StartSecond = starttime.getSeconds();
+		json.EndYear	 = endtime.getFullYear();
+		json.EndMonth	 = endtime.getMonth() + 1;
+		json.EndDay		 = endtime.getDate();
+		json.EndHour	 = endtime.getHours();
+		json.EndMinute	 = endtime.getMinutes();
+		json.EndSecond	 = endtime.getSeconds();
+		json.EventId	 = 0;
 		
-		json.EventId=0;
-		var now=new Date().getTime();
-		json.RecordItemId=parseInt((parseInt(now)+parseInt(utcdiff))/1000);
+		var now = new Date().getTime();
+		json.RecordItemId = parseInt((parseInt(now)+parseInt(utcdiff))/1000);
 		
 		if($("#channelName_recItemEdit").attr("data-index")!="-1"){
-			var channel=channelList[parseInt($("#channelName_recItemEdit").attr("data-index"))];
-			json.ChannelName=channel.ChannelName;
-			json.ProgId=channel.ServiceId;
-			json.Bandwidth=channel.Bandwidth;
-			json.NetworkId=channel.NetworkId;
-			json.TsId=channel.TsId;
-			json.PidArray=channel.PidArray;
-			json.Frequency=channel.Frequency;
-			json.Version=4;
+			var channel = channelList[parseInt($("#channelName_recItemEdit").attr("data-index"))];
+			json.ChannelName = channel.ChannelName;
+			json.ProgId		 = channel.ServiceId;
+			json.Bandwidth	 = channel.Bandwidth;
+			json.NetworkId	 = channel.NetworkId;
+			json.TsId		 = channel.TsId;
+			json.PidArray	 = channel.PidArray;
+			json.Frequency	 = channel.Frequency;
+			json.Version	 = 4;
 		}
 
-		if($("#recItemIndex").val()!="-1"){
+		if($("#recItemIndex").val()!= "-1"){
 			var pvrScheduleItemObj = pvrScheduleObj[$("#recItemIndex").val()];
-			json.RecordItemId=pvrScheduleItemObj.RecordItemId;
-			json.ChannelName=pvrScheduleItemObj.ChannelName;
-			json.EventId=pvrScheduleItemObj.EventId;
-			json.ProgId=pvrScheduleItemObj.ProgId;
-			json.Bandwidth=pvrScheduleItemObj.Bandwidth;
-			json.NetworkId=pvrScheduleItemObj.NetworkId;
-			json.TsId=pvrScheduleItemObj.TsId;
-			json.PidArray=pvrScheduleItemObj.PidArray;
-			json.Frequency=pvrScheduleItemObj.Frequency;
-			json.Version=pvrScheduleItemObj.Version;
+			json.RecordItemId	   = pvrScheduleItemObj.RecordItemId;
+			json.ChannelName	   = pvrScheduleItemObj.ChannelName;
+			json.EventId		   = pvrScheduleItemObj.EventId;
+			json.ProgId			   = pvrScheduleItemObj.ProgId;
+			json.Bandwidth		   = pvrScheduleItemObj.Bandwidth;
+			json.NetworkId		   = pvrScheduleItemObj.NetworkId;
+			json.TsId			   = pvrScheduleItemObj.TsId;
+			json.PidArray		   = pvrScheduleItemObj.PidArray;
+			json.Frequency		   = pvrScheduleItemObj.Frequency;
+			json.Version		   = pvrScheduleItemObj.Version;
 		}
 
 		var jsonstr = {StartDay:json.StartDay,
-					EndMonth:json.EndMonth,
-					StartMonth:json.StartMonth,
-					EventId:json.EventId,
-					ChannelName:json.ChannelName,
-					DisplayName:$("#displayName_recItemEdit").val(),
-					RecordItemId:json.RecordItemId,
-					EndMinute:json.EndMinute,
-					StartHour:json.StartHour,
-					ProgId:json.ProgId,
-					Bandwidth:json.Bandwidth,
-					EndSecond:json.EndSecond,
-					EndHour:json.EndHour,
-					StartYear:json.StartYear,
-					NetworkId:json.NetworkId,
-					TsId:json.TsId,
-					StartMinute:json.StartMinute,
-					EndDay:json.EndDay,
-					StartSecond:json.StartSecond,
-					PidArray:json.PidArray,
-					EndYear:json.EndYear,
-					Frequency:json.Frequency,
-					Version:json.Version};
+					EndMonth	: json.EndMonth,
+					StartMonth	: json.StartMonth,
+					EventId		: json.EventId,
+					ChannelName	: json.ChannelName,
+					DisplayName	: $("#displayName_recItemEdit").val(),
+					RecordItemId: json.RecordItemId,
+					EndMinute	: json.EndMinute,
+					StartHour	: json.StartHour,
+					ProgId		: json.ProgId,
+					Bandwidth	: json.Bandwidth,
+					EndSecond	: json.EndSecond,
+					EndHour		: json.EndHour,
+					StartYear	: json.StartYear,
+					NetworkId	: json.NetworkId,
+					TsId		: json.TsId,
+					StartMinute	: json.StartMinute,
+					EndDay		: json.EndDay,
+					StartSecond	: json.StartSecond,
+					PidArray	: json.PidArray,
+					EndYear		: json.EndYear,
+					Frequency	: json.Frequency,
+					Version		: json.Version};
 
-		if($("#recItemIndex").val()!="-1") {
+		if($("#recItemIndex").val()!= "-1") {
 			modifyRecItem(JSON.stringify(jsonstr));
 
 		} else {
-			var jsonstrarray=[];
+			var jsonstrarray = [];
 			jsonstrarray.push(jsonstr);
 			addRecItem(JSON.stringify(jsonstrarray));
 		}
 	});
 
-	//判断与其他节目的时间冲突
-	var iftimeconflict=function(starttime,endtime,recItemIndex){
-		data=pvrScheduleObj
-		flag=0;
+
+	var iftimeconflict = function(starttime,endtime,recItemIndex){
+		data = pvrScheduleObj
+		flag = 0;
 		$.each(data, function(index,value) {
-			if(index!=recItemIndex){
-				localstarttime=new Date(value.startTime.replace(/-/g, '/'));
-				localendtime=new Date(value.endTime.replace(/-/g, '/'));
-				if(starttime>=localstarttime&&starttime<=localendtime){
+			if(index != recItemIndex){
+				localstarttime = new Date(value.startTime.replace(/-/g, '/'));
+				localendtime   = new Date(value.endTime.replace(/-/g, '/'));
+				
+				if(starttime >= localstarttime&&starttime<=localendtime){
 					flag=1;
 					return;
 				}
-				if(endtime>=localstarttime&&endtime<=localendtime){
+				if(endtime >= localstarttime&&endtime<=localendtime){
 					flag=1;
 					return;
 				}
-				if(localstarttime>=starttime&&localstarttime<=endtime){
+				if(localstarttime >= starttime&&localstarttime<=endtime){
 					flag=1;
 					return;
 				}
-				if(localendtime>=starttime&&localendtime<=endtime){
+				if(localendtime >= starttime&&localendtime<=endtime){
 					flag=1;
 					return;
 				}
 			}
 		});
-		if(flag==1){
+		if(flag == 1){
 			return true;
 		}
 		return false;
 	}
 });
 
-/*列表自适应*/
+
 var divwidth=272;
 
 var resizeRecordFileList = function(){
@@ -999,10 +1095,10 @@ var resizeRecordFileList = function(){
 		//var marginleft=$('.recFilesListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
 		var marginleft=0;
 		//var marginright=$('.recFilesListli').css("margin-right").substring(0,$('.recFilesListli').css("margin-right").indexOf('px'));
-		var marginright=0;
-		var divallwidth=parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
-		var multiple=parseInt(windowwidth/divallwidth);
-		var needwidth=parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
+		var marginright = 0;
+		var divallwidth = parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
+		var multiple	= parseInt(windowwidth/divallwidth);
+		var needwidth	= parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
 		$('.recFilesListli').width(needwidth);
 	}
 }
@@ -1010,27 +1106,27 @@ var resizepvrScheduleList = function(){
 	if($('.pvrScheduleListli').length > 0){	
 		var windowwidth=$('#pvrScheduleList').width();
 		//var marginleft=$('.pvrScheduleListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
-		var marginleft=0;
+		var marginleft = 0;
 		//var marginright=$('.pvrScheduleListli').css("margin-right").substring(0,$('.recFilesListli').css("margin-right").indexOf('px'));
-		var marginright=0;
-		var divallwidth=parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
-		var multiple=parseInt(windowwidth/divallwidth);
-		var needwidth=parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
+		var marginright = 0;
+		var divallwidth = parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
+		var multiple	= parseInt(windowwidth/divallwidth);
+		var needwidth	= parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
 		$('.pvrScheduleListli').width(needwidth);
 	}
 }
 
 var resizecatchUpTopicList = function(){
-	if($('.twitterTopicListLi').length > 0){	
-		var windowwidth=$('#twitterTopicList').width();
+	if($('.catchUpTopicListLi').length > 0){	
+		var windowwidth=$('#catchUpTopicList').width();
 		//var marginleft=$('.pvrScheduleListli').css("margin-left").substring(0,$('.recFilesListli').css("margin-left").indexOf('px'));
-		var marginleft=0;
+		var marginleft = 0;
 		//var marginright=$('.pvrScheduleListli').css("margin-right").substring(0,$('.recFilesListli').css("margin-right").indexOf('px'));
-		var marginright=0;
-		var divallwidth=parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
-		var multiple=parseInt(windowwidth/divallwidth);
-		var needwidth=parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
-		$('.twitterTopicListLi').width(needwidth);
+		var marginright = 0;
+		var divallwidth	= parseInt(divwidth)+parseInt(marginleft)+parseInt(marginright);
+		var multiple	= parseInt(windowwidth/divallwidth);
+		var needwidth	= parseInt(windowwidth/multiple)-parseInt(marginleft)-parseInt(marginright);
+		$('.catchUpTopicListLi').width(needwidth);
 	}
 }
 
@@ -1040,9 +1136,7 @@ $(window).resize(function(){
 	resizecatchUpTopicList();
 });
 
-/** 
- * 时间对象的格式化; 
- */  
+
 Date.prototype.format = function(format) {  
 	/* 
 	 * eg:format="yyyy-MM-dd hh:mm:ss"; 
@@ -1054,7 +1148,7 @@ Date.prototype.format = function(format) {
 		"m+" : this.getMinutes(), // minute  
 		"s+" : this.getSeconds(), // second  
 		"q+" : Math.floor((this.getMonth() + 3) / 3), // quarter  
-		"S" : this.getMilliseconds()  
+		"S"  : this.getMilliseconds()  
 		// millisecond  
 	}  
   
