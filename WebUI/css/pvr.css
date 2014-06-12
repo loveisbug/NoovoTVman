@@ -41,6 +41,8 @@
 .pvrScheduleItem>div {
 	border-width: 2px;
 	border-color: white;
+	background-color: white;
+	color:black;
 }
 
 .pvrScheduleItem .check {
@@ -75,6 +77,8 @@
 .recordFileItem>div{
 	border-width: 2px;
 	border-color:white;
+	background-color: white;
+	color:black;
 }
 
 .recordFileItem .check {
@@ -163,21 +167,49 @@
 	z-index:0;
 }
 
-#twitterTopicList{
+#catchUpTopicList{
 	padding:0;
 	margin-top:0.3em;
 	list-style:none;	
 }
 
-.twitterTopicListLi{
-	cursor:pointer;
-	margin-left:6px;
+.recordItemEditTable_recordItemPage span{
+	color:white;
+	text-shadow:none;
+}
+
+.catchUpTopicListLi{
 	padding:0;
-	list-style:none;
 	position:relative;
 	height:8em;
 	width:17em;
 	float:left;
+}
+
+.catchUpTopicItemDiv{
+	height:6em;
+	background-color:white;
+	color: black;
+	padding:8px 8px;
+}
+
+.catchUpTopicImgDiv{
+	max-width:20%;
+	width: 20%;
+	height: 48px;
+	float: left;
+	padding-right: 2px;
+	margin-top:-2px;
+}
+.catchUpTopicImgDiv>img{
+	height:50px;
+}
+
+.catchUpTopicInfoDiv {
+	width:78%;
+	height:6em;
+	float:left;
+	padding:1px 1px;
 }
 
 .catchUpTopicMaskDiv{
@@ -196,8 +228,18 @@
 	width: 25px;
 	height:25px;
 }
+
+
+.catchUpPVRScheduleLi
+{
+	width: 95%;
+	margin-left: 5%;
+}
 .catchUpPVRScheduleItem {
 	background-color:white;
+	color: black;
+	padding-left: 8px;	
+	height: 4em;
 }
 
 .catchUpItemMaskDiv {
@@ -206,6 +248,7 @@
 	top:0px;
 	left:0px;
 	position:absolute;
+	z-index: 9999;
 }
 
 .catchUpItemCheckBox {
@@ -215,4 +258,13 @@
 	width: 25px;
 	height:25px;
 	z-index:0;
+}
+.channelName{
+	margin:0px;
+}
+
+.twitterImg{
+	height:50px;
+	width:44px;
+	border-radius: 10px;
 }

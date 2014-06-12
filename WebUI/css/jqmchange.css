@@ -3,9 +3,19 @@
 	line-height:1.8;
 }
 
+.ui-icon-custom-check:after {
+	background:url('../img/icon-setting-check.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
 .ui-icon-custom-into:after {
 	background:url('../img/icon-setting-into.png') no-repeat center;
 	background-size: 25px 25px;
+}
+
+.ui-icon-custom-search {
+	background:url('../img/icon-search.png') no-repeat center;
+	background-size: 13.5px 13.5px;
 }
 
 .ui-icon-custom-edit {
@@ -20,6 +30,11 @@
 
 .ui-icon-custom-selected {
 	background:url('../img/icon-selected.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
+.ui-icon-custom-selected-blue {
+	background:url('../img/icon-selected-blue.png') no-repeat center;
 	background-size: 25px 25px;
 }
 
