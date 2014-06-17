@@ -10,7 +10,7 @@ var offset				  = 0;
 var confirmLabel		  = "";
 var nowRecordId			  = -1;
 var catchUpScheduleObj    = "";
-var catchUpTopicArray     = new Array("true", "true", "true", "true", "true"); //default book all the topic
+var catchUpTopicArray     = new Array("true", "true", "true", "true", "true"); //default book all the topic\
 var twitterIconName 	  = "";
 
 var recordFileItem = '<li class="recFilesListli">\
@@ -54,9 +54,14 @@ var pvrScheduleItem ='<li class="pvrScheduleListli" style="height:8em;"> \
 
 var catchUpPVRScheduleItem = '<li class="catchUpPVRScheduleLi">\
                         <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0" ata-role="button" >\
-                            <p class="channelName">CH02:BBC Sports 1</p>\
-                            <p style="margin:0px;"><span class="displayName">England vs Japan </span></p>\
-							<p style="margin:0px;"><span class="timeLabel">2014/06/19 18:00-20:00</span></p>\
+                            <table style=" border:none; padding:0; margin:0;">\
+                            <tr>\
+								<td rowspan="3"><img class="channelIcon" src="img/a_lequipe21.png" style="padding:0.25em">\
+								</td><td class="channelName">CH02:BBC Sports 1</td>\
+							</tr>\
+                            <tr><td class="displayName">England vs Japan</td></tr>\
+                            <tr><td class="timeLabel">2014/06/19 18:00-20:00</td></tr>\
+                            </table>\
                             <div class="catchUpItemMaskDiv">\
                                 <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>\
                             </div>\
@@ -245,12 +250,18 @@ function initPVRFromS3(data){
 		var endHour 	= value.EndHour;
 		var endMinute	= value.EndMinute;
 		var endSecond	= value.EndSecond;
+		var networkId   = value.NetworkId;
+		var tsId        = value.TsId;
+		var serviceId   = value.ProgId;
+		var iconKey     = getChannelIconKey(networkId, tsId, serviceId);
+		var iconName    = getIconNameFromKey(iconKey);
 
 	 	var catchUpItem = $(catchUpPVRScheduleItem);
 	
 		catchUpItem.find(".catchUpPVRScheduleItem").attr("data-index", index);
 		catchUpItem.find(".channelName").html(channelName);
 		catchUpItem.find(".displayName").html(displayName);
+		catchUpItem.find(".channelIcon").attr("src", "./img/" + iconName + ".png");
 		
         var startTime = new Date(startYear + "/" + startMonth + "/" + startDay + " " + startHour + ":" + startMinute + ":0");
         	startTime = new Date(startTime.getTime() + offset);
@@ -266,9 +277,9 @@ function initPVRFromS3(data){
 			nowOffset 	= nowOffset * 60 * 1000;
 		 	currentTime = new Date(parseInt(nowTime) + parseInt(nowOffset) + utcdiff + offset);
 			
-		if(currentTime > endTime){
-			$(this).remove(".catchUpItemMaskDiv");	
-			$(this).find(".catchUpPVRScheduleItem ").css("color","grey");
+		if(currentTime > endTime || !isValidPVRSchedule(networkId, tsId, serviceId)) {
+			catchUpItem.find(".catchUpItemMaskDiv").remove();	
+			catchUpItem.find(".catchUpPVRScheduleItem ").css("color","grey");
 		}
 		//xinjia end
 		
@@ -320,11 +331,9 @@ function initPVRShedule(data) {
 		var endTimeFull    = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
         var sheduleItem    = $(pvrScheduleItem);
 		var recordItemId   = value.RecordItemId;
-		var progId 	  	   = value.ProgId;
-		var array 	       = getChannelIdArray(progId);
-		var networkId      = array[0];
-		var tsId 	       = array[1];
-		var serviceId 	   = array[2];
+		var networkId      = value.NetworkId;
+		var tsId 	       = value.TsId;
+		var serviceId 	   = value.ProgId;
 		var iconKey   	   = getChannelIconKey(networkId, tsId, serviceId);
 		var iconName  	   = getIconNameFromKey(iconKey);
 		
@@ -376,25 +385,19 @@ function findNowRecord(nowRecordId){
 	}
 }
 
-function getChannelIdArray(progId) {
-	var idArray   = [0, 0, 0];
-	var networkId = 0;
-	var tsId 	  = 0;
-	var serviceId = 0;
-
+function isValidPVRSchedule(networkId, tsId, serviceId) {
+	var isValid = false;
 	$.each(channelList, function(channelIndex, channel) {
-		if(progId == channel.ServiceId ) {
+			if(serviceId == channel.ServiceId &&
+				networkId == channel.NetworkId &&
+				tsId == channel.TsId ) {
 
-			networkId  = channel.NetworkId;
-			tsId 	   = channel.TsId;
-			serviceId  = channel.ServiceId;
-			idArray[0] = networkId;
-			idArray[1] = tsId;
-			idArray[2] = serviceId;
+				isValid = true;
 		}
 	});
-	return idArray;
+	return isValid;
 }
+
 /*=======================================twitter============================================*/
 function twitter(d,s,id) {
 	var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
@@ -728,7 +731,7 @@ $(function() {
     });
 
     // Yang begin
-    $("body").on("click", ".catchUpTopicListLi", function() {
+    $("body").on("click", ".catchUpTopicListLi:not(:last)", function() {
 		var twitterAccount = $(this).find(".catchUpTopicItemDiv").attr("data-account");
 		var twitterId 	   = $(this).find(".catchUpTopicItemDiv").attr("data-id");
 		twitterIconName    = $(this).find(".catchUpTopicItemDiv").attr("data-img"); 
@@ -738,7 +741,7 @@ $(function() {
 		$("iframe").empty();
 		
         $.mobile.changePage("#twitterPage", {transition: "slide", reverse: true});
-		$("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '">loading Twitter...</a>');
+		$("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '"><span style="font-size:1em">loading </span></a>');
 		loadTwitter();
     });
 
@@ -757,7 +760,7 @@ $(function() {
 	$(document).on("pagehide","#catchUpTopicPage",function(){
 		var jsonArray = [];
 
-		$.each($(".catchUpTopicListLi"), function(index, value) {
+		$.each($(".catchUpTopicListLi:not(:last)"), function(index, value) {
 			var isCheckNow = $(this).find(".catchUpTopicCheckBox").attr("data-isCheck");
 			var isCheckOld = catchUpTopicArray[index];
 			var jsonStr    = {};
@@ -770,8 +773,10 @@ $(function() {
 
 				if($(this).find(".catchUpTopicCheckBox").attr("data-isCheck") == "true") {
 					subscribed = 1;
+					catchUpTopicArray[index] = "true";
 				} else {
 					subscribed = 0;
+					catchUpTopicArray[index] = "false";
 				}
 
 				jsonStr.TopicName  = topicName;
@@ -813,6 +818,21 @@ $(function() {
     });
 	
 	$("body").on("click", ".syncBtn", function() {
+		var checkBox = $(".catchUpItemCheckBox[data-isCheck=true]");
+		if(checkBox.length >= 1) {
+			return true;
+		} else {
+			return false;
+		}
+	});
+	
+	$("body").on("click", "#btnOk", function() {
+		syncDialogWithOk();
+		
+		$.mobile.changePage("#pvrPage",  { transition: "none"});
+	});
+	
+	function syncDialogWithOk() {
 		var jsonStrArray = [];
 		var checkBox 	 = $(".catchUpItemCheckBox[data-isCheck=true]");
 		var recordItemId = new Date().getTime();
@@ -867,9 +887,8 @@ $(function() {
 
 				jsonStrArray.push(jsonstr);
 		});
-		
 		syncPVRSchedule(JSON.stringify(jsonStrArray));
-	});
+	}
 	// Yang end
 });
 

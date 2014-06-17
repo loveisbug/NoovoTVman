@@ -59,6 +59,10 @@ function getIconNameFromKey(iconKey) {
         	iconName = name;
         }
     });
+
+    if(iconName == "") {
+    	iconName = "video"
+    }
     return iconName;
 }
 

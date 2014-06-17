@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+    <entry key = "﻿001D02020015" name = "a_rtl1025"></entry>
+    <entry key = "001D02020046" name = "a_arturo"></entry>
+    <entry key = "001D0202005A" name = "a_effetto_notte"></entry>
+    <entry key = "001D02020065" name = "a_sportitalia"></entry>
+    <entry key = "001D02020066" name = "a_sportitalia2"></entry>
+    <entry key = "001D02020069" name = "a_sportitalia24"></entry>
+    <entry key = "001D0202006A" name = "a_super"></entry>
+    <entry key = "001D0202007A" name = "a_padre_pio"></entry>
+    <entry key = "001D020202BC" name = "a_la7_hd"></entry>
+    <entry key = "00390002002C" name = "a_tvs"></entry>
+    <entry key = "003900010004" name = "a_ftvguide"></entry>
+    <entry key = "003900010028" name = "a_nitv"></entry>
+    <entry key = "003900010029" name = "a_d44-news"></entry>
+    <entry key = "00390001002A" name = "a_d44-homepage"></entry>
+    <entry key = "00390001002C" name = "a_digitalforty-four"></entry>
+    <entry key = "00390001002D" name = "a_teacherstv"></entry>
+    <entry key = "00390001002E" name = "a_acctv"></entry>
+    <entry key = "00390001002F" name = "a_parliament-representatives"></entry>
+    <entry key = "003900010030" name = "a_parliament-senate"></entry>
+    <entry key = "003900010031" name = "a_expo"></entry>
+    <entry key = "0110032A1FA5" name = "a_la3"></entry>
+    <entry key = "0110032A1FA8" name = "a_rete4_hd"></entry>
+    <entry key = "0110032A1FA9" name = "a_canale5_hd"></entry>
+    <entry key = "011003850066" name = "a_premium_calcio"></entry>
+    <entry key = "011003850067" name = "a_premium_calcio"></entry>
+    <entry key = "011003850068" name = "a_premium_calcio"></entry>
+    <entry key = "011003850069" name = "a_premium_calcio"></entry>
+    <entry key = "01100385006A" name = "a_premium_calcio"></entry>
+    <entry key = "01100385006B" name = "a_premium_calcio"></entry>
+    <entry key = "011003850080" name = "a_premium_anteprima"></entry>
+    <entry key = "011003850081" name = "a_premium_menu"></entry>
+    <entry key = "0110038500B3" name = "a_premium_calcio"></entry>
+    <entry key = "011003890015" name = "a_servizio21"></entry>
+    <entry key = "011003890017" name = "a_servizio23"></entry>
+    <entry key = "011003890018" name = "a_servizio24"></entry>
+    <entry key = "011003890019" name = "a_servizio25"></entry>
+    <entry key = "01100389001A" name = "a_servizio26"></entry>
+    <entry key = "01100389001B" name = "a_servizio27"></entry>
+    <entry key = "01100389001C" name = "a_servizio28"></entry>
+    <entry key = "01100389001D" name = "a_servizio29"></entry>
+    <entry key = "01100389001E" name = "a_servizio30"></entry>
+    <entry key = "01100389008D" name = "a_canale5"></entry>
+    <entry key = "01100389008E" name = "a_italia1"></entry>
+    <entry key = "01100389008F" name = "a_rete4"></entry>
+    <entry key = "011003890091" name = "a_boing_ita"></entry>
+    <entry key = "011003890092" name = "a_iris"></entry>
+    <entry key = "011003890093" name = "a_cartoonito"></entry>
+    <entry key = "011003890099" name = "a_classtv_msnbc"></entry>
+    <entry key = "01100389009A" name = "a_coming_soon"></entry>
+    <entry key = "01100389009B" name = "a_bbcworld"></entry>
+    <entry key = "0110038900B0" name = "a_italia1_hd"></entry>
+    <entry key = "011003AC0FA4" name = "a_rete4"></entry>
+    <entry key = "011003AC0FA5" name = "a_canale5"></entry>
+    <entry key = "011003AC0FA6" name = "a_italia1"></entry>
+    <entry key = "011003AC0FAD" name = "a_la5"></entry>
+    <entry key = "011003AC0FAE" name = "a_tgcom24"></entry>
+    <entry key = "011003AC0FAF" name = "a_iris"></entry>
+    <entry key = "011003B614DD" name = "a_premium_play_hd"></entry>
+    <entry key = "013E00010D49" name = "a_rai1"></entry>
+    <entry key = "013E00010D4A" name = "a_rai2"></entry>
+    <entry key = "013E00010D4B" name = "a_rai3"></entry>
+    <entry key = "013E00010D53" name = "a_rainews"></entry>
+    <entry key = "013E00022171" name = "a_raisport1"></entry>
+    <entry key = "013E00022172" name = "a_raisport2"></entry>
+    <entry key = "013E00022173" name = "a_tv2000"></entry>
+    <entry key = "013E00022174" name = "a_raiscuola"></entry>
+    <entry key = "013E00030CE5" name = "a_rainotizie24"></entry>
+    <entry key = "013E00030CE8" name = "a_raitesthd"></entry>
+    <entry key = "013E00030CE9" name = "a_raisport"></entry>
+    <entry key = "013E00030CEB" name = "a_raistoria"></entry>
+    <entry key = "013E00030CED" name = "a_sat200"></entry>
+    <entry key = "013E00030CEE" name = "a_raigulp"></entry>
+    <entry key = "013E00042187" name = "a_rai4"></entry>
+    <entry key = "016314580021" name = "a_canal33"></entry>
+    <entry key = "016314580022" name = "a_eventos33"></entry>
+    <entry key = "016314580023" name = "a_alfa_tv"></entry>
+    <entry key = "016314580024" name = "a_directos33"></entry>
+    <entry key = "045208520002" name = "a_tv7reteazzurra"></entry>
+    <entry key = "045208520003" name = "a_tv7lady"></entry>
+    <entry key = "045208520004" name = "a_canale55"></entry>
+    <entry key = "045208520007" name = "a_fvgtriveneta"></entry>
+    <entry key = "101002110220" name = "a_abcnews24"></entry>
+    <entry key = "101002110221" name = "a_abc1"></entry>
+    <entry key = "101002110222" name = "a_abc2/abc4"></entry>
+    <entry key = "101002210223" name = "a_abc1"></entry>
+    <entry key = "101002210224" name = "a_abc3"></entry>
+    <entry key = "101204200421" name = "a_ninedigital"></entry>
+    <entry key = "101204200422" name = "a_gem"></entry>
+    <entry key = "101204200423" name = "a_go"></entry>
+    <entry key = "101305020520" name = "a_7digital"></entry>
+    <entry key = "101305020521" name = "a_7digital1"></entry>
+    <entry key = "101305020522" name = "a_7two"></entry>
+    <entry key = "101305020523" name = "a_7mate"></entry>
+    <entry key = "101305020524" name = "a_7digital"></entry>
+    <entry key = "101406020621" name = "a_one"></entry>
+    <entry key = "101406020625" name = "a_tendigital"></entry>
+    <entry key = "101406020627" name = "a_one"></entry>
+    <entry key = "101406020628" name = "a_eleven"></entry>
+    <entry key = "202800642775" name = "a_orf1"></entry>
+    <entry key = "202800642776" name = "a_orf2w"></entry>
+    <entry key = "202802582784" name = "a_orf2k"></entry>
+    <entry key = "202800642788" name = "a_atv"></entry>
+    <entry key = "2028014A2789" name = "a_puls4"></entry>
+    <entry key = "20280064278A" name = "a_orf2n"></entry>
+    <entry key = "2028006E278B" name = "a_puls4"></entry>
+    <entry key = "202802582798" name = "a_orf2t"></entry>
+    <entry key = "2028006E2B5F" name = "a_orfsportplus"></entry>
+    <entry key = "2028014A2C26" name = "a_3sat"></entry>
+    <entry key = "2028014A2C27" name = "a_orfsportplus"></entry>
+    <entry key = "2038013614B5" name = "a_een"></entry>
+    <entry key = "2038013614B6" name = "a_canvas"></entry>
+    <entry key = "2038013614B7" name = "a_ketnetop12"></entry>
+    <entry key = "2038013614B8" name = "a_nationalgeographic"></entry>
+    <entry key = "2038013614B9" name = "a_studio100"></entry>
+    <entry key = "2038013614BA" name = "a_ment"></entry>
+    <entry key = "2038013614BB" name = "a_kanaalz"></entry>
+    <entry key = "206413EC0009" name = "a_bgonair"></entry>
+    <entry key = "206414B40002" name = "a_btv"></entry>
+    <entry key = "206414B40003" name = "a_novatv"></entry>
+    <entry key = "206414B40004" name = "a_tv7"></entry>
+    <entry key = "206414B40005" name = "a_news7"></entry>
+    <entry key = "209E00180064" name = "a_ctv"></entry>
+    <entry key = "209E00180065" name = "a_ctv"></entry>
+    <entry key = "209E00180066" name = "a_ctv"></entry>
+    <entry key = "209E00180067" name = "a_ctv"></entry>
+    <entry key = "209E001A00C9" name = "a_ptss"></entry>
+    <entry key = "209E001A00CA" name = "a_ptss"></entry>
+    <entry key = "209E001A00CB" name = "a_hakkatv"></entry>
+    <entry key = "209E001C012C" name = "a_ftv"></entry>
+    <entry key = "209E001C012D" name = "a_ftv"></entry>
+    <entry key = "209E001C012E" name = "a_ftv"></entry>
+    <entry key = "209E001C0130" name = "a_ftv"></entry>
+    <entry key = "209E001E00C8" name = "a_ptss"></entry>
+    <entry key = "209E001F0190" name = "a_ttv"></entry>
+    <entry key = "209E001F0191" name = "a_ttv"></entry>
+    <entry key = "209E001F0192" name = "a_ttv"></entry>
+    <entry key = "209E001F0193" name = "a_ttv"></entry>
+    <entry key = "209E00200190" name = "a_ttv"></entry>
+    <entry key = "209E00200191" name = "a_ttv"></entry>
+    <entry key = "209E00200192" name = "a_ttv"></entry>
+    <entry key = "209E00200193" name = "a_ttv"></entry>
+    <entry key = "209E002201F5" name = "a_cts"></entry>
+    <entry key = "209E002201F6" name = "a_cts"></entry>
+    <entry key = "209E002201F7" name = "a_cts"></entry>
+    <entry key = "209E002201F8" name = "a_cts"></entry>
+    <entry key = "20BFD4010001" name = "a_htv1"></entry>
+    <entry key = "20BFD4010002" name = "a_htv2"></entry>
+    <entry key = "20BFD4010003" name = "a_rtltv"></entry>
+    <entry key = "20BFD4010004" name = "a_novatv"></entry>
+    <entry key = "20BFD4020015" name = "a_hrt3"></entry>
+    <entry key = "20BFD4020016" name = "a_hrt4"></entry>
+    <entry key = "20BFD4020017" name = "a_rtl2"></entry>
+    <entry key = "20BFD4020018" name = "a_domatv"></entry>
+    <entry key = "20BFD4041131" name = "a_jabukatv"></entry>
+    <entry key = "20BFD4041132" name = "a_net"></entry>
+    <entry key = "20BFD4041133" name = "a_z1"></entry>
+    <entry key = "20BF0D441134" name = "a_tv4r"></entry>
+    <entry key = "20BF0D441135" name = "a_tvplus"></entry>
+    <entry key = "20BFD5041195" name = "a_kanalri"></entry>
+    <entry key = "20BFD5041196" name = "a_tvistra"></entry>
+    <entry key = "20BFD5041197" name = "a_ritv"></entry>
+    <entry key = "20BFD5041198" name = "a_tvnova"></entry>
+    <entry key = "20BFD704125D" name = "a_tvvox"></entry>
+    <entry key = "20BF0D711267" name = "a_gradskatv"></entry>
+    <entry key = "20BFD50436B1" name = "a_sportskatelevizija"></entry>
+    <entry key = "20BFD50436B2" name = "a_kn"></entry>
+    <entry key = "20BFD50436B3" name = "a_cmc"></entry>
+    <entry key = "20E900010001" name = "a_eit"></entry>
+    <entry key = "20E900010002" name = "a_eit2"></entry>
+    <entry key = "20E900010028" name = "a_tv6"></entry>
+    <entry key = "20E900010029" name = "a_kanal2"></entry>
+    <entry key = "20E90001002A" name = "a_kanal11"></entry>
+    <entry key = "20E90001002B" name = "a_tv3"></entry>
+    <entry key = "20FA00010101" name = "a_france2"></entry>
+    <entry key = "20FA00010104" name = "a_france5"></entry>
+    <entry key = "20FA00010105" name = "a_france0"></entry>
+    <entry key = "20FA00010106" name = "a_lcp"></entry>
+    <entry key = "20FA00010111" name = "a_france3"></entry>
+    <entry key = "20FA0001011B" name = "a_fr3rhone"></entry>
+    <entry key = "20FA00010144" name = "a_fr3alpes"></entry>
+    <entry key = "20FA00020201" name = "a_direct8"></entry>
+    <entry key = "20FA00020203" name = "a_bfmtv"></entry>
+    <entry key = "20FA00020204" name = "a_itele"></entry>
+    <entry key = "20FA00020205" name = "a_d17"></entry>
+    <entry key = "20FA00020206" name = "a_gulli"></entry>
+    <entry key = "20FA00020207" name = "a_france4"></entry>
+    <entry key = "20FA00040401" name = "a_m6"></entry>
+    <entry key = "20FA00040402" name = "a_w9"></entry>
+    <entry key = "20FA00040403" name = "a_nt1"></entry>
+    <entry key = "20FA00040404" name = "a_paris_premiere"></entry>
+    <entry key = "20FA00040407" name = "a_arte_hd"></entry>
+    <entry key = "20FA00050501" name = "a_tf1_hd"></entry>
+    <entry key = "20FA00050502" name = "a_france2_hd"></entry>
+    <entry key = "20FA00050503" name = "a_m6hd"></entry>
+    <entry key = "20FA00060601" name = "a_tf1"></entry>
+    <entry key = "20FA00060602" name = "a_nrj12"></entry>
+    <entry key = "20FA00060603" name = "a_lci"></entry>
+    <entry key = "20FA00060604" name = "a_eurosport"></entry>
+    <entry key = "20FA00060605" name = "a_tf6"></entry>
+    <entry key = "20FA00060606" name = "a_tmc"></entry>
+    <entry key = "20FA00060607" name = "a_arte"></entry>
+    <entry key = "20FA00080802" name = "a_canal31"></entry>
+    <entry key = "20FA00080803" name = "a_idf1"></entry>
+    <entry key = "20FA00080804" name = "a_nrj_paris"></entry>
+    <entry key = "20FA00080805" name = "a_bfm_paris"></entry>
+    <entry key = "20FA000A0A01" name = "a_hd1"></entry>
+    <entry key = "20FA000A0A02" name = "a_lequipe21"></entry>
+    <entry key = "20FA000A0A03" name = "a_cherie25"></entry>
+    <entry key = "20FA000B0B01" name = "a_6ter"></entry>
+    <entry key = "20FA000B0B02" name = "a_numero23"></entry>
+    <entry key = "20FA000B0B03" name = "a_rmc_decouverte"></entry>
+    <entry key = "211401010002" name = "a_arte"></entry>
+    <entry key = "211401010041" name = "a_hrfernsehen"></entry>
+    <entry key = "211401010061" name = "a_mdr"></entry>
+    <entry key = "211401010081" name = "a_ndr_fs_nds"></entry>
+    <entry key = "21140102000B" name = "a_rbb"></entry>
+    <entry key = "21140102000C" name = "a_rbb"></entry>
+    <entry key = "21140102000D" name = "a_phoenix"></entry>
+    <entry key = "21140102000E" name = "a_das_erste"></entry>
+    <entry key = "21140102000F" name = "a_tagesschau24"></entry>
+    <entry key = "211402020202" name = "a_zdf"></entry>
+    <entry key = "211402020203" name = "a_3sat"></entry>
+    <entry key = "211402020204" name = "a_zdfinfo"></entry>
+    <entry key = "211402020205" name = "a_kika"></entry>
+    <entry key = "21140301400A" name = "a_kabel_eins"></entry>
+    <entry key = "21140301400E" name = "a_n24"></entry>
+    <entry key = "211403014013" name = "a_prosieben"></entry>
+    <entry key = "211403014018" name = "a_sat1"></entry>
+    <entry key = "2114030400E1" name = "a_sudwest"></entry>
+    <entry key = "211403040106" name = "a_wdr"></entry>
+    <entry key = "211403044003" name = "a_hse24"></entry>
+    <entry key = "21140304401D" name = "a_tele5"></entry>
+    <entry key = "211403054015" name = "a_rtl"></entry>
+    <entry key = "211403054016" name = "a_rtl2"></entry>
+    <entry key = "21140305401B" name = "a_superrtl"></entry>
+    <entry key = "211403054022" name = "a_vox"></entry>
+    <entry key = "211403070022" name = "a_bayerisches"></entry>
+    <entry key = "211403074010" name = "a_ntv"></entry>
+    <entry key = "211403074014" name = "a_qvc"></entry>
+    <entry key = "211403074025" name = "a_euronews"></entry>
+    <entry key = "21140307402A" name = "a_bibeltv"></entry>
+    <entry key = "21140307402E" name = "a_dasvierte"></entry>
+    <entry key = "211403074101" name = "a_multithek"></entry>
+    <entry key = "211403074102" name = "a_alextv"></entry>
+    <entry key = "211403074103" name = "a_123tv"></entry>
+    <entry key = "211403074105" name = "a_putpattv"></entry>
+    <entry key = "211403074106" name = "a_familytv"></entry>
+    <entry key = "211403074110" name = "a_bloomberg"></entry>
+    <entry key = "211403074112" name = "a_juwelotv"></entry>
+    <entry key = "211409014032" name = "a_servustv"></entry>
+    <entry key = "21140901678E" name = "a_juwelotv"></entry>
+    <entry key = "211430020006" name = "a_einsplus"></entry>
+    <entry key = "211431010023" name = "a_br_alpha"></entry>
+    <entry key = "2114391000E2" name = "a_sudwest"></entry>
+    <entry key = "211439100106" name = "a_wdr_fernsehen"></entry>
+    <entry key = "217C03CC000D" name = "a_rete_italia"></entry>
+    <entry key = "217C03CC0001" name = "a_channel24"></entry>
+    <entry key = "217C03CC0002" name = "a_fire"></entry>
+    <entry key = "217C03CC0003" name = "a_air"></entry>
+    <entry key = "217C20230008" name = "a_italia8_78"></entry>
+    <entry key = "217C20230064" name = "a_telemarket"></entry>
+    <entry key = "217C20230065" name = "a_telemarket_foryou"></entry>
+    <entry key = "217C202300C9" name = "a_playme"></entry>
+    <entry key = "217C2023012D" name = "a_telecity7"></entry>
+    <entry key = "217C202311C7" name = "a_boing_ita"></entry>
+    <entry key = "217C2023B035" name = "a_super_tennis"></entry>
+    <entry key = "217C2023B037" name = "a_radioitaliatv"></entry>
+    <entry key = "217C2023B415" name = "a_italia8_78"></entry>
+    <entry key = "217C2023B416" name = "a_italia8_78"></entry>
+    <entry key = "217C206405DC" name = "a_telemilano_city"></entry>
+    <entry key = "217C206407D0" name = "a_radio_milan_inter"></entry>
+    <entry key = "217C206409C4" name = "a_piublu_lombardia"></entry>
+    <entry key = "217C20640DAC" name = "a_tele_tv"></entry>
+    <entry key = "217C20641194" name = "a_telemilano"></entry>
+    <entry key = "217C2064157C" name = "a_piublu_lombardia"></entry>
+    <entry key = "217C20641D4C" name = "a_piublu_lombardia_hd"></entry>
+    <entry key = "217C20D00001" name = "a_lodi"></entry>
+    <entry key = "217C20D00002" name = "a_lombardia"></entry>
+    <entry key = "217C20D00003" name = "a_solregina"></entry>
+    <entry key = "217C20D00004" name = "a_romaniatv"></entry>
+    <entry key = "217C20D00007" name = "a_lombardiatvshopping"></entry>
+    <entry key = "217C231D0FAA" name = "a_espansione_provvisorio"></entry>
+    <entry key = "217C231D0FAB" name = "a_holiday_provvisorio"></entry>
+    <entry key = "217C231D0FAD" name = "a_espansione_provvisorio_hd"></entry>
+    <entry key = "217C231D0FAE" name = "a_telepavia_provvisorio"></entry>
+    <entry key = "217C231D0FD2" name = "a_primarete"></entry>
+    <entry key = "217C231D0FD3" name = "a_studio_italia"></entry>
+    <entry key = "217C231D0FD4" name = "a_telecolor"></entry>
+    <entry key = "217C231D0FD5" name = "a_telereporter"></entry>
+    <entry key = "217C231D0FD6" name = "a_primarete"></entry>
+    <entry key = "217C231D0FDA" name = "a_telefortuna"></entry>
+    <entry key = "217C231D0FDB" name = "a_la9"></entry>
+    <entry key = "217C231D0FDC" name = "a_la8"></entry>
+    <entry key = "217C231D0FDD" name = "a_goldtv"></entry>
+    <entry key = "217C231D0FDF" name = "a_trs_evergreen"></entry>
+    <entry key = "217C231D0FE0" name = "a_primarete_hd"></entry>
+    <entry key = "217C231D0FE1" name = "a_trs2_evergreen"></entry>
+    <entry key = "217C231D0FE2" name = "a_trs_evergreen_hd"></entry>
+    <entry key = "217C231D0FE3" name = "a_trs3_evergreen"></entry>
+    <entry key = "217C231D0FB0" name = "a_abc"></entry>
+    <entry key = "217C231D11D1" name = "a_italia_plus"></entry>
+    <entry key = "217C231D11D2" name = "a_telecolor199"></entry>
+    <entry key = "217C23E50001" name = "a_la6"></entry>
+    <entry key = "217C23E50002" name = "a_rete55"></entry>
+    <entry key = "217C23E50004" name = "a_telecupole"></entry>
+    <entry key = "217C23E50068" name = "a_galaxy"></entry>
+    <entry key = "217C23E5012C" name = "a_aitv"></entry>
+    <entry key = "217C23E5012D" name = "a_rete55_brescia"></entry>
+    <entry key = "217C23E50BBF" name = "a_telepace"></entry>
+    <entry key = "217C23E51248" name = "a_lotto_facile"></entry>
+    <entry key = "217C23E51B59" name = "a_nitegate"></entry>
+    <entry key = "217C23E51B5A" name = "a_nitegate"></entry>
+    <entry key = "217C272B0004" name = "a_telecity2"></entry>
+    <entry key = "217C272B000B" name = "a_telestar77"></entry>
+    <entry key = "217C272B051B" name = "a_giorno"></entry>
+    <entry key = "217C272B1195" name = "a_telecitymi"></entry>
+    <entry key = "217C272BA08D" name = "a_romittv"></entry>
+    <entry key = "217C272BA092" name = "a_telecity7"></entry>
+    <entry key = "217C272BA093" name = "a_channel24"></entry>
+    <entry key = "217C272BA475" name = "a_telestar77"></entry>
+    <entry key = "217C272BA476" name = "a_telecitymi"></entry>
+    <entry key = "217C272BA477" name = "a_telecitymi"></entry>
+    <entry key = "217C272BA478" name = "a_telestar77"></entry>
+    <entry key = "217C272BA47C" name = "a_canale_acqua"></entry>
+    <entry key = "217C30000001" name = "a_a3_nordest"></entry>
+    <entry key = "217C30000009" name = "a_media_shopping"></entry>
+    <entry key = "217C3000000B" name = "a_a3_nordest"></entry>
+    <entry key = "217C3000000C" name = "a_a3_nordest"></entry>
+    <entry key = "217C3000000E" name = "a_a3_nordest"></entry>
+    <entry key = "217C30000012" name = "a_a3_nordest"></entry>
+    <entry key = "217C47D00001" name = "a_italia83"></entry>
+    <entry key = "217C47D00002" name = "a_italia84"></entry>
+    <entry key = "217C47D00003" name = "a_italia156"></entry>
+    <entry key = "217C47D00004" name = "a_cantando_ballando"></entry>
+    <entry key = "217C47D00005" name = "a_italia156"></entry>
+    <entry key = "217C47D00006" name = "a_italia121"></entry>
+    <entry key = "217C47D00007" name = "a_france24"></entry>
+    <entry key = "217C47D00008" name = "a_italia160"></entry>
+    <entry key = "217C47D0000B" name = "a_italia126"></entry>
+    <entry key = "217C47D0000C" name = "a_italia135"></entry>
+    <entry key = "217C47D0000D" name = "a_italia159"></entry>
+    <entry key = "217C47D0000E" name = "a_italia142"></entry>
+    <entry key = "217C47D00011" name = "a_italia136"></entry>
+    <entry key = "217C47D00014" name = "a_italia53"></entry>
+    <entry key = "217C47D00015" name = "a_italia127"></entry>
+    <entry key = "217C79180001" name = "a_allmusic"></entry>
+    <entry key = "217C79180002" name = "a_repubblicatv"></entry>
+    <entry key = "217C79180003" name = "a_fr24"></entry>
+    <entry key = "217C79180004" name = "a_secondtv"></entry>
+    <entry key = "21AC13EC13F6" name = "a_ltv1"></entry>
+    <entry key = "21AC13EC1400" name = "a_ltv7"></entry>
+    <entry key = "21AC13EC140A" name = "a_lnt"></entry>
+    <entry key = "21AC13EC1414" name = "a_tv5"></entry>
+    <entry key = "21AC13EC141E" name = "a_tv3"></entry>
+    <entry key = "221008A6044D" name = "a_nederland1"></entry>
+    <entry key = "221008A6044E" name = "a_nederland2"></entry>
+    <entry key = "221008A6044F" name = "a_nederland3"></entry>
+    <entry key = "221008A60450" name = "a_tvoost"></entry>
+    <entry key = "22C100010001" name = "a_slo1"></entry>
+    <entry key = "22C100010002" name = "a_slo2"></entry>
+    <entry key = "22C100010003" name = "a_slo3"></entry>
+    <entry key = "22C100020004" name = "a_telem"></entry>
+    <entry key = "22C100030005" name = "a_koper"></entry>
+    <entry key = "22C100010006" name = "a_poptv"></entry>
+    <entry key = "22C100010007" name = "a_kanala"></entry>
+    <entry key = "22C100010008" name = "a_golicatv"></entry>
+    <entry key = "22C100030009" name = "a_tv3"></entry>
+    <entry key = "22C10001000A" name = "a_vaskanal"></entry>
+    <entry key = "22C10002000B" name = "a_rts"></entry>
+    <entry key = "22C10003000C" name = "a_tvprimorka"></entry>
+    <entry key = "22C10001000D" name = "a_tvpink3"></entry>
+    <entry key = "22C10001000E" name = "a_tvnakupi"></entry>
+    <entry key = "22C100050011" name = "a_pinksi"></entry>
+    <entry key = "22C100040017" name = "a_norkring-mux-b"></entry>
+    <entry key = "22F400040001" name = "a_sf1"></entry>
+    <entry key = "22F400040101" name = "a_tsr1"></entry>
+    <entry key = "22F400040102" name = "a_tsr2"></entry>
+    <entry key = "22F400040201" name = "a_rsila1"></entry>
+    <entry key = "320203000301" name = "a_sbsone"></entry>
+    <entry key = "320203000302" name = "a_sbstwo"></entry>
+    <entry key = "320203000304" name = "a_sbs3"></entry>
+    <entry key = "320203000305" name = "a_sbs4"></entry>
+    <entry key = "320203000306" name = "a_sbshd"></entry>
+    <entry key = "340100010064" name = "a_m1hd"></entry>
+    <entry key = "340100010065" name = "a_m2hd"></entry>
+    <entry key = "340100010066" name = "a_atv"></entry>
+    <entry key = "340100010067" name = "a_hirtv"></entry>
+    <entry key = "3403000200C8" name = "a_dunatvhd"></entry>
+    <entry key = "3403000200C9" name = "a_autonomia"></entry>
+    <entry key = "3403000200CA" name = "a_rtlklub"></entry>
+    <entry key = "3403000200CB" name = "a_tv2"></entry>
+    <entry key = "3403000200CC" name = "a_euronewsenteszt"></entry>
+    <entry key = "3403000200CD" name = "a_euronewsfrteszt"></entry>
+    <entry key = "340300004EEE" name = "a_euronewsgerteszt"></entry>
+    <entry key = "5555AAAA87E8" name = "a_hosanna_vision"></entry>
+    <entry key = "中視數位台_0064" name = "a_ctv"></entry>
+    <entry key = "中視新聞台_0065" name = "a_ctv"></entry>
+    <entry key = "中視綜藝台_0066" name = "a_ctv"></entry>
+    <entry key = "中視HD台_0067" name = "a_ctv"></entry>
+    <entry key = "公共電視 PTS_00C9" name = "a_ptss"></entry>
+    <entry key = "公視 HD_00C8" name = "a_ptss"></entry>
+    <entry key = "公視2台 PTS2_00CA" name = "a_ptss"></entry>
+    <entry key = "客家電視 HTV_00CB" name = "a_hakkatv"></entry>
+    <entry key = "民視綜合台_012C" name = "a_ftv"></entry>
+    <entry key = "民視交通台_012D" name = "a_ftv"></entry>
+    <entry key = "民視新聞台_012E" name = "a_ftv"></entry>
+    <entry key = "民視HD台_0130" name = "a_ftv"></entry>
+    <entry key = "台灣電視台_0190" name = "a_ttv"></entry>
+    <entry key = "台視財經台_0191" name = "a_ttv"></entry>
+    <entry key = "台視綜合台_0192" name = "a_ttv"></entry>
+    <entry key = "台視 HD台_0193" name = "a_ttv"></entry>
+    <entry key = "華視CTS_01F5" name = "a_cts"></entry>
+    <entry key = "華視教育台_01F6" name = "a_cts"></entry>
+    <entry key = "華視新聞資訊台_01F7" name = "a_cts"></entry>
+    <entry key = "華視HD_01F8" name = "a_cts"></entry>
+    <entry key = "CANAL+_0301" name = "a_canal_plus"></entry>
+    <entry key = "CANAL+ SPORT_0303" name = "a_canal_sport"></entry>
+    <entry key = "D8_0201" name = "a_direct8"></entry>
+    <entry key = "BFM TV_0203" name = "a_bfmtv"></entry>
+    <entry key = "i>TELE_0204" name = "a_itele"></entry>
+    <entry key = "D17_0205" name = "a_d17"></entry>
+    <entry key = "Gulli_0206" name = "a_gulli"></entry>
+    <entry key = "France 4_0207" name = "a_france4"></entry>
+    <entry key = "TF1_0601" name = "a_tf1"></entry>
+    <entry key = "NRJ12_0602" name = "a_nrj12"></entry>
+    <entry key = "TMC_0606" name = "a_tmc"></entry>
+    <entry key = "ARTE_0607" name = "a_arte"></entry>
+    <entry key = "IDF1_0803" name = "a_idf1"></entry>
+    <entry key = "NRJ Paris_0804" name = "a_nrj_paris"></entry>
+    <entry key = "BFM Business Paris_0805" name = "a_bfm_paris"></entry>
+    <entry key = "TF1 HD_0501" name = "a_tf1_hd"></entry>
+    <entry key = "France 2 HD_0502" name = "a_france2_hd"></entry>
+    <entry key = "M6HD_0503" name = "a_m6hd"></entry>
+    <entry key = "M6_0401" name = "a_m6"></entry>
+    <entry key = "W9_0402" name = "a_w9"></entry>
+    <entry key = "NT1_0403" name = "a_nt1"></entry>
+    <entry key = "PARIS PREMIERE_0404" name = "a_paris_premiere"></entry>
+    <entry key = "France 2_0101" name = "a_france2"></entry>
+    <entry key = "France 5_0104" name = "a_france5"></entry>
+    <entry key = "France Ô_0105" name = "a_france0"></entry>
+    <entry key = "LCP_0106" name = "a_lcp"></entry>
+    <entry key = "France 3_0111" name = "a_france3"></entry>
+    <entry key = "HD1_0A01" name = "a_hd1"></entry>
+    <entry key = "L'Equipe 21_0A02" name = "a_lequipe21"></entry>
+    <entry key = "Chérie 25_0A03" name = "a_cherie25"></entry>
+    <entry key = "6ter_0B01" name = "a_6ter"></entry>
+    <entry key = "NUMERO 23_0B02" name = "a_numero23"></entry>
+    <entry key = "RMC DECOUVERTE_0B03" name = "a_rmc_decouverte"></entry>
+    <entry key = "ARTE HD_0407" name = "a_arte_hd"></entry>
+    <entry key = "Das Erste_0100" name = "a_das_erste"></entry>
+    <entry key = "Einsfestival_0005" name = "a_einsfestival"></entry>
+    <entry key = "Eurosport_4024" name = "a_eurosport"></entry>
+    <entry key = "NDR FS NDS *_0081" name = "a_ndr_fs_nds"></entry>
+    <entry key = "RTL NRW_4015" name = "a_rtl"></entry>
+    <entry key = "VIVA_4020" name = "a_viva"></entry>
+    <entry key = "WDR Düsseldorf_0104" name = "a_wdr"></entry>
+    <entry key = "WDR Düsseldorf *_0104" name = "a_wdr"></entry>
+    <entry key = "WDR Wuppertal_0109" name = "a_wdr"></entry>
+    <entry key = "WDR Wuppertal *_0109" name = "a_wdr"></entry>
+    <entry key = "WDR Duisburg_010B" name = "a_wdr"></entry>
+    <entry key = "CNN Int._4006" name = "a_cnn"></entry>
+    <entry key = "MDR S-Anhalt_0064" name = "a_mdr"></entry>
+    <entry key = "13 TV_0108" name = "a_13tv"></entry>
+    <entry key = "24h_0214" name = "a_24h"></entry>
+    <entry key = "ANTENA 3_008C" name = "a_antena3"></entry>
+    <entry key = "Antena3 HD_0094" name = "a_antena3"></entry>
+    <entry key = "Boing_0091" name = "a_boing_ita"></entry>
+    <entry key = "Boing_00B8" name = "a_boing_es"></entry>
+    <entry key = "BOING_11C7" name = "a_boing_ita"></entry>
+    <entry key = "CANAL 7 TV_00B0" name = "a_canal7"></entry>
+    <entry key = "CANAL 33_0021" name = "a_canal33"></entry>
+    <entry key = "Clan_0215" name = "a_clan"></entry>
+    <entry key = "CORDOBA TV_0004" name = "a_cordobatv"></entry>
+    <entry key = "CUATRO_0421" name = "a_cuatro"></entry>
+    <entry key = "Discovery MAX_0105" name = "a_discovery_max"></entry>
+    <entry key = "Disney Channel_012D" name = "a_disney_channel"></entry>
+    <entry key = "DIVINITY_0422" name = "a_divinity"></entry>
+    <entry key = "EHS_138F" name = "a_ehs"></entry>
+    <entry key = "EHS TV_1389" name = "a_ehs"></entry>
+    <entry key = "Energy_0423" name = "a_energy"></entry>
+    <entry key = "FDF_00B5" name = "a_fdf"></entry>
+    <entry key = "HOSANNA VISION_87E8" name = "a_hosanna_vision"></entry>
+    <entry key = "HOSANNA VISION_22D5" name = "a_hosanna_vision"></entry>
+    <entry key = "HOSANNA VISION_0004" name = "a_hosanna_vision"></entry>
+    <entry key = "HOSSANA   TV_22D4" name = "a_hossanatv"></entry>
+    <entry key = "IB_0003" name = "a_ib"></entry>
+    <entry key = "IBEROAMERICATV_0001" name = "a_ibero_america"></entry>
+    <entry key = "Intereconomía_0133" name = "a_intereconomia"></entry>
+    <entry key = "laSexta_0154" name = "a_la_sexta"></entry>
+    <entry key = "laSexta HD_0158" name = "a_la_sexta"></entry>
+    <entry key = "La 1_0212" name = "a_la1"></entry>
+    <entry key = "La 2_0213" name = "a_la2"></entry>
+    <entry key = "LA OTRA_01A6" name = "a_la_otra"></entry>
+    <entry key = "laSexta3_0157" name = "a_la_sexta3"></entry>
+    <entry key = "laSexta3_0159" name = "a_la_sexta3"></entry>
+    <entry key = "LaSiete_00B6" name = "a_la_siete"></entry>
+    <entry key = "Libertad Digital TV_138A" name = "a_libertad"></entry>
+    <entry key = "MARCA TV_0107" name = "a_marcatv"></entry>
+    <entry key = "Metropolitan TV_01A7" name = "a_metropolitan"></entry>
+    <entry key = "MTV_0096" name = "a_mtv"></entry>
+    <entry key = "MTV_0266" name = "a_mtv"></entry>
+    <entry key = "MTV_0267" name = "a_mtv"></entry>
+    <entry key = "MTV_0130" name = "a_mtv"></entry>
+    <entry key = "MTV_1457" name = "a_mtv"></entry>
+    <entry key = "NITRO_0093" name = "a_nitro"></entry>
+    <entry key = "NOVA_008E" name = "a_nova"></entry>
+    <entry key = "NUEVE_0424" name = "a_nueve"></entry>
+    <entry key = "PLAYOCIO TV_0002" name = "a_play_ocio"></entry>
+    <entry key = "RADIOACTIVA TV_0002" name = "a_radio_activa"></entry>
+    <entry key = "SOLIDARIA TV_0004" name = "a_solidaria"></entry>
+    <entry key = "TDP_9C42" name = "a_tdp"></entry>
+    <entry key = "Telecinco_00B4" name = "a_telecinco"></entry>
+    <entry key = "Telecinco HD_00B9" name = "a_telecinco"></entry>
+    <entry key = "TELEGANES_0001" name = "a_teleganes"></entry>
+    <entry key = "TELE-K_0001" name = "a_telek"></entry>
+    <entry key = "TELE K_0001" name = "a_telek"></entry>
+    <entry key = "Telemadrid_01A5" name = "a_telemadrid"></entry>
+    <entry key = "Telemadrid HD_01A9" name = "a_telemadrid"></entry>
+    <entry key = "Vaughan TV_1391" name = "a_vaughantv"></entry>
+    <entry key = "Xplora_0156" name = "a_xplora"></entry>
+    <entry key = "Rai 1_0D49" name = "a_rai1"></entry>
+    <entry key = "Rai 2_0D4A" name = "a_rai2"></entry>
+    <entry key = "Rai 3 TGR Lombardia_0D4B" name = "a_rai3"></entry>
+    <entry key = "Rai 4_2187" name = "a_rai4"></entry>
+    <entry key = "Rai News_0D53" name = "a_rainews"></entry>
+    <entry key = "Rai Gulp_2188" name = "a_raigulp"></entry>
+    <entry key = "Rai Movie_2189" name = "a_raimovie"></entry>
+    <entry key = "Rai Premium_2185" name = "a_raipremium"></entry>
+    <entry key = "Rai Sport 1_2171" name = "a_raisport1"></entry>
+    <entry key = "Rai Sport 2_2172" name = "a_raisport2"></entry>
+    <entry key = "Rai yoyo_2186" name = "a_raiyoyo"></entry>
+    <entry key = "Rete Italia_000D" name = "a_rete_italia"></entry>
+    <entry key = "Coming Soon Television_009A" name = "a_coming_soon"></entry>
+    <entry key = "Iris_0FAF" name = "a_iris"></entry>
+    <entry key = "Fire_0002" name = "a_fire"></entry>
+    <entry key = "Air_0003" name = "a_air"></entry>
+    <entry key = "LA3_1FA5" name = "a_la3"></entry>
+    <entry key = "Super!_006A" name = "a_super"></entry>
+    <entry key = "Super tennis_B035" name = "a_super_tennis"></entry>
+    <entry key = "Italia1_0FA6" name = "a_italia1"></entry>
+    <entry key = "Italia1 HD_00B0" name = "a_italia1"></entry>
+    <entry key = "Cartoonito_0093" name = "a_cartoonito"></entry>
+    <entry key = "RTL 102.5 TV_0015" name = "a_rtl1025"></entry>
+    <entry key = "Arturo_0046" name = "a_arturo"></entry>
+    <entry key = "cielo_0002" name = "a_cielo"></entry>
+    <entry key = "For you_0016" name = "a_foryou"></entry>
+    <entry key = "FOCUS_0019" name = "a_focus"></entry>
+    <entry key = "Canale Acqua_A47C" name = "a_canale_acqua"></entry>
+    <entry key = "GALAXY TV_0068" name = "a_galaxy"></entry>
+    <entry key = "Sportitalia_0065" name = "a_sportitalia"></entry>
+    <entry key = "Sportitalia 2_0066" name = "a_sportitalia2"></entry>
+    <entry key = "Sportitalia 24_0069" name = "a_sportitalia24"></entry>
+    <entry key = "EFFETTO NOTTE_005A" name = "a_effetto_notte"></entry>
+    <entry key = "DEEJAY TV_0001" name = "a_deejay"></entry>
+    <entry key = "Canale5 HD_1FA9" name = "a_canale5_hd"></entry>
+    <entry key = "Canale5_0FA5" name = "a_canale5"></entry>
+    <entry key = "ClassTV MSNBC_0099" name = "a_classtv_msnbc"></entry>
+    <entry key = "Premium Calcio 1_0066" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 2_0067" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 3_0068" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 4_0069" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 5_006A" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 6_006B" name = "a_premium_calcio"></entry>
+    <entry key = "Premium Calcio 7_00B3" name = "a_premium_calcio"></entry>
+    <entry key = "Nitegate 1_1B59" name = "a_nitegate"></entry>
+    <entry key = "Nitegate 2_1B5A" name = "a_nitegate"></entry>
+    <entry key = "Rete4 HD_1FA8" name = "a_rete4_hd"></entry>
+    <entry key = "Telestar Canale 77_000B" name = "a_telestar77"></entry>
+    <entry key = "Telestar Canale_77_A475" name = "a_telestar77"></entry>
+    <entry key = "Telestar Canale__77_A478" name = "a_telestar77"></entry>
+    </resources>

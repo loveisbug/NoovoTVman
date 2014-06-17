@@ -156,15 +156,16 @@
 	left:0px;
 	position:absolute;
 	display:none;
+	z-index: 9999;
 }
 
 .pvrItemCheckBox {
 	position:absolute;
-	top: 0.5em;
+	top: 0.3em;
 	right: 0.5em;
-	width: 25px;
-	height:25px;
-	z-index:0;
+	width: 2em;
+	height:2em;
+	z-index: 9999;
 }
 
 #catchUpTopicList{
@@ -190,16 +191,16 @@
 	height:6em;
 	background-color:white;
 	color: black;
-	padding:8px 8px;
+	padding:0.5em 0.5em;
 }
 
 .catchUpTopicImgDiv{
 	max-width:20%;
 	width: 20%;
-	height: 48px;
+	height: 3em;
 	float: left;
-	padding-right: 2px;
-	margin-top:-2px;
+	padding-right: 0.1em;
+	margin-top: 0.2em;
 }
 .catchUpTopicImgDiv>img{
 	height:50px;
@@ -209,7 +210,20 @@
 	width:78%;
 	height:6em;
 	float:left;
-	padding:1px 1px;
+}
+.catchUpTopicInfoTopic{
+	font-size: 1.2em;
+}
+.catchUpTopicInfoDesDiv{
+	line-height:130%;
+	padding-top: 0.6em;
+	background-color: #f5f5f7;
+	height: 4em;
+	padding-left: 0.5em;
+	letter-spacing: 0.1em;
+}
+.catchUpTopicInfoDes{
+	font-size: 0.9em;
 }
 
 .catchUpTopicMaskDiv{
@@ -222,26 +236,30 @@
 
 .catchUpTopicCheckBox {
 	position:absolute;
-	top: 0.5em;
+	top: 0.3em;
 	height:0.5em;
 	right: 0.5em;
-	width: 25px;
-	height:25px;
+	width: 2em;
+	height:2em;
 }
 
 
 .catchUpPVRScheduleLi
 {
+	padding:0.1em;
 	width: 95%;
 	margin-left: 5%;
 }
 .catchUpPVRScheduleItem {
 	background-color:white;
-	color: black;
-	padding-left: 8px;	
-	height: 4em;
+	padding-left: 0;
+	color: black;	
+	height: auto;
+	border:none;
 }
-
+.catchUpPVRScheduleItem{
+	font-size:0.9em;
+}
 .catchUpItemMaskDiv {
 	width:100%;
 	height:100%;
@@ -253,18 +271,57 @@
 
 .catchUpItemCheckBox {
 	position:absolute;
-	top: 0.5em;
+	top: 0.3em;
 	right: 0.5em;
-	width: 25px;
-	height:25px;
+	width: 2em;
+	height:2em;
 	z-index:0;
 }
 .channelName{
 	margin:0px;
 }
 
-.twitterImg{
-	height:50px;
-	width:44px;
-	border-radius: 10px;
+.twitterImgDiv_catchUpPVRSchedulePage{
+	height: 3.3em;
+	width: 3.3em;
+	background-color:#fff; 
+	border-radius:0.6em;
+	margin-top: 0.66em;
+	margin-left: 0.55em;
+	position: absolute;"	
+}
+.twitterImg_catchUpPVRSchedulePage{
+	height:3em;
+	width: 3em;
+	border-radius: 0.6em;
+	padding: 0.15em 0.15em;
+	border:none;
+}
+#topic_catchUpPVRSchedulePage{
+	 font-weight: bold;
+	 font-size: 1.2em;
+	 position: absolute;
+	 margin-top: 1.2em;
+	 margin-left: 3.5em; 
+}
+#descriptionDiv{
+	 background-color: #f5f5f7;
+	 width: 100%;
+	 height: 7.5em;
+	 margin-top: 1.875em;
+	 line-height: 150%;
+}
+#description_catchUpPVRSchedulePage{
+	 text-indent: o.5em; 
+	 padding: 0.5em;
+	 word-break:break-all;
+	 word-wrap:normal;
+}
+#catchUpPVRScheduleList{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+.channelIcon{
+	padding-right: 0.5em;
 }

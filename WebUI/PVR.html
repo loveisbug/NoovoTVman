@@ -18,6 +18,7 @@
         <script src="./js/mobiscroll.datetime-2.6.2.js"></script>
         <script src="./js/mobiscroll.android-ics-2.6.2.js" type="text/javascript"></script>
         <link rel="stylesheet" href="./css/mobiscroll.android-ics-2.6.2.css"  />
+        <link rel="stylesheet" href="./css/global.css" />
 		<link rel="stylesheet" href="./css/pvr.css" />
 
 	</head>
@@ -151,14 +152,14 @@
 
           <div data-role="content" id="catchUpContent">
              <ul id="catchUpTopicList">
-                <li class="catchUpTopicListLi" data-topicName="World_Cup">
+                <li class="catchUpTopicListLi" data-topicName="WorldCup_UK">
                     <div style="padding:0.3em 0.2em"> 
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476278045532098560" data-account="WorldCup_TVman" data-img="topic_World_Cup.jpg">
-                            <div class="catchUpTopicImgDiv"><img src="./img/topic_World_Cup.jpg"/></div>
+                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476281877280460800" data-account="WldcpTVmanuk" data-img="topic_World_Cup.png">
+                            <div class="catchUpTopicImgDiv"><img src="./img/topic_World_Cup.png"/></div>
                                 
                             <div class="catchUpTopicInfoDiv">
-                                <div><span style="font-size:17px;"><b>World Cup</b></span></div>
-                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">Catch up the newest movement of world cup on DTV. New draw, news release, tidbits, comments. Never miss a thing!</span>
+                                <div><span class="catchUpTopicInfoTopic"><b>World Cup</b></span></div>
+                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The Matches,teams,news...</span>
                                 </div>
                             </div>
                             <div class="catchUpTopicMaskDiv">
@@ -173,8 +174,8 @@
                             <div class="catchUpTopicImgDiv"><img src="./img/topic_Sports.jpg"/></div>
                                 
                             <div class="catchUpTopicInfoDiv">
-                                <div><span style="font-size:17px;"><b>Sports</b></span></div>
-                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">We follow and share the latest sports relevant program and events on DTV.</span>
+                                <div><span class="catchUpTopicInfoTopic"><b>Sports</b></span></div>
+                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">Football,Tennis,Rugby,F1...</span>
                                 </div>
                             </div>
                             <div class="catchUpTopicMaskDiv">
@@ -183,14 +184,30 @@
                         </div>
                     </div>
                 </li>
-                <li class="catchUpTopicListLi" data-topicName="Documentary">
+                <li class="catchUpTopicListLi" style="padding:0;position:relative;height:8em;width:17em;float:left;">
+                    <div style="padding:0.3em 0.2em">      
+                        <div style="height:6em;	background-color:white;color: black;padding:0.5em 0.5em;">
+                            <div style="width: 20%;float: left;padding-right: 0.1em;margin-top: 0.2em;"><img src="./img/TVman.png" style="height:2.3em;"/></div>
+                                
+                            <div style="width:78%;height:6em;float:left;">
+                                <div><span class="catchUpTopicInfoTopic"><b></b></span></div>
+                                <div style=" margin-top:1.45em;line-height:130%;padding-top: 0.5em;background-color:#f9f9fa;height: 4em;padding-left: 0.5em;">
+                                <span  style="font-size:1.1em; font-weight:700; text-shadow:none; padding-top: 0.2em;display: block; color:#666;">Coming soon...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--<li class="catchUpTopicListLi" data-topicName="Documentary">
                     <div style="padding:0.3em 0.2em"> 
                         <div class="catchUpTopicItemDiv" data-role="button" data-id="471980729778180096" data-account="Documentary" data-img="topic_Documentary.jpg">
                             <div class="catchUpTopicImgDiv"><img style="height:35px; width:40px;margin-top: 8px;" src="./img/topic_Documentary.jpg"/></div>
                                 
                             <div class="catchUpTopicInfoDiv">
-                                <div><span style="font-size:17px;"><b>Documentary</b></span></div>
-                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">This is documentary topic, we search and share the documentary program on DTV.</span>
+                                <div><span class="catchUpTopicInfoTopic"><b>Documentary</b></span></div>
+                                <div class="catchUpTopicInfoDesDiv">
+                                	<span class="catchUpTopicInfoDes">This is documentary topic, we search and share the documentary program on DTV.
+                                    </span>
                                 </div>
                             </div>
                             <div class="catchUpTopicMaskDiv">
@@ -205,8 +222,8 @@
                             <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
                                 
                             <div class="catchUpTopicInfoDiv">
-                                <div><span style="font-size:17px;"><b>Variety Shows</b></span></div>
-                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">The Hottest variety shows are all here, catch up the most popular shows from now!</span>
+                                <div><span class="catchUpTopicInfoTopic"><b>Variety Shows</b></span></div>
+                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The Hottest variety shows are all here, catch up the most popular shows from now!</span>
                                 </div>
                             </div>
                             <div class="catchUpTopicMaskDiv">
@@ -221,8 +238,8 @@
                             <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
                                 
                             <div class="catchUpTopicInfoDiv">
-                                <div><span style="font-size:17px;"><b> Politics</b></span></div>
-                                <div style="line-height:1; padding-top:3px;"><span style="font-size:10px; font-weight:400">The deeper analysis, further understanding of political event on DTV.</span>
+                                <div><span class="catchUpTopicInfoTopic"><b> Politics</b></span></div>
+                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The deeper analysis, further understanding of political event on DTV.</span>
                                 </div>
                             </div>
                             <div class="catchUpTopicMaskDiv">
@@ -230,7 +247,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li>-->
              </ul>
           </div>
         </div>
@@ -241,7 +258,6 @@
           <div data-role="header" data-tap-toggle="false" id="twitterHeader" data-theme="a">
             <h1 id="header_Twitter">Twitter</h1>
             <a data-role="button" href="#catchUpTopicPage" data-transition="slide" data-reverse="true" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;" >back</a>
-            </a> 
           </div>
 
           <div data-role="content" id="twitterContent" style="padding:0 0;">
@@ -252,41 +268,41 @@
 
 
         <!--  CatchUpPVRSchedule -->
-        <div data-role="page" id="catchUpPVRSchedulePage" data-theme="a">
+        <div data-role="page" id="catchUpPVRSchedulePage" data-theme="a" style="background-color:#abc4ec;">
           <div data-role="header" data-position="fixed" data-tap-toggle="false" id="twitterHeader" data-theme="a">
             <h1 id="header_RecommandPVRPage">CatchUpContent</h1>
             <a data-role="button" href="#twitterPage" data-transition="slide" class="ui-icon-custom-back ui-btn-left ui-btn ui-nodisc-icon ui-btn-icon-notext" style="background-color:transparent; border:0;">back</a>
           </div>
 
+            <div data-role="popup" id="popupDialog_catchUpPVRSchedulePage" data-overlay-theme="b" data-theme="b"  class="tipsBox">
+                    <br />
+                    <p>8~63 characters, Only A~Z,a~z,0-9 allowed.</p>
+                    <br />
+            </div>
+
           <div data-role="content" id="twitterContent">
             <div id="CatchUpPVRSchedule">
-                <!--<div style="background-color:rgb(226, 226, 226); width:100%; border-radius:15px;height:3em; display:table; vertical-align:middle;">
-                    <div style="display:table-cell; vertical-align:middle">
-                        <img style="vertical-align:middle; margin-left:0.3em;" src="./img/World_Cup.png"/>
-                        <span style="vertical-align:middle; font-weight:bold; font-size:18px;" id="topic_catchUpPVRSchedulePage">England Team</span>
-                    </div>
-                </div>-->
-                <div style="background-color:rgb(226, 226, 226); width:100%;height:3em; display:table; vertical-align:middle;">
+                <div style="background-color:#f5f5f7;; width:100%;height:3em; display:table; vertical-align:middle;">
                     <div style="height: 44px;">
-                    	<!--<div style="height: 51.2px;width: 45.2px;background-color: #FFFFFF;border-radius: 5px;margin-top: 12.5px;margin-left: 3.5px;position: absolute;padding: 1.2px 1.2px;">-->
-                        <div style="height: 52px;width: 44px;background-color:#fff; border-radius:10px;margin-top: 10.5px;margin-left: 5.5px;position: absolute;padding:2px 2px;">
-                        	<img class="twitterImg" src="./img/World_Cup.jpg"/>
+                        <div class="twitterImgDiv_catchUpPVRSchedulePage">
+                        	<img class="twitterImg_catchUpPVRSchedulePage" src="./img/topic_World_Cup.png"/>
                         </div>
-                        <span style="font-weight: bold;font-size: 18px;position: absolute;margin-top: 25px;
-margin-left: 56px;" id="topic_catchUpPVRSchedulePage">England Team</span>
+                        <span id="topic_catchUpPVRSchedulePage">England Team</span>
                     </div>
                 </div>
                 
-                <div id="descriptionDiv" style="background-color: rgb(236, 236, 236);width: 100%;
-height: auto;margin-top: 30px;">
-                    <p id="description_catchUpPVRSchedulePage" style="text-indent: 8px; padding: 8px;">Hi, ALitu</p>
+                <div id="descriptionDiv">
+                    <p id="description_catchUpPVRSchedulePage">Description</p>
                 </div>
-                <div><p style="color:white;margin-top:1em;margin-bottom:0.3em;padding-left:5%;">PVR Schedule:</p></div>
-                <ul id="catchUpPVRScheduleList" style="list-style:none;padding:0 0;margin:0 0;">
+                <div><p style="color:black; text-shadow:none;margin-top:1em;margin-bottom:0.3em;padding-left:5%;">PVR Schedule:</p></div>
+                <ul id="catchUpPVRScheduleList">
                     <li class="catchUpPVRScheduleLi">
                         <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0">
-                            <p class="channelName">CH02:BBC Sports 1</p>
-                            <p><span class="displayName">England vs Japan </span><span class="timeLabel">2014/06/19 18:00-20:00</span></p>
+                            <table style=" border:none; padding:0; margin:0;">
+                            <tr><td rowspan="3"><img class="channelIcon" src="./img/a_3sat.png" style="padding:0.25em"></td><td>CH02:BBC Sports 1</td></tr>
+                            <tr><td>England vs Japan</td></tr>
+                            <tr><td>2014/06/19 18:00-20:00</td></tr>
+                            </table>
                             <div class="catchUpItemMaskDiv">
                                 <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="false"></div>
                             </div>
@@ -294,15 +310,28 @@ height: auto;margin-top: 30px;">
                     </li>
                     <li class="catchUpPVRScheduleLi">
                         <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0">
+                            <table style=" border:none; padding:0; margin:0;">
+                            <tr><td rowspan="3"><img class="channelIcon" src="img/a_lequipe21.png" style="padding:0.25em"></td><td>CH02:BBC Sports 1</td></tr>
+                            <tr><td>England vs Japan</td></tr>
+                            <tr><td>2014/06/19 18:00-20:00</td></tr>
+                            </table>
+                            <div class="catchUpItemMaskDiv">
+                                <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="false"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--<li class="catchUpPVRScheduleLi">
+                        <div class="catchUpPVRScheduleItem ui-body ui-body-a" data-index="0">
                             <p class="channelName">CH02:BBC Sports 1</p>
                             <p><span class="displayName">England vs Japan </span><span class="timeLabel">2014/06/19 18:00-20:00</span></p>
                             <div class="catchUpItemMaskDiv">
                                 <div class="catchUpItemCheckBox ui-icon-custom-selected-blue" data-isCheck="false"></div>
                             </div>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
-                <a data-role="button" class="syncBtn" style="font-weight: normal; background-color:rgb(226,226,226); color:black;">Sync with this Schedule <img src="./img/icon-check.png"></a>
+                <a href="dialog.html" data-role="button" class="syncBtn" data-rel="dialog" data-transition="slidedown" style="color:black; background-color:#f5f5f7; border:none;">Sync with this Schedule
+        <img src="./img/icon-check.png" /></a>
             </div>
             </div>
           </div>
