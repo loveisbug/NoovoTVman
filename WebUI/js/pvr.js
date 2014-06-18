@@ -731,7 +731,12 @@ $(function() {
     });
 
     // Yang begin
-    $("body").on("click", ".catchUpTopicListLi:not(:last)", function() {
+	$(".twitterBack").bind("click",function(){
+		$("#twitterContent").empty();
+		$("#twitter-wjs").remove();
+		$("iframe").empty();
+	});
+    $(".catchUpTopicListLi:not(:last)").unbind().bind("click", function() {
 		var twitterAccount = $(this).find(".catchUpTopicItemDiv").attr("data-account");
 		var twitterId 	   = $(this).find(".catchUpTopicItemDiv").attr("data-id");
 		twitterIconName    = $(this).find(".catchUpTopicItemDiv").attr("data-img"); 
