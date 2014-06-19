@@ -731,12 +731,13 @@ $(function() {
     });
 
     // Yang begin
-	$(".twitterBack").bind("click",function(){
+	$(".twitterBack").click(function(){
 		$("#twitterContent").empty();
 		$("#twitter-wjs").remove();
 		$("iframe").empty();
 	});
-    $(".catchUpTopicListLi:not(:last)").unbind().bind("click", function() {
+
+    $("body").on("click", ".catchUpTopicListLi:not(:last)", function() {
 		var twitterAccount = $(this).find(".catchUpTopicItemDiv").attr("data-account");
 		var twitterId 	   = $(this).find(".catchUpTopicItemDiv").attr("data-id");
 		twitterIconName    = $(this).find(".catchUpTopicItemDiv").attr("data-img"); 
