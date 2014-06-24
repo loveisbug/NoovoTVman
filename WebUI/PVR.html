@@ -6,12 +6,13 @@
 	    <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
 	    <script src="./js/jquery-1.8.3.min.js"></script>
         <script src="./js/jquery.mobile-1.4.2.min.js"></script>
+        <script src="./js/Tocca.min.js"></script>
         <script src="./js/global.js"></script>
         <script src="./js/pvr.js"></script>
 	    <script src="./js/mobiscroll.core-2.6.2.js"></script>
         <script src="./js/mobiscroll.core-2.6.2-zh.js"></script>
         <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
-        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140605.min.css" />
+        <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140622.min.css" />
         <link rel="stylesheet" href="./css/jqmChange.css" />
         <link rel="stylesheet" href="./css/mobiscroll.core-2.6.2.css" />
         <link rel="stylesheet" href="./css/mobiscroll.animation-2.6.2.css" />
@@ -58,8 +59,8 @@
 
 
         <!--  Record Item  -->
-        <div data-role="page" id="recordItemPage" data-theme="a">
-          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
+        <div data-role="page" id="recordItemPage" data-theme="f">
+          <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="f">
             <a href="#pvrPage" data-role="button" class="ui-icon-custom-back ui-btn ui-nodisc-icon ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
             <h1 id="recordItemLabel_RecordItem">RecordItem</h1>
           </div>
@@ -100,8 +101,8 @@
         </div>
 
         <!--  Channel List  -->
-        <div data-role="page" id="channelListPage" data-theme="a">
-            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="a">
+        <div data-role="page" id="channelListPage" data-theme="f">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" data-theme="f">
                 <a href="#recordItemPage" id="ChannelListback" data-role="button" class="ui-icon-custom-back ui-nodisc-icon ui-btn ui-btn-icon-notext" data-transition="slide" data-direction="reverse" style="background-color:transparent; border:none;" data-shadow="false">Back</a>
                 <h1 style="margin: 0 10% !important" id="channelListLabel_ChannelList">ChannelList</h1>
             </div>
@@ -152,102 +153,6 @@
 
           <div data-role="content" id="catchUpContent">
              <ul id="catchUpTopicList">
-                <li class="catchUpTopicListLi" data-topicName="WorldCup_UK">
-                    <div style="padding:0.3em 0.2em"> 
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476281877280460800" data-account="WldcpTVmanuk" data-img="topic_World_Cup.png">
-                            <div class="catchUpTopicImgDiv"><img src="./img/topic_World_Cup.png"/></div>
-                                
-                            <div class="catchUpTopicInfoDiv">
-                                <div><span class="catchUpTopicInfoTopic"><b>World Cup</b></span></div>
-                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The Matches,teams,news...</span>
-                                </div>
-                            </div>
-                            <div class="catchUpTopicMaskDiv">
-                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
-                            </div>
-                        </div>
-                    </div>
-              </li>
-                <li class="catchUpTopicListLi" data-topicName="Sports">
-                    <div style="padding:0.3em 0.2em">      
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476276881440796672" data-account="Sports_TVman" data-img="topic_Sports.jpg">
-                            <div class="catchUpTopicImgDiv"><img src="./img/topic_Sports.jpg"/></div>
-                                
-                            <div class="catchUpTopicInfoDiv">
-                                <div><span class="catchUpTopicInfoTopic"><b>Sports</b></span></div>
-                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">Football,Tennis,Rugby,F1...</span>
-                                </div>
-                            </div>
-                            <div class="catchUpTopicMaskDiv">
-                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="catchUpTopicListLi" style="padding:0;position:relative;height:8em;width:17em;float:left;">
-                    <div style="padding:0.3em 0.2em">      
-                        <div style="height:6em;	background-color:white;color: black;padding:0.5em 0.5em;">
-                            <div style="width: 20%;float: left;padding-right: 0.1em;margin-top: 0.2em;"><img src="./img/TVman.png" style="height:2.3em;"/></div>
-                                
-                            <div style="width:78%;height:6em;float:left;">
-                                <div><span class="catchUpTopicInfoTopic"><b></b></span></div>
-                                <div style=" margin-top:1.45em;line-height:130%;padding-top: 0.5em;background-color:#f9f9fa;height: 4em;padding-left: 0.5em;">
-                                <span  style="font-size:1.1em; font-weight:700; text-shadow:none; padding-top: 0.2em;display: block; color:#666;">Coming soon...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <!--<li class="catchUpTopicListLi" data-topicName="Documentary">
-                    <div style="padding:0.3em 0.2em"> 
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="471980729778180096" data-account="Documentary" data-img="topic_Documentary.jpg">
-                            <div class="catchUpTopicImgDiv"><img style="height:35px; width:40px;margin-top: 8px;" src="./img/topic_Documentary.jpg"/></div>
-                                
-                            <div class="catchUpTopicInfoDiv">
-                                <div><span class="catchUpTopicInfoTopic"><b>Documentary</b></span></div>
-                                <div class="catchUpTopicInfoDesDiv">
-                                	<span class="catchUpTopicInfoDes">This is documentary topic, we search and share the documentary program on DTV.
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="catchUpTopicMaskDiv">
-                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
-                            </div>
-                        </div>
-                    </div>
-              </li>
-                <li class="catchUpTopicListLi" data-topicName="Variety_shows">
-                    <div style="padding:0.3em 0.2em"> 
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="476281877280460800" data-account="Varietyshows_TV" data-img="Variety_shows.jpg">
-                            <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
-                                
-                            <div class="catchUpTopicInfoDiv">
-                                <div><span class="catchUpTopicInfoTopic"><b>Variety Shows</b></span></div>
-                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The Hottest variety shows are all here, catch up the most popular shows from now!</span>
-                                </div>
-                            </div>
-                            <div class="catchUpTopicMaskDiv">
-                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
-                            </div>
-                        </div>
-                    </div>
-              </li>
-                <li class="catchUpTopicListLi" data-topicName="Politics">
-                    <div style="padding:0.3em 0.2em"> 
-                        <div class="catchUpTopicItemDiv" data-role="button" data-id="471979025749901312" data-account="TVman" data-img="Politics.jpg">
-                            <div class="catchUpTopicImgDiv"><img src="./img/a_cherie25.png"/></div>
-                                
-                            <div class="catchUpTopicInfoDiv">
-                                <div><span class="catchUpTopicInfoTopic"><b> Politics</b></span></div>
-                                <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The deeper analysis, further understanding of political event on DTV.</span>
-                                </div>
-                            </div>
-                            <div class="catchUpTopicMaskDiv">
-                                <div class="catchUpTopicCheckBox ui-icon-custom-selected-blue" data-isCheck="true"></div>
-                            </div>
-                        </div>
-                    </div>
-                </li>-->
              </ul>
           </div>
         </div>
