@@ -156,7 +156,6 @@
 	left:0px;
 	position:absolute;
 	display:none;
-	z-index: 9999;
 }
 
 .pvrItemCheckBox {
@@ -165,7 +164,6 @@
 	right: 0.5em;
 	width: 2em;
 	height:2em;
-	z-index: 9999;
 }
 
 #catchUpTopicList{

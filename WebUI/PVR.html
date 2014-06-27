@@ -31,7 +31,7 @@
 		  <div data-role="header"  data-position="fixed" data-tap-toggle="false" id="pvrHeader" data-theme="c">
           	<a id="cancelpvrselect" data-role="button" class="ui-icon-custom-back ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;display:none;" >cancel</a>
             <a id="delButton_PVR" data-role="button" class="ui-icon-custom-edit ui-btn-right ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">Edit</a>
-		    <h1 id="pvrScheduleLabel_PVR">PVR</h1>
+		    <h1 id="pvrScheduleLabel_PVR">&nbsp;</h1>
 
 		    <div class="statusBar" id="statusBar">
 				<div style="left:0px;" class="circle" ></div>
@@ -42,14 +42,6 @@
 
 		  <div data-role="content" id="mainContent">
             <ul id="pvrScheduleList">
-                <li class="pvrScheduleListli" style="height:8em;"> 
-                    <a href="#" data-transition="slide" class="pvrScheduleItem pvrScheduleAddItem">
-                        <div class="ui-body ui-body-a ui-shadow" style="padding:8px 8px;height:6em; border-color:#e4e7e8;background-color:#e4e7e8" >
-                            <div style="position:absolute;top: 50%; left: 50%; margin-top:0.8em; margin-left: -5em;font-size:12px;"><span style="color:#95a5a6;">New PVR Schedule</span></div>
-                            <div style="margin-top:-1em;width:28px; height:28px;position:absolute; top: 50%; left: 50%; margin-left: -1em; margin-top: -1.8em;text-align:center; border-radius:5px;"><span style="font-weight:bold;font-size:3em; line-height:0.7em; color:#95a5a6;">+</span></div>
-                        </div>
-                    </a>
-                </li>
             </ul>
 
 		  </div>
@@ -235,7 +227,7 @@
                         </div>
                     </li>-->
                 </ul>
-                <a href="dialog.html" data-role="button" class="syncBtn" data-rel="dialog" data-transition="slidedown" style="color:black; background-color:#f5f5f7; border:none;">Sync with this Schedule
+                <a href="dialog.html" data-role="button" class="syncBtn" data-rel="dialog" data-transition="slidedown" style="color:black; background-color:#f5f5f7; border:none;"><span id="syncLabel">Sync with this Schedule</span>
         <img src="./img/icon-check.png" /></a>
             </div>
             </div>

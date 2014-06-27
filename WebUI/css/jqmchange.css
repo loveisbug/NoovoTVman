@@ -3,6 +3,12 @@
 	line-height:1.8;
 }
 
+.ui-page { 
+   backface-visibility:hidden; 
+   -webkit-backface-visibility:hidden;
+   -moz-backface-visibility:hidden;
+}
+
 .ui-icon-custom-check:after {
 	background:url('../img/icon-setting-check.png') no-repeat center;
 	background-size: 25px 25px;
