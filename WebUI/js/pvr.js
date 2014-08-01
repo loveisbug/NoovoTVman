@@ -10,10 +10,12 @@ var offset				  = 0;
 var confirmLabel		  = "";
 var nowRecordId			  = -1;
 var catchUpScheduleObj    = "";
-var catchUpTopicArray     = new Array("true", "true", "true"); //default book all the topic\
+var catchUpTopicArray     = new Array("true", "true", "true"); //default book all the topic
 var twitterIconName 	  = "";
 var countryCode           = "";
 var loadingLabel          = "";
+var remotePVRStart        = "";
+var remotePVRFailed       = "";
 
 var twitterUK             = [{topic:"WorldCup_GB", displayName:"WorldCup", accountName:"WldcpTVmanuk", description:"The Matches, teams, News", twitterId:"476281877280460800", image:"topic_World_Cup.png"},
 							 {topic:"Sports_GB", displayName:"Sports", accountName:"SportsTVmanuk", description:"Football, Tennis, Rugby, F1",twitterId:"476276881440796672", image:"topic_Sports.jpg"}];
@@ -98,11 +100,14 @@ var pvrScheduleItemBtn = '<li class="pvrScheduleListli" style="height:8em;">\
                 </li>'
 
 var topicItem = '<li class="catchUpTopicListLi" data-topicName="WorldCup_UK">\
-                    <div style="padding:0.3em 0.2em"> \
+                    <div style="padding:0.3em 0.6em"> \
                         <div class="catchUpTopicItemDiv" data-role="button" data-id="476281877280460800" data-account="WldcpTVmanuk" data-img="topic_World_Cup.png">\
                             <div class="catchUpTopicImgDiv"><img src="./img/topic_World_Cup.png"/></div>\
                             <div class="catchUpTopicInfoDiv">\
-                                <div><span class="catchUpTopicInfoTopic"><b>World Cup</b></span></div>\
+                                <div>\
+                                    <span class="catchUpTopicInfoTopic"><b>World Cup</b></span>\
+                                    <span class="red_dot_img" style="display:none;"><img src="./img/red-dot.png" style="height:0.5em; width:0.5em;float: left;margin-right: 6px;"></span>\
+                                </div>\
                                 <div class="catchUpTopicInfoDesDiv"><span class="catchUpTopicInfoDes">The Matches,teams,news...</span>\
                                 </div>\
                             </div>\
@@ -114,7 +119,7 @@ var topicItem = '<li class="catchUpTopicListLi" data-topicName="WorldCup_UK">\
                 </li>'
 
 var topicItemComing = '<li class="catchUpTopicListLi" style="padding:0;position:relative;height:8em;width:17em;float:left;">\
-                    <div style="padding:0.3em 0.2em">      \
+                    <div style="padding:0.3em 0.6em">      \
                         <div style="height:6em;	background-color:white;color: black;padding:0.5em 0.5em;">\
                             <div style="width: 20%;float: left;padding-right: 0.1em;margin-top: 0.2em;"><img src="./img/TVman.png" style="height:2.3em;"/></div>\
                             <div style="width:78%;height:6em;float:left;">\
@@ -130,6 +135,10 @@ var topicItemComing = '<li class="catchUpTopicListLi" style="padding:0;position:
 
 /*=======================================Init function============================================*/ 
 function init() {
+    if(browser.versions.android) {
+        preventTheDefaultEvent();
+    }
+
     window.location = "native://PVRInit";
 }
 
@@ -160,6 +169,8 @@ function onDataWithJSON(data,key) {
         var twitter          = temp.Twitter;
         var syncLabel        = temp.SyncLabel;
         var catchUpContent   = temp.CatchUpContent;
+            remotePVRStart   = temp.RemotePVRStart;
+            remotePVRFailed  = temp.RemotePVRFailed;
 
         //calculateCurrentTime
 		var	now 	  = new Date().getTime();
@@ -216,9 +227,18 @@ function onDataWithJSON(data,key) {
 		initPVRShedule(pvrScheduleArray);
 	
 	} else if(key == "PVRFromS3") {
-		initPVRFromS3(temp);
-		$.mobile.changePage("#catchUpPVRSchedulePage", { transition: "slide", reverse:true});
-        $("#catchUpPVRSchedulePage").focus();
+
+		var isSucceed = temp.isSucceed;
+
+		if(isSucceed) {
+			hideLoader();
+			initPVRFromS3(temp.PVR);
+			$.mobile.changePage("#catchUpPVRSchedulePage", { transition: "slide", reverse:true});
+	        $("#catchUpPVRSchedulePage").focus();
+    	} else {
+    		showLoader(remotePVRFailed);
+    		setTimeout("hideLoader()", 1000);
+    	}
 
 	} else if(key == "SyncTopicFinishNotification") {
 		initCatchUpTopic(temp);
@@ -253,6 +273,7 @@ function deletePvr(recordIdArray){
 }
 
 function getPVRFromS3(url) {
+	showLoader(remotePVRStart);
     window.location = "native://GetPVRFromS3?" + url;
 }
 
@@ -487,6 +508,55 @@ function isValidPVRSchedule(networkId, tsId, serviceId) {
 	});
 	return isValid;
 }
+ 
+function showLoader(tips) {
+    $.mobile.loading('show', {  
+        text: '',
+        textVisible: true,
+        theme: 'a',
+        textonly: false, 
+        html: "<div><center><img src='./img/icon-loading.gif' /></center>" +
+			"<h1>"+ tips+ "</h1>" +
+			"</div>"
+    });
+}
+
+//this code just for android.
+function preventTheDefaultEvent() {
+    document.ontouchmove = function(event) {
+        event.preventDefault();
+    };
+    
+    $("[data-role='page']").on("pageshow pageinit", function(e, data) {
+
+        $(this).bind("scroll", function(e, data) {
+            var top = $(document).scrollTop() + data.distance.y;
+            $.mobile.silentScroll(top);
+        });
+    });
+
+    $("[data-role='page']").on("pagehide", function(e, data) {
+        $(this).unbind("scroll");
+        $(document).scrollTop(0);
+        $.mobile.silentScroll(0);
+    });
+
+    $("[data-role='page']").on("pagebeforeshow", function(e, data) {
+        $(this).unbind("scroll");
+        $(document).scrollTop(0);
+        $.mobile.silentScroll(0);
+    });
+}
+
+function hideLoader()  
+{
+    $.mobile.loading('hide');  
+}
+  
+function hideLoader()  
+{  
+    $.mobile.loading('hide');  
+} 
 
 function imgError(image) {
     image.onerror = "";
@@ -524,7 +594,7 @@ function checkIframe() {
 	iframe.contents().find("body").css("margin", "0px 0px");
 	iframe.contents().find("body").css("padding", "0px 0px");
 	iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
-	var tempHeight = $(window).height() - headerHeight - 10;
+	var tempHeight = $(window).height() - headerHeight ;
 	var tempWidth  = $(window).width();
 	iframe.height(tempHeight);
 	iframe.width(tempWidth);
@@ -540,33 +610,7 @@ function checkIframe() {
 }
 /*=======================================JQuery Binding============================================*/
 /*===================================delect record and documents===================================*/
-document.ontouchmove = function(event) {
-    event.preventDefault();
-};
-
 $(document).ready(function () {
-
-    
-    $("[data-role='page']").on("pageshow", function(e, data) {
-
-        $(this).bind("scroll", function(e, data) {
-          var top = $(document).scrollTop() + data.distance.y;
-          $.mobile.silentScroll(top);
-        });
-    });
-
-    $("[data-role='page']").on("pagehide pageinit", function(e, data) {
-        $(this).unbind("scroll");
-        $(document).scrollTop(0);
-        $.mobile.silentScroll(0);
-    });
-
-    $("[data-role='page']").on("pagebeforeshow", function(e, data) {
-        $(this).unbind("scroll");
-        $(document).scrollTop(0);
-         $.mobile.silentScroll(0);
-    });
-
     $("#delButton_PVR").click(function() {
 
 		if($('.pvrScheduleListli').length > 0) {
@@ -873,7 +917,7 @@ $(function() {
 		$("iframe").empty();
 		
         $.mobile.changePage("#twitterPage", {transition: "slide", reverse: true});
-        $("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '"><div style="text-align:center; margin-top:45%; width:100%;"><span style="font-size:1em;color:white;">' + loadingLabel + '...</span></div></a>');
+        $("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" data-chrome="nofooter noheader transparent" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '"><div style="text-align:center; margin-top:45%; width:100%;"><span style="font-size:1em;color:white;">' + loadingLabel + '...</span></div></a>');
 		loadTwitter();
     });
 

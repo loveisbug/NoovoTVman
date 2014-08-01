@@ -27,14 +27,11 @@
 	width:17em;
 	float:left;
 }
-#pvrScheduleList li>a  {
+.pvrScheduleItem{
 	background-color:transparent; 
 	border-width:0px;
 	text-decoration:none;
-	padding:0.3em 0.2em;
-}
-.pvrScheduleItem{
-	padding:0.3em 0.2em;
+	padding:0.3em 0.6em;
 	display:block;
 }
 
@@ -62,15 +59,11 @@
 	width:17em;
 	float:left;
 }
-#recFilesList li>a  {
+.recordFileItem{
 	background-color:transparent; 
 	border-width:0px;
 	text-decoration:none;
-	padding:0.3em 0.2em;
-}
-
-.recordFileItem{
-	padding:0.2em 0.5em;
+	padding:0.3em 0.6em;
 	display:block;
 }
 
