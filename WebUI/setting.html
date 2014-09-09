@@ -4,15 +4,20 @@
 		<meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	    <link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
-	    <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140622.min.css" />
+	    <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140825.min.css" />
 	    <link rel="stylesheet" href="./css/jqmChange.css" />
 	    
 	    <script src="./js/jquery-1.8.3.min.js"></script>
 	    <script src="./js/jquery.mobile-1.4.2.min.js"></script>
-	    <script src="./js/setting.js"></script>
 	    <script src="./js/global.js"></script>
+	    <script src="./js/setting.js"></script>
 
 	    <style type="text/css">
+	    	*{
+				font-weight: 100;
+				font-family: helvetica,serif;
+				letter-spacing: 1px;
+			}
 			.tipsBox {
 				padding: 10px 10px !important;
 			}
@@ -42,10 +47,28 @@
 
 		  <div data-role="content">
 			<ul data-role="listview">
-			  <li data-icon="custom-into" class="ui-nodisc-icon"><a href="#connectToWlanPage" data-transition="slide"><img src="./img/icon-setting-wlan.png" alt="wlan" class="ui-li-icon leftIcon" /><span id="wlanLabel_Setting">WLAN</span></a></li>
-			  <li data-icon="custom-into" class="ui-nodisc-icon"><a href="#hotspotPage" data-transition="slide"><img src="./img/icon-setting-hot.png" alt="hotspot" class="ui-li-icon leftIcon" /><span id="hotspotLabel_Setting">Hot Spot</span></a></li>
-			  <li data-icon="custom-into" class="ui-nodisc-icon"><a href="#aboutPage" data-transition="slide"><img src="./img/icon-setting-about.png" alt="about" class="ui-li-icon leftIcon" /><span id="aboutLabel_Setting">About</span></a></li>
+			    <li data-icon="custom-into" class="ui-nodisc-icon">
+			  		<a href="#connectToWlanPage" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+			  			<img src="./img/icon-setting-wlan.png" alt="wlan" class="ui-li-icon leftIcon" />
+			  			<span id="wlanLabel_Setting">WLAN</span>
+			  		</a>
+			    </li>
+			    <li data-icon="custom-into" class="ui-nodisc-icon">
+			  		<a href="#hotspotPage" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+			  			<img src="./img/icon-setting-hot.png" alt="hotspot" class="ui-li-icon leftIcon" />
+			  			<span id="hotspotLabel_Setting">Hot Spot</span>
+			  		</a>
+			  	</li>
+			  	<li data-icon="custom-into">
+			  		<a href="#aboutPage" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+			  			<img src="./img/icon-setting-about.png" alt="about" class="ui-li-icon leftIcon" />
+			  			<span id="aboutLabel_Setting">About</span>
+			  		</a>
+			  	</li>
 			</ul>
+		  </div>
+
+		  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
 		  </div>
 		</div> 
 
@@ -70,6 +93,9 @@
 				    <br />
 				</div>
 		  </div>
+
+		  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		  </div>
 		</div>
 
 		<!--  SSID List  -->
@@ -84,6 +110,9 @@
 				  <!-- <li data-icon="false" class="ssidItem" value="Test">Test</li> -->
 				</ul>
   			</div>
+
+  			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		  </div>
 		</div>
 
 
@@ -97,11 +126,11 @@
 
   			<div data-role="content">
 				<ul data-role="listview" id="hotspotList">
-				  <li><a href="#wifiChannelPage" data-transition="slide"><span id="ChannelLabel_Hotspot">WiFi Channel</span> <span class="ui-li-count" id="currentWifiChannel" style="background-color:transparent;border-width:0px;padding-top:1px;color:white">CH 1</span></a></li>
-				  <li><a href="#wifiSecretPage" data-transition="slide"><span id="SecretModeLabel_Hotspot">Security</span> <span class="ui-li-count" id="currentWifiSecret" style="background-color:transparent;border-width:0px;padding-top:1px;color:white">NONE</span></a></li>
+				  <li><a href="#wifiChannelPage" data-transition="slide"><span id="ChannelLabel_Hotspot">WiFi Channel</span> <span class="ui-li-count" id="currentWifiChannel" style="background-color:transparent;border-width:0px;padding-top:1px;color:#d5d5d7;">CH 1</span></a></li>
+				  <li><a href="#wifiSecretPage" data-transition="slide"><span id="SecretModeLabel_Hotspot">Security</span> <span class="ui-li-count" id="currentWifiSecret" style="background-color:transparent;border-width:0px;padding-top:1px;color:#d5d5d7;">NONE</span></a></li>
 				</ul>
 			<br />
-			<input type="button" id="applyButton" value="Apply"/>
+			<input type="button" id="applyButton" value="Apply" style="font-weight:normal;" />
   			</div>
 
   			<div data-role="popup" id="popupDialog_WIFI" data-overlay-theme="b" data-theme="b"  class="tipsBox">
@@ -109,6 +138,9 @@
 				    <p>8~63 characters, Only A~Z,a~z,0-9 allowed.</p>
 				    <br />
 			</div>
+
+			<div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		  </div>
 		</div>
 
 		<!--  ChannelList  -->
@@ -133,6 +165,9 @@
 			  <li data-icon="false">CH 11</li>
 			</ul>
 		  </div>
+
+		  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		  </div>
 		</div>
 
 		<!--  HotspotSecret  -->
@@ -147,6 +182,9 @@
 			  <li data-icon="check" class="ui-btn-icon-right ui-icon-custom-check">NONE</li>
 			  <li data-icon="false">WPA</li>
 			</ul>
+		  </div>
+
+		  <div data-role="footer" data-position="fixed" data-tap-toggle="false">
 		  </div>
 		</div>
 
@@ -163,23 +201,26 @@
 		  	<div data-role="content">
 			  	<ul data-role="listview" data-inset="true" data-shadow="false" style="margin-top:0px;margin-bottom:0px;">
 	    			<li class="ui-btn" style="border-width:1px;margin-bottom:8px;">
-		        		<h2 id ="versionLabel" class="ui-li-heading">Version</h2>
-		        		<p  id="version" class="ui-li-desc"></p>
+		        		<p id ="versionLabel" class="ui-li-heading" style="font-size:1em;">Version</p>
+		        		<p id="version" class="ui-li-desc"></p>
 	      			</li>
 	      			<li class="ui-btn" style="border-width:1px;margin-bottom:8px;">
-		        		<h2 id="deviceLabel" class="ui-li-heading">Firmware</h2>
+		        		<p id="deviceLabel" class="ui-li-heading" style="font-size:1em;">Firmware<p/>
 		        		<p  id="device" class="ui-li-desc"></p>
-		        		<h2 id="ssidLabel" class="ui-li-heading">SSID</h2>
+		        		<p id="ssidLabel" class="ui-li-heading" style="font-size:1em;">SSID</p>
 		        		<p  id="ssid" class="ui-li-desc"></p>
 				    </li>
 				    <li class="ui-btn">
-				        <h2 id="availableLabel" class="ui-li-heading">avaliable</h2>
+				        <p id="availableLabel" class="ui-li-heading" style="font-size:1em;">avaliable</p>
 			        	<p  id="available" class="ui-li-desc">KB</p>
-			        	<h2 id="totalLabel" class="ui-li-heading">total</h2>
+			        	<p id="totalLabel" class="ui-li-heading" style="font-size:1em;">total</p>
 			        	<p  id="total" class="ui-li-desc">KB</p>
 				    </li>
 	  			</ul>
 		    </div>
+
+		    <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+		  </div>
 		</div>
 
 

@@ -2,13 +2,16 @@
 .ui-header {
 	line-height:1.8;
 }
-
-.ui-page { 
-   backface-visibility:hidden; 
-   -webkit-backface-visibility:hidden;
-   -moz-backface-visibility:hidden;
+.ui-header .ui-title, .ui-footer .ui-title {
+	font-weight: normal;
 }
-
+.ui-btn {
+	font-weight: normal;
+}
+.ui-input-text input {
+	text-shadow:none;
+	font-size: 1em;
+}
 .ui-icon-custom-check:after {
 	background:url('../img/icon-setting-check.png') no-repeat center;
 	background-size: 25px 25px;
@@ -52,4 +55,66 @@
 .ui-icon-custom-back {
 	background:url('../img/icon-go-back.png') no-repeat center;
 	background-size: 43% 72%;
+}
+/*7/21 liveTV */
+.ui-icon-custom-channel-search {
+	background:url('../img/icon-list-search.png') no-repeat center;
+	background-size: 30px 30px;
+}
+/*8/8 liveTV */
+.ui-icon-custom-channel-selected {
+	background:url('../img/icon-selected-dark-red.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
+.ui-icon-custom-channel-unselect {
+	background:url('../img/icon-unselect-dark-red.png') no-repeat center;
+	background-size: 25px 25px;
+}
+
+/* Tab */
+.ui-icon-custom-nav-liveTV {
+	background:url('../img/tab-tv@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-epg {
+	background:url('../img/tab-epg@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-pvr {
+	background:url('../img/tab-pvr@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-setting {
+	background:url('../img/tab-setting@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-liveTV-selected {
+	background:url('../img/tab-tv-selected@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-epg-selected {
+	background:url('../img/tab-epg-selected@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-pvr-selected {
+	background:url('../img/tab-pvr-selected@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+.ui-icon-custom-nav-setting-selected {
+	background:url('../img/tab-setting-selected@2x.png') no-repeat center;
+	background-size: 48px 48px;
+}
+
+/*EPG*/
+.ui-icon-custom-epg-panel {
+	background:url('../img/tab-epg@2x.png') no-repeat center;
+	background-size: 30px 30px;
 }

@@ -1,0 +1,51 @@
+*{
+	font-weight: 100;
+	font-family: helvetica,serif;
+	letter-spacing: 1px;
+}
+#channelItem {
+	 min-height: 3em;
+}
+
+.channelItemMaskDiv{
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	display:none;
+	z-index:99999999;
+	position:absolute;
+}
+
+.channelItemCheckBox {
+	position:absolute;
+	top: 0.3em;
+	right: 0.5em;
+	width: 2em;
+	height:2em;
+}
+
+.currentPlayingChannel .channelName {
+	color:red;
+}
+
+/*search channelPage*/
+#progressBar {
+	text-align:center;
+	color:white;
+	text-shadow:none;
+	margin-top:50%;
+}
+
+.progressScrollBar {
+	background-color:#8DB7D8;
+	width:10px;
+	height:0.5em;
+	border-radius:0.25em;
+}
+
+.progressBackground {
+	height:0.5em;
+	background-color:white;
+	border-radius:0.25em;
+}

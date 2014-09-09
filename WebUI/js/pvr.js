@@ -9,13 +9,16 @@ var utcdiff				  = 0;
 var offset				  = 0;
 var confirmLabel		  = "";
 var nowRecordId			  = -1;
-var catchUpScheduleObj    = "";
+var catchUpScheduleObj    = new Array();
 var catchUpTopicArray     = new Array("true", "true", "true"); //default book all the topic
 var twitterIconName 	  = "";
 var countryCode           = "";
 var loadingLabel          = "";
 var remotePVRStart        = "";
 var remotePVRFailed       = "";
+var catchUpConflictObj    = "";
+var localConflictObj      = "";
+var catchUpNoConflictObj  = "";
 
 var twitterUK             = [{topic:"WorldCup_GB", displayName:"WorldCup", accountName:"WldcpTVmanuk", description:"The Matches, teams, News", twitterId:"476281877280460800", image:"topic_World_Cup.png"},
 							 {topic:"Sports_GB", displayName:"Sports", accountName:"SportsTVmanuk", description:"Football, Tennis, Rugby, F1",twitterId:"476276881440796672", image:"topic_Sports.jpg"}];
@@ -32,7 +35,7 @@ var twitterTW             = [{topic:"Sports_TW", displayName:"運動", accountNa
 
 var twitterAccountList    = [{group:"GB", accoutList:twitterUK},
 							 {group:"FR", accoutList:twitterFR},
-							 {group:"IT", accoutList:twitterIT},
+							 {group:"EU", accoutList:twitterIT},
 							 {group:"TW", accoutList:twitterTW}];
 
 var recordFileItem = '<li class="recFilesListli">\
@@ -131,6 +134,17 @@ var topicItemComing = '<li class="catchUpTopicListLi" style="padding:0;position:
                         </div>\
                     </div>\
                 </li>'
+
+var conflictItemOrg = '<li class="syncListLi">\
+                        <table style=" border:none; padding:0; margin:0;">\
+                            <tr>\
+                                <td rowspan="3"><img class="channelIcon" src="img/a_lequipe21.png" style="padding:0.25em">\
+                                </td><td class="channelName">CH02:BBC Sports 1</td>\
+                            </tr>\
+                            <tr><td class="displayName">England vs Japan</td></tr>\
+                            <tr><td class="timeLabel">2014/06/19 18:00-20:00</td></tr>\
+                        </table>\
+                    </li>'
                 
 
 /*=======================================Init function============================================*/ 
@@ -142,9 +156,8 @@ function init() {
     window.location = "native://PVRInit";
 }
 
-
 /*=======================================public slot============================================*/
-function onDataWithJSON(data,key) { 
+function onDataWithJSON(data, key) { 
     var temp;
     if(browser.versions.android) {
         temp = eval( "(" + data + ")" );
@@ -200,13 +213,17 @@ function onDataWithJSON(data,key) {
         var recordFilesArray = temp.PVR;
         initRecordFiles(recordFilesArray);
 
-    } else if(key == "UpdateRecItemList"){
-		$.mobile.changePage("#pvrPage",  { transition: "none"});
+    } else if(key == "UpdateRecItemList") {
+        var whichPageId = $.mobile.activePage.attr("id");
+        if(whichPageId != "mergePage") {
+            $.mobile.changePage("#pvrPage",  { transition: "none"});
+        }
+
 		var pvrScheduleArray = temp.PVRSchedule;
 		initPVRShedule(pvrScheduleArray);
 		findNowRecord(nowRecordId);
 
-	} else if(key == "UpdateTime"){
+	} else if(key == "UpdateTime") {
 		var	now 	  = new Date().getTime();
 		var nowoffset = new Date().getTimezoneOffset();
 		nowoffset 	  = nowoffset * 60 * 1000;
@@ -217,17 +234,17 @@ function onDataWithJSON(data,key) {
 			offset  = parseInt(temp.CurrentTime.Offset);
 		}
 
-	} else if(key == "RecordStartNotification"){
+	} else if(key == "RecordStartNotification") {
 		nowRecordId = temp;
 		findNowRecord(nowRecordId);
 
-	} else if(key == "RecordFinishNotification"){
+	} else if(key == "RecordFinishNotification") {
 		nowRecordId = -1;
 		var pvrScheduleArray = temp.PVRSchedule;
 		initPVRShedule(pvrScheduleArray);
 	
 	} else if(key == "PVRFromS3") {
-
+        
 		var isSucceed = temp.isSucceed;
 
 		if(isSucceed) {
@@ -245,7 +262,6 @@ function onDataWithJSON(data,key) {
 
 	}
 }
-
 
 /*=======================================public signal============================================*/
 function playFile(filePath) {
@@ -291,9 +307,8 @@ function initPVRShedule(data) {
     $.each(data, function(index,value) {
         var channelName    = value.ChannelName;
         var displayName    = value.DisplayName;
-        var startTime      = new Date(value.StartYear + "/" + value.StartMonth + "/" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0").format("yyyy-MM-dd hh:mm");
-        var endTime        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("hh:mm");
-		var endTimeFull    = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0").format("yyyy-MM-dd hh:mm");
+        var startTime      = new Date(value.StartYear + "/" + value.StartMonth + "/" + value.StartDay + " " + value.StartHour + ":" + value.StartMinute + ":0");
+        var endTime        = new Date(value.EndYear + "/" + value.EndMonth + "/" + value.EndDay + " " + value.EndHour + ":" + value.EndMinute + ":0");
         var sheduleItem    = $(pvrScheduleItem);
 		var recordItemId   = value.RecordItemId;
 		var networkId      = value.NetworkId;
@@ -307,13 +322,13 @@ function initPVRShedule(data) {
 		sheduleItem.find(".pvrItemRecDiv").attr("data-recordId",recordItemId);
         sheduleItem.find("#channelName_pvrShedule").html("CH:"+channelName).attr("id", "channelName" + index + "_pvrShedule");
         sheduleItem.find("#programme_pvrShedule").html(displayName == "" ? "&nbsp" : displayName).attr("id", "programme" + index + "_pvrShedule");
-        sheduleItem.find("#startTime_pvrShedule").html(startTime).attr("id", "startTime" + index + "_pvrShedule");
-        sheduleItem.find("#endTime_pvrShedule").html(endTime).attr("id", "endTime" + index + "_pvrShedule");
+        sheduleItem.find("#startTime_pvrShedule").html(startTime.format("yyyy-MM-dd hh:mm")).attr("id", "startTime" + index + "_pvrShedule");
+        sheduleItem.find("#endTime_pvrShedule").html(endTime.format("hh:mm")).attr("id", "endTime" + index + "_pvrShedule");
         sheduleItem.find(".pvrItemImgDiv img").attr("src", "./img/"+ iconName +".png");
 
         pvrScheduleObj[index] = value;
         pvrScheduleObj[index].startTime = startTime;
-        pvrScheduleObj[index].endTime   = endTimeFull;
+        pvrScheduleObj[index].endTime   = endTime;
 
         pvrScheduleList.append(sheduleItem);
     });
@@ -405,7 +420,7 @@ function initCatchUpTopic(data) {
 	 });
 }
 
-function initPVRFromS3(data){
+function initPVRFromS3(data) {
 
 	 var catchUpPVRScheduleList = $("#catchUpPVRScheduleList");
 	 catchUpPVRScheduleList.children().remove();
@@ -425,7 +440,7 @@ function initPVRFromS3(data){
 	 $("#topic_catchUpPVRSchedulePage").html(topic);
 	 $("#description_catchUpPVRSchedulePage").html(description);
 		
-	 catchUpScheduleObj    = new Array();
+	 catchUpScheduleObj = new Array();
 	 $.each(catchUpPVRSchedule, function(index, value) {
 	 	var channelName = value.ChannelName;
 		var displayName = value.DisplayName;
@@ -481,8 +496,68 @@ function initPVRFromS3(data){
 	 });		
 }
 
+function initMergePage() {
+    //init the remote pvr
+    var remotePVRList = $("#syncList");
+    remotePVRList.children().remove();
+    remotePVRList.empty();
+    
+    $.each(catchUpConflictObj, function(index, value) {
+        var channelName = value.ChannelName;
+        var displayName = value.DisplayName;
+        var networkId   = value.NetworkId;
+        var tsId        = value.TsId;
+        var serviceId   = value.ProgId;
+        var iconKey     = getChannelIconKey(networkId, tsId, serviceId);
+        var iconName    = getIconNameFromKey(iconKey);
+           
+        var conflictItem = $(conflictItemOrg);
+    
+        conflictItem.find(".channelName").html(channelName);
+        conflictItem.find(".displayName").html(displayName);
+        conflictItem.find(".channelIcon").attr("src", "./img/" + iconName + ".png");
+        
+        var startTime = value.startTime;
+        var endTime   = value.endTime;
+           
+        var timeLabel = startTime.format("yyyy-MM-dd hh:mm") + " - " + endTime.format("hh:mm");
+        conflictItem.find(".timeLabel").html(timeLabel);
+        
+        remotePVRList.append(conflictItem);
+     });
+    
+    //init the local pvr
+    var localPVRList = $("#localList");
+    localPVRList.children().remove();
+    localPVRList.empty();
+    
+    $.each(localConflictObj, function(index, value) {
+        var channelName = value.ChannelName;
+        var displayName = value.DisplayName;
+        var networkId   = value.NetworkId;
+        var tsId        = value.TsId;
+        var serviceId   = value.ProgId;
+        var iconKey     = getChannelIconKey(networkId, tsId, serviceId);
+        var iconName    = getIconNameFromKey(iconKey);
+           
+        var conflictItem = $(conflictItemOrg);
+    
+        conflictItem.find(".channelName").html(channelName);
+        conflictItem.find(".displayName").html(displayName);
+        conflictItem.find(".channelIcon").attr("src", "./img/" + iconName + ".png");
+           
+        var startTime = value.startTime;
+        var endTime   = value.endTime;
+           
+        var timeLabel = startTime.format("yyyy-MM-dd hh:mm") + " - " + endTime.format("hh:mm");
+        conflictItem.find(".timeLabel").html(timeLabel);
+        
+        localPVRList.append(conflictItem);
+     });
+}
+
 /*=======================================private function============================================*/
-function findNowRecord(nowRecordId){
+function findNowRecord(nowRecordId) {
 	if(nowRecordId != -1){
 		var pvrItemRecDivs = $(".pvrItemRecDiv");
 		$.each(pvrItemRecDivs, function(index,element) {
@@ -520,6 +595,59 @@ function showLoader(tips) {
 			"</div>"
     });
 }
+
+function dynamicMergeLayout() {
+    /* Some orientation changes leave the scroll position at something
+     * that isn't 0,0. This is annoying for user experience. */
+    scroll(0, 0);
+    /* Calculate the geometry that our content area should take */
+    var header = $("#mergeHeader");
+    var content = $("#mergeContent");
+
+    var viewportHeight = $(window).height();    
+    var contentHeight = viewportHeight - header.outerHeight();
+    contentHeight -= (content.outerHeight() - content.height());
+    content.height(contentHeight);
+
+    var mergeButton = $("#mergeButton");
+    var temp = mergeButton.css("margin-top");
+    var compareHeight = contentHeight - mergeButton.outerHeight() - temp.split("p")[0];
+    compareHeight -= ($("#compareArea").height() - $("#compareArea").outerHeight());
+    $("#compareArea").height(compareHeight);
+
+    var maxHeight = (compareHeight - $("#tipsBar").height()) / 2.0;
+
+    //Sync PVR Height
+    var syncListHeight = $("#syncList").height();
+    var syncShouldHeight = 0;
+    if(syncListHeight < maxHeight) {
+        syncShouldHeight = syncListHeight;
+    } else {
+        if($("#localList").height() >= maxHeight){
+            syncShouldHeight = maxHeight;
+        } else {
+            maxHeight = maxHeight * 2 - $("#localList").height();
+            syncShouldHeight = maxHeight < syncListHeight ? maxHeight : syncListHeight;
+        }
+    }
+    $("#syncList").height(syncShouldHeight);
+    $("#syncDiv").height(syncShouldHeight);
+
+    //Sync PVR Height
+    var localListHeight = $("#localList").height();
+    maxHeight = (compareHeight - syncShouldHeight - $("#tipsBar").height());
+    var localShouldHeight = 0;
+    if(localListHeight < maxHeight) {
+        localShouldHeight = localListHeight;
+    } else {
+        localShouldHeight = maxHeight;
+    }
+    $("#localList").height(localShouldHeight);
+    $("#localDiv").height(localShouldHeight);
+    
+    compareHeight = $("#syncDiv").height() + $("#localDiv").height() +  $("#tipsBar").height();
+    $("#compareArea").height(compareHeight);
+  };
 
 //this code just for android.
 function preventTheDefaultEvent() {
@@ -574,10 +702,12 @@ function twitter(d,s,id) {
 		fjs.parentNode.insertBefore(js,fjs);
 	}
 }
+
 function loadTwitter () {
 	timerId = setTimeout("checkIframe()", 500);
 	twitter(document,"script","twitter-wjs");
 }
+
 function checkIframe() {
 	var iframe = $("iframe");
 
@@ -594,7 +724,7 @@ function checkIframe() {
 	iframe.contents().find("body").css("margin", "0px 0px");
 	iframe.contents().find("body").css("padding", "0px 0px");
 	iframe.contents().find("#twitter-widget-0").css("marginBottom", "0px");
-	var tempHeight = $(window).height() - headerHeight ;
+	var tempHeight = $(window).height() - headerHeight - 10;
 	var tempWidth  = $(window).width();
 	iframe.height(tempHeight);
 	iframe.width(tempWidth);
@@ -608,11 +738,96 @@ function checkIframe() {
 		return false;
 	});
 }
+
+function syncTwitterSchedual() {
+    
+    $.each(catchUpScheduleObj, function(index, catchUpSchedule) {
+           var startTime = catchUpSchedule.startTime;
+           var endTime   = catchUpSchedule.endTime;
+           
+           var conflictIndex = iftimeconflict(startTime, endTime, -1);
+           
+           if(conflictIndex >= 1) {
+                catchUpConflictObj[catchUpConflictObj.length] = catchUpSchedule;
+                localConflictObj[localConflictObj.length] = pvrScheduleObj[conflictIndex - 1];
+           } else {
+                catchUpNoConflictObj[catchUpNoConflictObj.length] = catchUpSchedule;
+           }
+    });
+
+    //sync the no conflict
+    if(catchUpNoConflictObj.length > 0) {
+        syncPVRScheduleList(catchUpNoConflictObj);
+    }
+    
+    if(catchUpConflictObj.length > 0) {
+        initMergePage();
+        $.mobile.changePage("#mergePage",  { transition: "none"});
+        dynamicMergeLayout();
+    }
+}
+
+// Yang begin
+function syncPVRScheduleList(objectList) {
+    var jsonStrArray = [];
+    var recordItemId = new Date().getTime();
+    
+    $.each(objectList, function(catchUpScheduleIndex, catchUpScheduleItem) {
+           
+        var startTime = catchUpScheduleItem.startTime;
+        var endTime   = catchUpScheduleItem.endTime;
+        var	pidArray  = 0;
+        var	bandwidth = 0;
+        var	frequency = 0;
+           
+        //get the Channel Info
+        $.each(channelList, function(channelIndex, channel) {
+            if(catchUpScheduleItem.ProgId == channel.ServiceId &&
+                catchUpScheduleItem.NetworkId == channel.NetworkId &&
+                catchUpScheduleItem.TsId == channel.TsId ) {
+              
+                pidArray  = channel.PidArray;
+                bandwidth = channel.Bandwidth;
+                frequency = channel.Frequency;
+            }
+        });
+           
+        var jsonstr = {
+            StartYear	: startTime.getFullYear(),
+            StartMonth	: startTime.getMonth() + 1,
+            StartDay	: startTime.getDate(),
+            StartHour	: startTime.getHours(),
+            StartMinute	: startTime.getMinutes(),
+            StartSecond : startTime.getSeconds(),
+            EndYear		: endTime.getFullYear(),
+            EndMonth	: endTime.getMonth() + 1,
+            EndDay		: endTime.getDate(),
+            EndHour		: endTime.getHours(),
+            EndMinute	: endTime.getMinutes(),
+            EndSecond	: endTime.getSeconds(),
+            ProgId		: catchUpScheduleItem.ProgId,
+            NetworkId	: catchUpScheduleItem.NetworkId,
+            TsId		: catchUpScheduleItem.TsId,
+            Version		: catchUpScheduleItem.Version,
+            ChannelName	: catchUpScheduleItem.ChannelName,
+            DisplayName	: catchUpScheduleItem.DisplayName,
+            EventId		: 0,
+            RecordItemId: parseInt(recordItemId / 1000) + catchUpScheduleIndex,
+            PidArray	: pidArray,
+            Bandwidth	: bandwidth,
+            Frequency	: frequency
+        };
+           
+        jsonStrArray.push(jsonstr);
+    });
+    addRecItem(JSON.stringify(jsonStrArray));
+}
+// Yang end
+
 /*=======================================JQuery Binding============================================*/
 /*===================================delect record and documents===================================*/
 $(document).ready(function () {
     $("#delButton_PVR").click(function() {
-
 		if($('.pvrScheduleListli').length > 0) {
 			var pvrScheduleListdiv = $("#pvrScheduleList li>div")
 			if(pvrScheduleListdiv.length > 0) {
@@ -917,7 +1132,7 @@ $(function() {
 		$("iframe").empty();
 		
         $.mobile.changePage("#twitterPage", {transition: "slide", reverse: true});
-        $("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" data-chrome="nofooter noheader transparent" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '"><div style="text-align:center; margin-top:45%; width:100%;"><span style="font-size:1em;color:white;">' + loadingLabel + '...</span></div></a>');
+        $("#twitterContent").append('<a style="text-shadow:none; text-decoration:none; font-size:14px; font-weight:normal;" class="twitter-timeline" data-dnt="true" href="https://twitter.com/' + twitterAccount+'" data-widget-id="' + twitterId + '"><div style="text-align:center; margin-top:45%; width:100%;"><span style="font-size:1em;color:white;">' + loadingLabel + '...</span></div></a>');
 		loadTwitter();
     });
 
@@ -982,80 +1197,79 @@ $(function() {
 			checkBox.attr("data-isCheck", "false");
     	}
     });
-	
+
 	$("body").on("click", ".syncBtn", function() {
-		var checkBox = $(".catchUpItemCheckBox[data-isCheck=true]");
-		if(checkBox.length >= 1) {
-			return true;
-		} else {
-			return false;
+        var tempArray = new Array();
+        var catchUpPVRScheduleLi = $(".catchUpPVRScheduleLi");
+                 
+        $.each(catchUpPVRScheduleLi, function(index, value) {
+            var checkBox = $(this).find(".catchUpItemCheckBox");
+            if(checkBox.attr("data-isCheck") == "true") {
+               tempArray[tempArray.length] = catchUpScheduleObj[index];
+            }
+        });
+                 
+        catchUpScheduleObj = tempArray;
+                 
+		if(catchUpScheduleObj.length >= 1) {
+            catchUpConflictObj   = new Array();
+            localConflictObj     = new Array();
+            catchUpNoConflictObj = new Array();
+                 
+            syncTwitterSchedual();
 		}
 	});
+
+    // merge js begin
+    $("body").on("click","#syncDiv, .syncPVRLabel",function() {
+        $(".syncPVRLabel").css("background-color","darkorange");
+        $(".localPVRLabel").css("background-color","grey");
+        $("#syncDiv").css("border","2px solid darkorange");
+        $("#syncDiv").find(".tangle").addClass("selected");
+        $("#localDiv").css("border","2px solid grey");
+        $("#localDiv").find(".tangle").removeClass("selected");
+    });
+
+    $("body").on("click","#localDiv, .localPVRLabel",function() {
+        $(".localPVRLabel").css("background-color","darkorange");
+        $(".syncPVRLabel").css("background-color","grey");
+        $("#localDiv").css("border","2px solid darkorange");
+        $("#localDiv").find(".tangle").addClass("selected");
+        $("#syncDiv").css("border","2px solid grey");
+        $("#syncDiv").find(".tangle").removeClass("selected");
+    });
+  
+  $("body").on("click", "#mergeButton", function() {
+        var whichModuleSeleted = $("#compareArea").find(".selected").parent().attr("id");
+               
+        if(whichModuleSeleted == "syncDiv") {
+            //s1: delete the local related pvr
+            //s2: add catchup pvr.
+            var tempArray = new Array();
+            $.each(localConflictObj, function(index, value){
+                tempArray[tempArray.length] = value.RecordItemId;
+            });
+               
+            deletePvr(tempArray);
+            setTimeout("syncPVRScheduleList(catchUpConflictObj)", 100);
+            
+               
+        } else if(whichModuleSeleted == "localDiv") {
+            //nothin: beacase local is already exist.
+        }
+        
+               
+        $.mobile.changePage("#pvrPage",  { transition: "none"});
+  });
+
+    // merge js end
 	
 	$("body").on("click", "#btnOk", function() {
 		syncDialogWithOk();
 		
 		$.mobile.changePage("#pvrPage",  { transition: "none"});
 	});
-	
-	function syncDialogWithOk() {
-		var jsonStrArray = [];
-		var checkBox 	 = $(".catchUpItemCheckBox[data-isCheck=true]");
-		var recordItemId = new Date().getTime();
-
-		$.each(checkBox, function(catchUpScheduleIndex, item) {
-			var catchUpScheduleItemIndex = parseInt($(item).parents(".catchUpPVRScheduleItem").attr("data-index"));
-			var catchUpScheduleItem      = catchUpScheduleObj[catchUpScheduleItemIndex];
-			
-			var startTime = catchUpScheduleItem.startTime;
-			var endTime   = catchUpScheduleItem.endTime;
-			var	pidArray  = 0;
-			var	bandwidth = 0;
-			var	frequency = 0;
-
-			//get the Channel Info
-			$.each(channelList, function(channelIndex, channel) {
-				if(catchUpScheduleItem.ProgId == channel.ServiceId &&
-					catchUpScheduleItem.NetworkId == channel.NetworkId &&
-					catchUpScheduleItem.TsId == channel.TsId ) {
-					
-					pidArray  = channel.PidArray;
-					bandwidth = channel.Bandwidth;
-					frequency = channel.Frequency;
-				}
-			});
-
-			var jsonstr = {
-					StartYear	: startTime.getFullYear(),
-					StartMonth	: startTime.getMonth() + 1,
-					StartDay	: startTime.getDate(),
-					StartHour	: startTime.getHours(),
-					StartMinute	: startTime.getMinutes(),
-					StartSecond : startTime.getSeconds(),
-					EndYear		: endTime.getFullYear(),
-					EndMonth	: endTime.getMonth() + 1,
-					EndDay		: endTime.getDate(),
-					EndHour		: endTime.getHours(),
-					EndMinute	: endTime.getMinutes(),
-					EndSecond	: endTime.getSeconds(),
-					ProgId		: catchUpScheduleItem.ProgId,
-					NetworkId	: catchUpScheduleItem.NetworkId,
-					TsId		: catchUpScheduleItem.TsId,
-					Version		: catchUpScheduleItem.Version,
-					ChannelName	: catchUpScheduleItem.ChannelName,
-					DisplayName	: catchUpScheduleItem.DisplayName,
-					EventId		: 0,
-					RecordItemId: parseInt(recordItemId / 1000) + catchUpScheduleIndex,
-					PidArray	: pidArray,
-					Bandwidth	: bandwidth,
-					Frequency	: frequency
-				};
-
-				jsonStrArray.push(jsonstr);
-		});
-		syncPVRSchedule(JSON.stringify(jsonStrArray));
-	}
-	// Yang end
+    // Yang end
 });
 
 
@@ -1236,40 +1450,40 @@ $(function(){
 			addRecItem(JSON.stringify(jsonstrarray));
 		}
 	});
-
-
-	var iftimeconflict = function(starttime,endtime,recItemIndex){
-		data = pvrScheduleObj
-		flag = 0;
-		$.each(data, function(index,value) {
-			if(index != recItemIndex){
-				localstarttime = new Date(value.startTime.replace(/-/g, '/'));
-				localendtime   = new Date(value.endTime.replace(/-/g, '/'));
-				
-				if(starttime >= localstarttime&&starttime<=localendtime){
-					flag=1;
-					return;
-				}
-				if(endtime >= localstarttime&&endtime<=localendtime){
-					flag=1;
-					return;
-				}
-				if(localstarttime >= starttime&&localstarttime<=endtime){
-					flag=1;
-					return;
-				}
-				if(localendtime >= starttime&&localendtime<=endtime){
-					flag=1;
-					return;
-				}
-			}
-		});
-		if(flag == 1){
-			return true;
-		}
-		return false;
-	}
 });
+
+
+function iftimeconflict(starttime,endtime,recItemIndex){
+    data = pvrScheduleObj
+    flag = 0;
+    $.each(data, function(index,value) {
+        if(index != recItemIndex) {
+           localstarttime = value.startTime;
+           localendtime   = value.endTime;
+           
+           if(starttime >= localstarttime&&starttime<=localendtime){
+               flag = index + 1;
+               return;
+           }
+           
+           if(endtime >= localstarttime&&endtime<=localendtime){
+               flag = index + 1;
+               return;
+           }
+           
+           if(localstarttime >= starttime&&localstarttime<=endtime){
+               flag = index + 1;
+               return;
+           }
+           
+           if(localendtime >= starttime&&localendtime<=endtime){
+               flag = index + 1;
+               return;
+           }
+        }
+    });
+    return flag;
+}
 
 
 var divwidth=272;

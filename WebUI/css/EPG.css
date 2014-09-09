@@ -1,0 +1,119 @@
+* {
+	letter-spacing: 1px;	
+}
+
+#channelList li>a img.leftIcon {
+	width:48px !important;
+	height:48px !important;
+	max-width: 48px !important;
+	max-height:48px !important;
+}
+
+#channelList li>a span{
+	line-height: 48px;
+	margin-left: 60px;
+	color: white;
+	text-shadow: none;
+	font-size: 1em;
+	font-weight: normal;
+}
+
+#panelBtn {
+	display: block;
+	width: 40px;
+	min-height: 3em;
+	position: fixed;
+	z-index: 2;
+}
+
+#panelBtn span {
+	background: #fff;
+	content: '';
+	display: block;
+	width: 20px;
+	height: 2px;
+	position: absolute;
+	left: 5px;
+}
+
+#panelBtn .top {
+	top: 0.8em;
+}
+
+#panelBtn .middle {
+	top: 1.6em;
+}
+
+#panelBtn .bottom {
+	 top: 2.4em; 
+}
+
+#timeDiv {
+	margin: 0;
+	padding: 0;
+}
+
+#timeTable {
+	width:100%;
+}
+
+#timeTable td {
+	 border-bottom:none;
+	 text-align:center;
+	 text-shadow:none;
+	 text-align:center;
+}
+
+#timeTable .week {
+	 display:block;
+	 font-size:0.8em;
+	 width: 80%;
+	 color: #ACACB2;
+	 color: rgba(172, 172, 178, 0.47);
+}
+
+#timeTable .date {
+	 display:block; 
+	 font-size:1.7em;
+	 width: 80%;
+	 color: white;
+	 margin-top: 0.15em;
+	 border-bottom:3px solid transparent;
+}
+
+#timeTable .current .week {
+	 color: rgb(233,66,66);
+}
+
+#timeTable .current .date {
+	 color: rgb(233,66,66);
+	 border-bottom:3px solid rgb(233,66,66);
+}
+
+#EPGList .EPGListDiv {
+	 min-height: 3em;
+}
+#EPGList .EPGTime {
+	 padding: 0;
+	 border: none;
+	 text-align: left;
+}
+#EPGList .programName {
+	 overflow: auto;
+	 text-overflow: ellipsis; 
+}
+#EPGList .programDsp {
+	 display: block;
+	 margin-top: 1em;
+	 height: 1.5em;
+	 width: 100%;
+	 line-height: 1.5;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+}
+#EPGList .unfold {
+	 overflow: auto;
+	 word-wrap: break-word;
+	 white-space: normal;
+	 height: auto;
+}

@@ -1,3 +1,8 @@
+*{
+	font-weight: 100;
+	font-family: helvetica,serif;
+	letter-spacing: 1px;
+}
 .statusBar {
 	position:absolute;
 	left:50%; 
@@ -153,8 +158,8 @@
 
 .pvrItemCheckBox {
 	position:absolute;
-	top: 0.3em;
-	right: 0.5em;
+	top: 0.4em;
+	right: 0.8em;
 	width: 2em;
 	height:2em;
 }
@@ -315,4 +320,63 @@
 }
 .channelIcon{
 	padding-right: 0.5em;
+}
+
+/*mergePage css*/
+#syncDiv, #localDiv {
+	position:relative;
+	border:2px solid darkorange;
+	margin: 0 auto;
+}
+
+#syncList, #localList {
+	list-style:none;
+	border:none;
+	padding:0px;
+	margin:0px;
+	overflow:auto;
+}
+.syncListLi, .localListLi {
+	background-color:white;
+	margin-top:1px;
+}
+.selected {
+	position:absolute;
+	right:0px;
+	bottom:0px;	
+	 width:0;height:0;  
+    line-height:0;  
+    border-width:1em;  
+    border-style:solid;  
+    border-color:transparent darkorange transparent transparent; 
+    transform: translate3d(1em,1em,0) rotateY(180deg) rotateZ(-45deg);
+}
+
+.syncPVRLabel {
+ 	height:1.5em;
+ 	width:6em;
+ 	background-color:darkorange;
+ 	color:white;
+ 	position: absolute;
+	top:0;
+	left: 0;
+	text-shadow:none;
+}
+
+.localPVRLabel {
+	height:1.5em;
+ 	width:6em;
+ 	background-color:grey;
+	color:white;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	text-shadow:none;
+}
+
+#mergeButton {
+	background-color:#56a9c8;
+	border:none;
+	margin: 0;
+	margin-top: 1em;
 }
