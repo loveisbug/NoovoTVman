@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="index">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+
+		<link rel="stylesheet" href="./css/jquery.mobile-1.4.2.min.css" />
+	    <link rel="stylesheet" href="./css/jquery_mobile_1.4.2_20140825.min.css" />
+		<link rel="stylesheet" href="./css/jquery.mmenu.css" />
+		<link rel="stylesheet" href="./css/jquery.mmenu.searchfield.css"  />
+		<link rel="stylesheet" href="./css/jquery.mmenu.header.css"  />
+		<link rel="stylesheet" href="./css/jquery.mmenu.effects.css"  />
+		<link rel="stylesheet" href="./css/jqmChange.css" />
+	    <link rel="stylesheet" href="./css/EPG.css" />
+
+		<script src="./js/jquery-1.8.3.min.js"></script>
+		<script src="./js/jquery.mobile-1.4.2.min.js"></script>
+		<script type="text/javascript" src="./js/jquery.mmenu.min.js"></script>
+		<script src="./js/jquery.mmenu.searchfield.min.js"></script>
+		<script src="./js/jquery.mmenu.header.min.js"></script>
+		<script src="./js/global.js"></script>
+	    <script src="./js/EPG.js"></script>
+		<script type="text/javascript">
+
+			$(function() {
+				$('#menu').mmenu(
+				{
+					"classes": "mm-slide",
+					"slidingSubmenus": false,
+					searchfield: {
+						add: true,
+						search: true
+					}
+				}, { onClick: {
+						preventDefault: true
+					}
+				}, {
+					offCanvas: {
+						pageSelector: 'div[data-role="page"]:first'
+					}
+				});
+
+				$('#menu a').on( 'click', function() {
+					var _t = this;
+					$('#menu').one('closed.mm', function() {
+						$.mobile.changePage( _t.href, {
+							transition: 'slide'
+						});
+					});
+				});
+			});
+
+			$(document).on('pageshow', function( e, ui ) {
+				$('#menu').trigger( 'setPage', [ $(e.target) ] );
+				$('#menu a').each( function() {
+					if ( $.mobile.path.parseUrl( this.href ).href == window.location.href ) {
+						$(this).trigger( 'setSelected.mm' );
+					}
+				});
+			});
+
+		</script>
+	</head>
+	<body onload="init();">
+		<nav id="menu" >
+			<ul id="channelList" class="mm-nolist" style="padding-top:25px;">
+				<li>
+			  			<img class="channelIcon leftIcon" src="./img/a_m6.png" style="position:absolute;" />
+			  			<span class="channelName">6 6M</span>
+			    </li>
+			</ul>
+		</nav>
+
+		<div data-role="page" id="EPGPage" data-theme="a">
+			<div data-role="header" data-position="fixed" data-tap-toggle="false">
+				<h1>EPG</h1>
+				<a id="panelBtn" href="#menu" data-role="button" class="ui-btn-left ui-nodisc-icon ui-btn ui-btn-icon-notext" style="background-color:transparent;border-width:0px;">
+					<span class="top"></span>
+					<span class="middle"></span>
+					<span class="bottom"></span>
+				</a>
+			</div>
+			<div data-role="content">
+				<div id="timeDiv">
+					<p style="text-shadow:none;color:white;color:rgb(233,66,66);font-size:1.1em;margin:0 0 0.5em 0;">24th. August</p>
+					<table id="timeTable">
+						<tr>
+							<td>
+								<span class="week">周一</span>
+								<span class="date">2</span>
+							</td>
+							<td>
+								<span class="week">周二</span>
+								<span class="date">25</span>
+							</td>
+							<td>
+								<span class="week">周三</span>
+								<span class="date">26</span>
+							</td>
+							<td>
+								<span class="week">周四</span>
+								<span class="date">27</span>
+							</td>
+							<td>
+								<span class="week">周五</span>
+								<span class="date">28</span>
+							</td>
+							<td>
+								<span class="week">周六</span>
+								<span class="date">29</span>
+							</td>
+							<td>
+								<span class="week">周日</span>
+								<span class="date">30</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<ul data-role="listview" id="EPGList" style="margin-top:0px;">
+					<!-- <li data-icon="false">
+						<a href="#" style="padding:0;margin:0">
+							<div class="EPGListDiv" style="margin:1em;font-weight:normal;text-shadow:none;">
+								<div class="EPGTime ui-btn ui-btn-icon-right ui-icon-carat-l">01.27-02.06</div>
+								<div class="programName">program name</div>
+								<span class="programDsp"></span>
+							</div>
+						</a>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+
+	</body>
+</html>

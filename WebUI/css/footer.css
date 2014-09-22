@@ -1,6 +1,24 @@
-.tabItem {
-	height: 55px;
-	background-color:transparent !important;
-	border-width:0px !important;
+* {
+	margin:0 auto;
+	padding: 0;
+}
+
+html,body,table,tr {
 	width: 100%;
+	height: 100%;
+	border:none;
+}
+
+table, tr {
+	text-align:center;
+}
+
+td, td div {
+	width: 48px;
+	height: 48px;
+	background-color: transparent;
+}
+
+a,td,img,button,input,textarea{
+	-webkit-tap-highlight-color:rgba(255,255,255,0);
 }

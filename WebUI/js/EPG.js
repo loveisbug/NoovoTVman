@@ -3,12 +3,22 @@ var utcdiff				  = 0;
 var offset				  = 0;
 var weekdayNameArray     = "";
 var channelArray         = "";
-var channelItemProtoType = '<li data-icon="false" class="ui-nodisc-icon" data-filtertext="6 6M">\
-				  		<a href="#" class="ui-btn" style="padding:0px;">\
-				  			<img class="channelIcon ui-li-icon leftIcon" src="./img/a_m6.png" style="top:0px;left:0px;" />\
-				  			<span class="channelName"></span>\
-				  		</a>\
-				    </li>';
+var channelItemProtoType = '<li>\
+			    				<a class="ui-btn">\
+			  						<img class="channelIcon leftIcon" src="./img/a_m6.png"/>\
+			  						<span class="channelName">6 6Msefsfsfsfsfsef6 6Msefsfsfsfsfsef6 6Msefsfsfsfsfsef6 6Msefsfsfsfsfsef</span>\
+			  					</a>\
+			  				</li>';
+var epgItemProtoType = '<li data-icon="false">\
+						<a href="#" style="padding:0;margin:0" class="EPGListDiv">\
+							<div style="position:absolute;right:0;top:0;"><div class="icon ui-nodisc-icon ui-btn ui-btn-icon-notext ui-icon-carat-l" style="border:none;background-color:transparent;"></div></div>\
+							<div style="margin:1em;font-weight:normal;text-shadow:none;">\
+								<div class="EPGTime">01.27-02.06</div>\
+								<div class="programName">program name</div>\
+								<span class="programDsp"></span>\
+							</div>\
+						</a>\
+					</li>'
 
 /*=======================================Init function============================================*/
 function init() {
@@ -28,8 +38,12 @@ function onDataWithJSON(data, key) {
 		if(key == "EPGInit"){
 			$.mobile.changePage("#EPGPage",  { transition: "none"});
 		}
+        
 		channelArray     = temp.ChannelList;
         weekdayNameArray = temp.WeekdayNames;
+        epgInfo          = temp.CurrentEPG;
+        var channelIndex = temp.CurrentChannelIndex;
+        var dayIndex     = temp.CurrentDayIndex;
         
         //calculateCurrentTime
 		var	now 	  = new Date().getTime();
@@ -42,15 +56,15 @@ function onDataWithJSON(data, key) {
             
 			currentTime = new Date(now + nowoffset + utcdiff + offset);
 		}
-        
-        initDateTabel(currentTime);
+
+		initEPGInfo(epgInfo);
+        initDateTabel(currentTime, dayIndex);
         initChannelList(channelArray);
 	}
 }
 
 /*=======================================Init function============================================*/
 function initChannelList(data) {
-
 	var channelList = $("#channelList");
 	channelList.children().remove();
 	channelList.empty();
@@ -63,7 +77,6 @@ function initChannelList(data) {
 		var iconKey     = getChannelIconKey(networkId, tsId, serviceId);
 		var iconName    = getIconNameFromKey(iconKey);
 		var channelItem = $(channelItemProtoType);
-
 		
 		channelItem.attr("data-filtertext", channelName);
         channelItem.attr("data-NetworkId", networkId);
@@ -75,10 +88,10 @@ function initChannelList(data) {
 		channelList.append(channelItem);
 	});
     
-    channelList.listview('refresh')
+    channelList.listview('refresh');
 }
 
-function initDateTabel(data) {
+function initDateTabel(data, dayIndex) {
     $("#timeDiv").children("p").html(data.toLocaleDateString());
     
 	var timeTable = $("#timeTable tr").find("td");
@@ -91,10 +104,39 @@ function initDateTabel(data) {
 	 	$(value).find(".week").html(weekName);
         $(value).find(".date").html(dayNum);
     });
+    
+    $("#timeTable tr").find("td:eq(" + dayIndex + ")").addClass("current");
+}
+
+function initEPGInfo(data) {
+	var epgInfoList = $("#EPGList");
+	epgInfoList.children().remove();
+	epgInfoList.empty();
+
+	$.each(data, function(index,  value) {
+		var startTime   = value.fStartDateTime;
+		var duration    = value.fDuration;
+		var programName	= value.fEventName;
+		var description = value.fEventText;
+		var epgInfoItem = $(epgItemProtoType);
+
+		epgInfoItem.find(".programName").html(programName);
+		epgInfoItem.find(".programDsp").html(description);
+
+		epgInfoList.append(epgInfoItem);
+	});
+    
+    epgInfoList.listview('refresh');
 }
 
 /*=======================================public signal============================================*/
+function changeSVC(svcIndex) {
+    window.location = "native://EPGChangeSVC?" + svcIndex;
+}
 
+function changeDay(dayIndex) {
+    window.location = "native://EPGChangeDay?" + dayIndex;
+}
 
 /*=======================================private function============================================*/
 
@@ -103,19 +145,26 @@ $(document).ready(function(){
 	// change date
 	$("body").on("click","#timeTable td",function() {
 		$(this).addClass("current").siblings().removeClass("current");
+        changeDay($(this).index());
 	});
-	// $("body").on("toggle", ".EPGListDiv",function(){
-	// 	$(this).find(".programDsp").addClass("unfold");
-	// },function(){
-	// 	$(this).find(".programDsp").removeClass("unfold");
-	// });
-	$(".EPGListDiv").toggle(
-		function(){
-			$(this).find(".programDsp").addClass("unfold");
-			$(this).find(".EPGTime").addClass("ui-icon-carat-d").removeClass("ui-icon-carat-l");
-		},function(){
-			$(this).find(".programDsp").removeClass("unfold");
-			$(this).find(".EPGTime").addClass("ui-icon-carat-l").removeClass("ui-icon-carat-d");
+
+	$("#panelBtn").click(function() {
+		$("div[data-role='page']").ontouchmove = function(e) {
+			e.preventDefault();
 		}
-	);
+	});
+                  
+    $("body").on("click","#channelList li",function() {
+        changeSVC($(this).index());
+    });
+
+	$("body").on("click", ".EPGListDiv", function() {
+		if($(this).find(".programDsp").hasClass("unfold")) {
+			$(this).find(".programDsp").removeClass("unfold");
+			$(this).find(".icon").addClass("ui-icon-carat-l").removeClass("ui-icon-carat-d");
+		} else {
+			$(this).find(".programDsp").addClass("unfold");
+			$(this).find(".icon").addClass("ui-icon-carat-d").removeClass("ui-icon-carat-l");
+		}
+	});
 });

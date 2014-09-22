@@ -2,20 +2,39 @@
 	letter-spacing: 1px;	
 }
 
+#channelList {
+	list-style:none
+}
+
+#channelList li {
+	border-bottom: 1px solid #1f1f1f;
+}
+
+#channelList li a {
+	border:none;
+	padding:0;
+    margin:0;
+    text-align:left;
+}
+
 #channelList li>a img.leftIcon {
 	width:48px !important;
 	height:48px !important;
 	max-width: 48px !important;
 	max-height:48px !important;
+	vertical-align: middle;
 }
 
-#channelList li>a span{
-	line-height: 48px;
-	margin-left: 60px;
+#channelList li span {
 	color: white;
 	text-shadow: none;
 	font-size: 1em;
 	font-weight: normal;
+	overflow:hidden;
+	text-overflow: ellipsis;
+    margin-left:0.5em;
+	height:100%;
+	vertical-align: middle; 
 }
 
 #panelBtn {
@@ -74,7 +93,7 @@
 
 #timeTable .date {
 	 display:block; 
-	 font-size:1.7em;
+	 font-size:1.5em;
 	 width: 80%;
 	 color: white;
 	 margin-top: 0.15em;
@@ -116,4 +135,5 @@
 	 word-wrap: break-word;
 	 white-space: normal;
 	 height: auto;
+     min-height:3em;
 }
